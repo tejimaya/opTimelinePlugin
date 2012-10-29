@@ -16,11 +16,11 @@
             {{/if}} | <a href="<?php echo url_for('@homepage', array('absolute' => true)) ?>timeline/show/id/${id}"><span class="timestamp">${created_at}</span></a>
 
             <!--Nice Plugin -->
-            <a><span class="nice-cancel" data-nice-id="${id}" style="display: none;">いいね！を取り消す</span></a>
-            <a><span class="nice-post" data-nice-id="${id}"><i class="icon-thumbs-up"></i></span></a>
-            <a><span class="nice-list" data-nice-id="${id}">いいね！</span></a>
-            <div class="nice-list-member" data-nice-id="${id}">
-              <p style="background-color: #33c">「いいね！」したメンバー</p>
+            <div class="nice" style="padding-bottom: 5px;">
+              <a><span class="nice-list" data-nice-id="${id}">いいね！</span></a>
+              <a><span class="nice-cancel" data-nice-id="${id}" style="display: none;">いいね！を取り消す&nbsp;</span></a>
+              {{if member.self==false}}<a><span class="nice-post" data-nice-id="${id}" member-id="${member.id}"><i class="icon-thumbs-up"></i>&nbsp;&nbsp;</span></a>{{/if}}
+              <div class="nice-list-member" data-nice-id="${id}"></div>
             </div>
             </div>
 
@@ -77,6 +77,15 @@
                 {{html body_html}}
                 </span>
                 </div>
+            <!-- nice Plugin -->
+            <div class="nice-comment">
+              <a><span class="nice-list" data-nice-id="${id}">いいね！</span></a>
+              <a><span class="nice-cancel" data-nice-id="${id}" style="display: none;">いいね！を取り消す&nbsp;</span></a>
+              {{if member.self==false}}<a><span class="nice-post" data-nice-id="${id}" member-id="${member.id}"><i class="icon-thumbs-up"></i>&nbsp;&nbsp;</span></a>{{/if}}
+              <div class="nice-list-member" data-nice-id="${id}"></div>
+            </div>
+
+
                 <div class="timeline-post-comment-control">
                 {{if member.self==true }}<a href="#timeline-post-delete-confirm-${id}" class="timeline-post-delete-confirm-link">削除する</a> | {{/if}} <a href="<?php echo url_for('@homepage', array('absolute' => true)) ?>timeline/show/id/${id}"><span class="timestamp">${created_at}</span></a>
                 </div>

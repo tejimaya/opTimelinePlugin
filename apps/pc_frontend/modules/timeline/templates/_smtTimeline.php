@@ -10,9 +10,11 @@ var gorgon = {
 </script>
 <?php op_smt_use_stylesheet('/opTimelinePlugin/css/jquery.colorbox.css') ?>
 <?php op_smt_use_stylesheet('/opTimelinePlugin/css/timeline-smartphone.css', 'last') ?>
+<?php op_smt_use_stylesheet('/opNicePlugin/css/nice-smartphone.css', 'last') ?>
 <?php op_smt_use_javascript('/opTimelinePlugin/js/jquery.colorbox.js', 'last') ?>
 <?php op_smt_use_javascript('/opTimelinePlugin/js/jquery.timeline.js', 'last') ?>
 <?php op_smt_use_javascript('/opTimelinePlugin/js/timeline-loader-smartphone.js', 'last') ?>
+<?php op_smt_use_javascript('/opNicePlugin/js/nice-smartphone.js', 'last') ?>
 
 <script id="timelineTemplate" type="text/x-jquery-tmpl">
         <div class="timeline-post">
@@ -31,6 +33,11 @@ var gorgon = {
 
           <div class="timeline-post-control">
             <a href="#timeline-${id}" class="timeline-comment-link">コメントする</a>
+          </div>
+          <!--Nice Plugin -->
+          <a href="/nice/list/A/${id}"><span class="nice-list" data-nice-id="${id}">いいね！</span></a>
+          <a><span class="nice-cancel" data-nice-id="${id}" style="display: none;">いいね！を取り消す&nbsp;</span></a>
+          {{if member.self==false}}<a><span class="nice-post" data-nice-id="${id}" member-id="${member.id}"><i class="icon-thumbs-up"></i>&nbsp;&nbsp;&nbsp;</span></a>{{/if}}
           </div>
 
           <div class="timeline-post-comments" id="commentlist-${id}">
@@ -60,6 +67,13 @@ var gorgon = {
                 {{html body_html}}
                 </span>
                 </div>
+                <!-- nice Plugin -->
+                <div class="nice-comment">
+                <a href="/nice/list/A/${id}"><span class="nice-list" data-nice-id="${id}">いいね！</span></a>
+                <a><span class="nice-cancel" data-nice-id="${id}" style="display: none;">いいね！を取り消す&nbsp;</span></a>
+{{if member.self==false}}<a><span class="nice-post" data-nice-id="${id}" member-id="${member.id}"><i class="icon-thumbs-up"></i>&nbsp;&nbsp;&nbsp;</span></a>{{/if}}
+<div class="nice-list-member" data-nice-id="${id}"></div>
+</div>
               </div>
               <div class="timeline-post-comment-control">
               ${created_at}
