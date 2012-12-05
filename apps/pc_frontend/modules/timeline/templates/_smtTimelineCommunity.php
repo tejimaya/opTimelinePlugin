@@ -33,9 +33,9 @@ var gorgon = {
             </div>
               <!--Like Plugin -->
               <span class="like-wrapper hide">
-              <a href="/like/list/A/${id}"><span class="like-list" data-like-id="${id}">いいね！</span></a>
-              <a><span class="like-cancel" data-like-id="${id}" style="display: none;">いいね！を取り消す&nbsp;</span></a>
-              {{if member.self==false}}<a><span class="like-post" data-like-id="${id}" member-id="${member.id}"><i class="icon-thumbs-up"></i>&nbsp;&nbsp;&nbsp;</span></a>{{/if}}
+              {{if member.self==false}}<a><span class="like-post" data-like-id="${id}" data-like-target="A" member-id="${member.id}"><i class="icon-thumbs-up"></i>&nbsp;&nbsp;&nbsp;</span></a>{{/if}}
+              <a><span class="like-cancel" data-like-id="${id}" data-like-target="A" style="display: none;">いいね！を取り消す&nbsp;</span></a>
+              <a><span class="like-list" data-like-id="${id}" data-like-target="A">いいね！</span></a>
               </span>
               </div>
 
@@ -74,14 +74,12 @@ var gorgon = {
                 </span>
                 </div>
                   <!-- like Plugin -->
-                  <span class="like-comment-wrapper hide">
-                  <div class="like-comment">
-                  <a href="/like/list/A/${id}"><span class="like-list" data-like-id="${id}">いいね！</span></a>
-                  <a><span class="like-cancel" data-like-id="${id}" style="display: none;">いいね！を取り消す&nbsp;</span></a>
-                  {{if member.self==false}}<a><span class="like-post" data-like-id="${id}" member-id="${member.id}"><i class="icon-thumbs-up"></i>&nbsp;&nbsp;&nbsp;</span></a>{{/if}}
-                  <div class="like-list-member" data-like-id="${id}"></div>
+                  <div class="like-wrapper hide">
+                  {{if member.self==false}}<a><span class="like-post" data-like-id="${id}" data-like-target="A" member-id="${member.id}"><i class="icon-thumbs-up"></i>&nbsp;&nbsp;&nbsp;</span></a>{{/if}}
+                  <a><span class="like-cancel" data-like-id="${id}" data-like-target="A" style="display: none;">いいね！を取り消す&nbsp;</span></a>
+                  <a><span class="like-list" data-like-id="${id}" data-like-target="A">いいね！</span></a>
+                  <div class="like-list-member" data-like-id="${id}" data-like-target="A"></div>
                   </div>
-                  </span>
               </div>
               <div class="timeline-post-comment-control">
               ${created_at}

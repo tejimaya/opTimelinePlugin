@@ -16,14 +16,13 @@
             {{/if}} | <a href="<?php echo url_for('@homepage', array('absolute' => true)) ?>timeline/show/id/${id}"><span class="timestamp">${created_at}</span></a>
 
             <!--Like Plugin -->
-            <span class="like-wrapper hide">
-            <div class="like" style="padding-bottom: 5px;">
-              <a><span class="like-list" data-like-id="${id}">いいね！</span></a>
-              <a><span class="like-cancel" data-like-id="${id}" style="display: none;">いいね！を取り消す&nbsp;</span></a>
-              {{if member.self==false}}<a><span class="like-post" data-like-id="${id}" member-id="${member.id}"><i class="icon-thumbs-up"></i>&nbsp;&nbsp;</span></a>{{/if}}
-              <div class="like-list-member" data-like-id="${id}"></div>
-            </div>
-            </span>
+            <div></div>
+            <div class="like-wrapper hide">
+              {{if member.self==false}}<a><span class="like-post" data-like-id="${id}" data-like-target="A" member-id="${member.id}"><i class="icon-thumbs-up"></i>&nbsp;&nbsp;</span></a>{{/if}}
+              <a><span class="like-cancel" data-like-id="${id}" data-like-target="A" style="display: none;">いいね！を取り消す&nbsp;</span></a>
+              <a><span class="like-list" data-like-id="${id}" data-like-target="A">いいね！</span></a>
+              <div class="like-list-member" data-like-id="${id}" data-like-target="A"></div>
+            </div><div style="padding-bottom: 10px;"></div>
             </div>
 
             <div class="timeline-post-comments" id="commentlist-${id}">
@@ -80,14 +79,12 @@
                 </span>
                 </div>
             <!-- like Plugin -->
-            <span class="like-comment-wrapper hide">
-            <div class="like-comment">
-              <a><span class="like-list" data-like-id="${id}">いいね！</span></a>
-              <a><span class="like-cancel" data-like-id="${id}" style="display: none;">いいね！を取り消す&nbsp;</span></a>
-              {{if member.self==false}}<a><span class="like-post" data-like-id="${id}" member-id="${member.id}"><i class="icon-thumbs-up"></i>&nbsp;&nbsp;</span></a>{{/if}}
-              <div class="like-list-member" data-like-id="${id}"></div>
+            <div class="like-wrapper hide">
+              {{if member.self==false}}<a><span class="like-post" data-like-target="A" data-like-id="${id}" member-id="${member.id}"><i class="icon-thumbs-up"></i>&nbsp;&nbsp;</span></a>{{/if}}
+              <a><span class="like-cancel" data-like-id="${id}" data-like-target="A" style="display: none;">いいね！を取り消す&nbsp;</span></a>
+              <a><span class="like-list" data-like-id="${id}" data-like-target="A">いいね！</span></a>
+              <div class="like-list-member" data-like-id="${id}" data-like-target="A"></div>
             </div>
-            </span>
 
 
                 <div class="timeline-post-comment-control">
@@ -117,13 +114,4 @@
               </div>
               {{/if}}
             </div>
-</script>
-
-<script id="LikelistTemplate" type="text/x-jquery-tmpl">
-  <table style="border: 1px #000 solid;">
-    <tr style="padding: 2px;">
-      <td style="width: 48px; padding: 2px;"><a href="${profile_url}"><img src="${profile_image}" width="48"></a></td>
-      <td style="padding: 2px;"><a href="${profile_url}">${name}</a></td>
-    </tr>
-  </table>
 </script>
