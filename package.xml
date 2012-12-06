@@ -45,14 +45,20 @@ $ ./symfony opTimelinePlugin:install
   <email />
   <active>yes</active>
  </lead>
+ <lead>
+  <name>ichikawa tatsuya</name>
+  <user>ichikawa</user>
+  <email />
+  <active>yes</active>
+ </lead>
  <developer>
   <name>手嶋守</name>
   <user>tejima</user>
   <email />
   <active>yes</active>
  </developer>
- <date>2012-11-22</date>
- <time>19:36:13</time>
+ <date>2012-12-06</date>
+ <time>11:14:16</time>
  <version>
   <release>1.0.1</release>
   <api>1.0.1</api>
@@ -63,7 +69,7 @@ $ ./symfony opTimelinePlugin:install
  </stability>
  <license>Apache</license>
  <notes>
-beta release. correspond to the opLikePlugin
+beta release.
  </notes>
  <contents>
   <dir baseinstalldir="/" name="/">
@@ -76,7 +82,7 @@ beta release. correspond to the opLikePlugin
    <file baseinstalldir="/" md5sum="5559ab4f73502323436069c86e9eefdd" name="apps/pc_frontend/modules/timeline/config/view.yml" role="data" />
    <file baseinstalldir="/" md5sum="fabc1c085b1bd6dafc4162c33c2b5d2f" name="apps/pc_frontend/modules/timeline/templates/communitySuccess.php" role="data" />
    <file baseinstalldir="/" md5sum="a5ba3cc418b75d605d93bf968bb1536f" name="apps/pc_frontend/modules/timeline/templates/memberSuccess.php" role="data" />
-   <file baseinstalldir="/" md5sum="6334841a17b9eb756a47fa0f2187fadf" name="apps/pc_frontend/modules/timeline/templates/showSuccess.php" role="data" />
+   <file baseinstalldir="/" md5sum="9502e7c2ed6bf62c38643043714e0eeb" name="apps/pc_frontend/modules/timeline/templates/showSuccess.php" role="data" />
    <file baseinstalldir="/" md5sum="4e40150c3a98809df75c8b508a74973e" name="apps/pc_frontend/modules/timeline/templates/smtCommunitySuccess.php" role="data" />
    <file baseinstalldir="/" md5sum="73fa2368ae8541090f65860588afccde" name="apps/pc_frontend/modules/timeline/templates/smtMemberSuccess.php" role="data" />
    <file baseinstalldir="/" md5sum="c154cb4c5eae03912b70295e9d5766a4" name="apps/pc_frontend/modules/timeline/templates/smtShowError.php" role="data" />
@@ -85,15 +91,15 @@ beta release. correspond to the opLikePlugin
    <file baseinstalldir="/" md5sum="7d4d22b3f34a1da4eae082855f41314a" name="apps/pc_frontend/modules/timeline/templates/_communityTimelineBy5.php" role="data" />
    <file baseinstalldir="/" md5sum="a33f8e8887c19b781e6b9c70e189c89e" name="apps/pc_frontend/modules/timeline/templates/_smtCommunityTimelineBy1.php" role="data" />
    <file baseinstalldir="/" md5sum="1735483cc78e52beba0199328c4437d1" name="apps/pc_frontend/modules/timeline/templates/_smtMemberTimelineBy1.php" role="data" />
-   <file baseinstalldir="/" md5sum="d0f86d22f38630d871018f2d01ca9228" name="apps/pc_frontend/modules/timeline/templates/_smtTimeline.php" role="data" />
-   <file baseinstalldir="/" md5sum="ea01cf5cca0f39e5cae98b79dc9738c8" name="apps/pc_frontend/modules/timeline/templates/_smtTimelineCommunity.php" role="data" />
+   <file baseinstalldir="/" md5sum="b3cbf56488a48b9864bf3f246ac6eb60" name="apps/pc_frontend/modules/timeline/templates/_smtTimeline.php" role="data" />
+   <file baseinstalldir="/" md5sum="685eafc13ffebaf966005cfa5428f64f" name="apps/pc_frontend/modules/timeline/templates/_smtTimelineCommunity.php" role="data" />
    <file baseinstalldir="/" md5sum="9c202be8bdb9d0ab032e3c70023b1f88" name="apps/pc_frontend/modules/timeline/templates/_smtTimelineMember.php" role="data" />
    <file baseinstalldir="/" md5sum="5a67b31eba756fe3169053fad8d41049" name="apps/pc_frontend/modules/timeline/templates/_smtTimelinePostButton.php" role="data" />
    <file baseinstalldir="/" md5sum="79afa33160d64e132ccd3658ffa19da5" name="apps/pc_frontend/modules/timeline/templates/_timelineAll.php" role="data" />
    <file baseinstalldir="/" md5sum="2594b80f12c12d2bbc5ae97baf6dc493" name="apps/pc_frontend/modules/timeline/templates/_timelineCommunity.php" role="data" />
    <file baseinstalldir="/" md5sum="0ad56f6dcb0aa672585651f8f7d60ba2" name="apps/pc_frontend/modules/timeline/templates/_timelineMentions.php" role="data" />
    <file baseinstalldir="/" md5sum="6aa5093a0118cf2271aeb81f5c0ad35e" name="apps/pc_frontend/modules/timeline/templates/_timelineProfile.php" role="data" />
-   <file baseinstalldir="/" md5sum="748f0ada1b705635e6d73e111aac8bb8" name="apps/pc_frontend/modules/timeline/templates/_timelineTemplate.php" role="data" />
+   <file baseinstalldir="/" md5sum="7da501f37a6464c1cad0c696fc9f9a7a" name="apps/pc_frontend/modules/timeline/templates/_timelineTemplate.php" role="data" />
    <file baseinstalldir="/" md5sum="1c328bdc62855d492c0547291849c2b0" name="config/gadget.yml" role="data" />
    <file baseinstalldir="/" md5sum="81f82bfd969955c770e57bad6a52a8aa" name="config/member_config.yml" role="data" />
    <file baseinstalldir="/" md5sum="ecbe6753ba28e49b5056136d693345ee" name="config/profile_gadget.yml" role="data" />
@@ -277,10 +283,10 @@ beta release.
     <release>beta</release>
     <api>beta</api>
    </stability>
-   <date>2012-11-22</date>
+   <date>2012-12-06</date>
    <license>Apache</license>
    <notes>
-beta release. correspond to the opLikePlugin
+beta release.
    </notes>
   </release>
  </changelog>
