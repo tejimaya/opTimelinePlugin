@@ -58,10 +58,10 @@ $ ./symfony opTimelinePlugin:install
   <active>yes</active>
  </developer>
  <date>2012-12-11</date>
- <time>11:08:00</time>
+ <time>11:10:42</time>
  <version>
-  <release>1.0.4</release>
-  <api>1.0.4</api>
+  <release>1.0.5</release>
+  <api>1.0.5</api>
  </version>
  <stability>
   <release>devel</release>
@@ -278,6 +278,21 @@ devel release.
    <version>
     <release>1.0.4</release>
     <api>1.0.4</api>
+   </version>
+   <stability>
+    <release>devel</release>
+    <api>devel</api>
+   </stability>
+   <date>2012-12-11</date>
+   <license>Apache</license>
+   <notes>
+devel release.
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>1.0.5</release>
+    <api>1.0.5</api>
    </version>
    <stability>
     <release>devel</release>
