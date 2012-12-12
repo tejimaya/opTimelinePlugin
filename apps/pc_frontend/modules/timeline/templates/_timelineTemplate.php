@@ -12,7 +12,21 @@
               {{html body_html}}
             </div>
             <div class="timeline-post-control">
-            <a class="timeline-comment-link">コメントする</a>{{if member.self==true}} | <a href="#timeline-post-delete-confirm-${id}" class="timeline-post-delete-confirm-link">削除する</a>{{/if}} | <a href="<?php echo url_for('@homepage', array('absolute' => true)) ?>timeline/show/id/${id}"><span class="timestamp">${created_at}</span></a>
+            <a class="timeline-comment-link">コメントする</a>{{if member.self==true}} | <a href="#timeline-post-delete-confirm-${id}" class="timeline-post-delete-confirm-link">削除する</a>
+            {{/if}} | <a href="<?php echo url_for('@homepage', array('absolute' => true)) ?>timeline/show/id/${id}"><span class="timestamp">${created_at}</span></a>
+
+            <!--Like Plugin -->
+            <div class="like" style="display: none;">
+            <span class="like-wrapper" data-like-id="${id}" data-like-target="A" member-id="${member.id}">
+            <span class="like-post">いいね！</span>
+            <span class="like-cancel">いいね！を取り消す&nbsp;</span>
+            <span class="like-you">あなたが「いいね！」と言っています。</span><div></div>
+            <a class="like-list" href="#likeModal" data-toggle="modal"></a>
+            <div class="like-list-member"></div>
+            <span class="like-friend-list"></span>
+            </span>
+            </div>
+
             </div>
 
             <div class="timeline-post-comments" id="commentlist-${id}">
@@ -68,6 +82,7 @@
                 {{html body_html}}
                 </span>
                 </div>
+
                 <div class="timeline-post-comment-control">
                 {{if member.self==true }}<a href="#timeline-post-delete-confirm-${id}" class="timeline-post-delete-confirm-link">削除する</a> | {{/if}} <a href="<?php echo url_for('@homepage', array('absolute' => true)) ?>timeline/show/id/${id}"><span class="timestamp">${created_at}</span></a>
                 </div>
@@ -95,5 +110,16 @@
               </div>
               {{/if}}
             </div>
-</script>
 
+            <!--Like Plugin -->
+            <div class="like" style="display: none;">
+            <span class="like-wrapper font-small" data-like-id="${id}" data-like-target="A" member-id="${member.id}">
+            <span class="like-post">いいね！</span>
+            <span class="like-cancel">いいね！を取り消す&nbsp;</span>
+            <span class="like-you">あなたが「いいね！」と言っています。</span><div></div>
+            <a class="like-list" href="#likeModal" data-toggle="modal"></a>
+            <div class="like-list-member"></div>
+            <span class="like-friend-list"></span>
+            </span>
+            </div>
+</script>

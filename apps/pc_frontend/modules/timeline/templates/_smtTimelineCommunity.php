@@ -31,7 +31,16 @@ var gorgon = {
             <div class="timeline-post-body" id="timeline-body-context-${id}">
               {{html body_html}}
             </div>
+              <!--Like Plugin -->
+              <span class="like-wrapper hide">
+              {{if member.self==false}}<a><span class="like-post" data-like-id="${id}" data-like-target="A" member-id="${member.id}"><i class="icon-thumbs-up"></i>&nbsp;&nbsp;&nbsp;</span></a>{{/if}}
+              <a><span class="like-cancel" data-like-id="${id}" data-like-target="A" style="display: none;">いいね！を取り消す&nbsp;</span></a>
+              <a><span class="like-list" data-like-id="${id}" data-like-target="A">いいね！</span></a>
+              </span>
+              </div>
+
           </div>
+
 
           <div class="timeline-post-control">
             <a href="#timeline-${id}" class="timeline-comment-link">コメントする</a>
@@ -64,6 +73,13 @@ var gorgon = {
                 {{html body_html}}
                 </span>
                 </div>
+                  <!-- like Plugin -->
+                  <div class="like-wrapper hide">
+                  {{if member.self==false}}<a><span class="like-post" data-like-id="${id}" data-like-target="A" member-id="${member.id}"><i class="icon-thumbs-up"></i>&nbsp;&nbsp;&nbsp;</span></a>{{/if}}
+                  <a><span class="like-cancel" data-like-id="${id}" data-like-target="A" style="display: none;">いいね！を取り消す&nbsp;</span></a>
+                  <a><span class="like-list" data-like-id="${id}" data-like-target="A">いいね！</span></a>
+                  <div class="like-list-member" data-like-id="${id}" data-like-target="A"></div>
+                  </div>
               </div>
               <div class="timeline-post-comment-control">
               ${created_at}
