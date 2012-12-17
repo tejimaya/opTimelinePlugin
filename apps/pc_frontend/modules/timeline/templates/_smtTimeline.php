@@ -33,7 +33,7 @@ var gorgon = {
             <a href="#timeline-${id}" class="timeline-comment-link">コメントする</a>
           </div>
           <!--Like Plugin -->
-          <div class="row like-wrapper" data-like-id="${id}" data-like-target="A" member-id="${member.id}" style="text-align: center;">
+          <div class="row like-wrapper" data-like-id="${id}" data-like-target="A" member-id="${member.id}" style="text-align: center; display: none;">
           <span class="span6" style="text-align: center;"> 
           <a class="like-post">いいね！</a>
           <a class="like-cancel">いいね！を取り消す</a>
@@ -75,7 +75,7 @@ var gorgon = {
               ${created_at}
               </div>
               <!-- Like Plugin -->
-              <div class="row like-wrapper" data-like-id="${id}" data-like-target="A" member-id="${member.id}">
+              <div class="row like-wrapper" data-like-id="${id}" data-like-target="A" member-id="${member.id}" style="display: none;">
               <span class="span5" style="text-align: center;"> 
               <a class="like-post">いいね！</a>
               <a class="like-cancel">いいね！を取り消す</a>

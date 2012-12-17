@@ -32,7 +32,7 @@ var gorgon = {
               {{html body_html}}
             </div>
               <!-- Like Plugin -->
-              <div class="row like-wrapper" data-like-id="${id}" data-like-target="A" member-id="${member.id}">
+              <div class="row like-wrapper" data-like-id="${id}" data-like-target="A" member-id="${member.id}" style="display: none;">
               <span class="span5" style="text-align: center;"> 
               <a class="like-post">いいね！</a>
               <a class="like-cancel">いいね！を取り消す</a>
@@ -82,7 +82,7 @@ var gorgon = {
               ${created_at}
               </div>
               <!-- Like Plugin -->
-              <div class="row like-wrapper" data-like-id="${id}" data-like-target="A" member-id="${member.id}">
+              <div class="row like-wrapper" data-like-id="${id}" data-like-target="A" member-id="${member.id}" style="display: none;">
               <span class="span5" style="text-align: center;"> 
               <a class="like-post">いいね！</a>
               <a class="like-cancel">いいね！を取り消す</a>
