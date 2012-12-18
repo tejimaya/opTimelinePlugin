@@ -57,19 +57,19 @@ $ ./symfony opTimelinePlugin:install
   <email />
   <active>yes</active>
  </developer>
- <date>2012-12-12</date>
- <time>19:35:03</time>
+ <date>2012-12-18</date>
+ <time>11:37:05</time>
  <version>
-  <release>1.0.1</release>
-  <api>1.0.1</api>
+  <release>1.0.2</release>
+  <api>1.0.2</api>
  </version>
  <stability>
-  <release>beta</release>
-  <api>beta</api>
+  <release>alpha</release>
+  <api>alpha</api>
  </stability>
  <license>Apache</license>
  <notes>
-beta release.
+alpha release.
  </notes>
  <contents>
   <dir baseinstalldir="/" name="/">
@@ -91,8 +91,8 @@ beta release.
    <file baseinstalldir="/" md5sum="7d4d22b3f34a1da4eae082855f41314a" name="apps/pc_frontend/modules/timeline/templates/_communityTimelineBy5.php" role="data" />
    <file baseinstalldir="/" md5sum="a33f8e8887c19b781e6b9c70e189c89e" name="apps/pc_frontend/modules/timeline/templates/_smtCommunityTimelineBy1.php" role="data" />
    <file baseinstalldir="/" md5sum="1735483cc78e52beba0199328c4437d1" name="apps/pc_frontend/modules/timeline/templates/_smtMemberTimelineBy1.php" role="data" />
-   <file baseinstalldir="/" md5sum="eb30a774285d87e524c8f5c150758ac4" name="apps/pc_frontend/modules/timeline/templates/_smtTimeline.php" role="data" />
-   <file baseinstalldir="/" md5sum="198ae3b7107235a13c771514628db5f0" name="apps/pc_frontend/modules/timeline/templates/_smtTimelineCommunity.php" role="data" />
+   <file baseinstalldir="/" md5sum="3003b95ecc653fc4cba6d112f6030eb6" name="apps/pc_frontend/modules/timeline/templates/_smtTimeline.php" role="data" />
+   <file baseinstalldir="/" md5sum="51e2a4869d488663c249954d970854ee" name="apps/pc_frontend/modules/timeline/templates/_smtTimelineCommunity.php" role="data" />
    <file baseinstalldir="/" md5sum="9c202be8bdb9d0ab032e3c70023b1f88" name="apps/pc_frontend/modules/timeline/templates/_smtTimelineMember.php" role="data" />
    <file baseinstalldir="/" md5sum="5a67b31eba756fe3169053fad8d41049" name="apps/pc_frontend/modules/timeline/templates/_smtTimelinePostButton.php" role="data" />
    <file baseinstalldir="/" md5sum="79afa33160d64e132ccd3658ffa19da5" name="apps/pc_frontend/modules/timeline/templates/_timelineAll.php" role="data" />
@@ -173,8 +173,8 @@ beta release.
    <file baseinstalldir="/" md5sum="0fa78a621a85700338f794cafb1898f6" name="web/js/jquery.colorbox.js" role="data" />
    <file baseinstalldir="/" md5sum="007640beb5613c6aab970d8d6ef753cb" name="web/js/jquery.desktopify.js" role="data" />
    <file baseinstalldir="/" md5sum="dec10d474ae3072207dcabe2365b1852" name="web/js/jquery.timeline.js" role="data" />
-   <file baseinstalldir="/" md5sum="9bab86ad4e6e4b5c391aa7bfd7462a20" name="web/js/timeline-loader-smartphone.js" role="data" />
-   <file baseinstalldir="/" md5sum="fe04fa8bfff7e276649333e0c5631f99" name="web/js/timeline-loader.api.js" role="data" />
+   <file baseinstalldir="/" md5sum="793ee0d00048d2b8ee8ca7d730c58db1" name="web/js/timeline-loader-smartphone.js" role="data" />
+   <file baseinstalldir="/" md5sum="d2a81759329a342da68b5bda629a0c24" name="web/js/timeline-loader.api.js" role="data" />
    <file baseinstalldir="/" md5sum="41d4e18b4ad695410c8526f607f9df79" name="web/js/timeline-loader.js" role="data" />
    <file baseinstalldir="/" md5sum="d68f452e78f4ed9d29fc37894175c506" name="dependencies.yml" role="data" />
    <file baseinstalldir="/" md5sum="617856c3fb2b7177fe7fffa8a1ddd1a1" name="dependencies.yml.sample" role="data" />
@@ -212,6 +212,21 @@ beta release.
    <license>Apache</license>
    <notes>
 beta release.
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>1.0.2</release>
+    <api>1.0.2</api>
+   </version>
+   <stability>
+    <release>alpha</release>
+    <api>alpha</api>
+   </stability>
+   <date>2012-12-18</date>
+   <license>Apache</license>
+   <notes>
+alpha release.
    </notes>
   </release>
  </changelog>
