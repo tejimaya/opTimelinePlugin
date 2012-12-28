@@ -58,10 +58,10 @@ $ ./symfony opTimelinePlugin:install
   <active>yes</active>
  </developer>
  <date>2012-12-28</date>
- <time>16:52:59</time>
+ <time>17:08:38</time>
  <version>
-  <release>1.1.1</release>
-  <api>1.1.1</api>
+  <release>1.1.2</release>
+  <api>1.1.2</api>
  </version>
  <stability>
   <release>alpha</release>
@@ -208,7 +208,7 @@ alpha release.
    <file baseinstalldir="/" md5sum="d68f452e78f4ed9d29fc37894175c506" name="dependencies.yml" role="data" />
    <file baseinstalldir="/" md5sum="617856c3fb2b7177fe7fffa8a1ddd1a1" name="dependencies.yml.sample" role="data" />
    <file baseinstalldir="/" md5sum="f34dd7a47996e29f48fe9629cc0dcbd1" name="README" role="data" />
-   <file baseinstalldir="/" md5sum="2aa7dc22e781b2353a82378feba6a001" name="README.md" role="data" />
+   <file baseinstalldir="/" md5sum="260ad510a7f53928e13f3321c48906e9" name="README.md" role="data" />
   </dir>
  </contents>
  <dependencies>
@@ -307,6 +307,21 @@ stable release.
    <version>
     <release>1.1.1</release>
     <api>1.1.1</api>
+   </version>
+   <stability>
+    <release>alpha</release>
+    <api>alpha</api>
+   </stability>
+   <date>2012-12-28</date>
+   <license>Apache</license>
+   <notes>
+alpha release.
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>1.1.2</release>
+    <api>1.1.2</api>
    </version>
    <stability>
     <release>alpha</release>
