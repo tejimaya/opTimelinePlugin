@@ -25,6 +25,34 @@ $(function(){
     $('#gorgon-loadmore').show();
   });
 
+  $('.timeline-comment-loadmore').live('click', function() {
+    var timelineId = $(this).attr('data-timeline-id');
+    var commentlist = $('#commentlist-' + timelineId);
+    var commentLength = commentlist.children('.timeline-post-comment').length;
+    $('#timeline-comment-loader-' + timelineId).show();
+
+    $.ajax({
+      type: 'GET',
+      url: openpne.apiBase + 'timeline/commentSearch.json?apiKey=' + openpne.apiKey,
+      data: {
+        'timeline_id': timelineId,
+        'count': commentLength + 20,
+      },
+      success: function(json){
+        commentlist.children('.timeline-post-comment').remove();
+        $('#timelineCommentTemplate').tmpl(json.data.reverse()).prependTo('#commentlist-' + timelineId);
+        $('#timeline-comment-loader-' + timelineId).hide();
+
+        if (json.data.length < commentLength + 20)
+        {
+          $('#timeline-comment-loadmore-' + timelineId).hide();
+        }
+      },
+      error: function(XMLHttpRequest, textStatus, errorThrown){
+        $('#commentlist-' + timelineId).hide();
+      },  
+    }); 
+  });
 });
 
 function timelineAllLoad() {
@@ -33,7 +61,8 @@ function timelineAllLoad() {
     gorgon.apiKey = openpne.apiKey;
     $.ajax({
       type: 'GET',
-      url: openpne.apiBase + 'activity/search.json',
+      url: openpne.apiBase + 'timeline/search.json',
+      //url: openpne.apiBase + 'activity/search.json',
       data: gorgon,
       success: function (json){
         renderJSON(json, 'all');
@@ -51,7 +80,8 @@ function timelineAllLoad() {
   {
     $.ajax({
       type: 'GET',
-      url: openpne.apiBase + 'activity/search.json?apiKey=' + openpne.apiKey,
+      //url: openpne.apiBase + 'activity/search.json?apiKey=' + openpne.apiKey,
+      url: openpne.apiBase + 'timeline/search.json?apiKey=' + openpne.apiKey,
       success: function (json){
         renderJSON(json, 'all');
       },
@@ -74,7 +104,8 @@ function timelineDifferenceLoad() {
   {
     gorgon = {apiKey: openpne.apiKey,}
   }
-  $.getJSON( openpne.apiBase + 'activity/search.json?count=20&since_id=' + lastId, gorgon, function(json){
+  //$.getJSON( openpne.apiBase + 'activity/search.json?count=20&since_id=' + lastId, gorgon, function(json){
+  $.getJSON( openpne.apiBase + 'timeline/search.json?count=20&since_id=' + lastId, gorgon, function(json){
     renderJSON(json, 'diff');
   });
 }
@@ -94,7 +125,8 @@ function timelineLoadmore() {
 
   $.ajax({
     type: 'GET',
-    url: openpne.apiBase + 'activity/search.json',
+    url: openpne.apiBase + 'timeline/search.json',
+    //url: openpne.apiBase + 'activity/search.json',
     data: gorgon,
     success: function(json){
       renderJSON(json, 'more');
@@ -115,6 +147,24 @@ function renderJSON(json, mode) {
   {
     $('#timeline-list').empty();
   }
+  if(json.data && 0 < viewPhoto)
+  {
+    for(i=0;i<json.data.length;i++)
+    {   
+      if (!json.data[i].body_html.match(/img.*src=/))
+      {   
+        if (json.data[i].body.match(/\.(jpg|jpeg|bmg|png|gif)/gi))
+        {   
+          json.data[i].body_html = json.data[i].body.replace(/((http:|https:)\/\/[\x21-\x26\x28-\x7e]+.(jpg|jpeg|bmg|png|gif))/gi, '<div><a href="$1"><img src="$1"></img></a></div>');
+        }   
+        else if (json.data[i].body.match(/((http:|https:)\/\/[\x21-\x26\x28-\x7e]+)/gi))
+        {   
+          json.data[i].body_html = json.data[i].body.replace(/((http:|https:)\/\/[\x21-\x26\x28-\x7e]+)/gi, '<a href="$1"><div class="urlBlock"><img src="http://mozshot.nemui.org/shot?$1"><br />$1</div></a>');
+        }   
+      }   
+    }   
+  }
+
 
   $timelineData = $('#timelineTemplate').tmpl(json.data);
   $('.timeline-comment-button', $timelineData).timelineComment();
@@ -152,8 +202,12 @@ function renderJSON(json, mode) {
     {
       if(json.data[i].replies)
       {
-        $('#timelineCommentTemplate').tmpl(json.data[i].replies).prependTo('#commentlist-' +json.data[i].id);
+        $('#timelineCommentTemplate').tmpl(json.data[i].replies.reverse()).prependTo('#commentlist-' +json.data[i].id);
         $('#timeline-post-comment-form-' + json.data[i].id, $timelineData).show();
+      }
+      if(10 < parseInt(json.data[i].repliesCount))
+      {
+        $('#timeline-comment-loadmore-' + json.data[i].id).show();
       }
     }
   }

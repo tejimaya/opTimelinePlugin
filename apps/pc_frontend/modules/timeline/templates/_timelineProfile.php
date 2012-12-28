@@ -10,6 +10,8 @@ var gorgon = {
       },
       'timer': '120000',
     };
+var MAXLENGTH = 140;
+var viewPhoto = '<?php echo $viewPhoto ?>';
 //]]>
 </script>
 

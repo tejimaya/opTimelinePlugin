@@ -16,6 +16,11 @@ class timelineComponents extends sfComponents
     $this->getResponse()->addJavascript('/opTimelinePlugin/js/jquery.colorbox.js', 'last');
     $this->getResponse()->addJavascript('/opTimelinePlugin/js/jquery.timeline.js', 'last');
 
+    $this->publicFlags = Doctrine::getTable('ActivityData')->getPublicFlags();
+    $this->viewPhoto = opTimeline::getViewPhoto();
+
+    $this->fileMaxSize = opTimelinePluginUtil::getFileSizeMaxOfFormat();
+    
     return sfView::SUCCESS;
   }
 
@@ -33,6 +38,7 @@ class timelineComponents extends sfComponents
       $this->memberId = $this->getUser()->getMember()->getId();
     }
 
+    $this->viewPhoto = opTimeline::getViewPhoto();
     return sfView::SUCCESS;
   }
 
@@ -41,6 +47,10 @@ class timelineComponents extends sfComponents
     $this->getResponse()->addStyleSheet('/opTimelinePlugin/css/jquery.colorbox.css');
     $this->getResponse()->addJavascript('/opTimelinePlugin/js/jquery.colorbox.js', 'last');
     $this->getResponse()->addJavascript('/opTimelinePlugin/js/jquery.timeline.js', 'last');
+
+    $this->publicFlags = Doctrine::getTable('ActivityData')->getPublicFlags();
+    $this->viewPhoto = opTimeline::getViewPhoto();
+    $this->fileMaxSize = opTimelinePluginUtil::getFileSizeMaxOfFormat();
   }
 
   public function executeCommunityTimelineBy5(sfWebRequest $request)
@@ -64,6 +74,7 @@ class timelineComponents extends sfComponents
     $this->baseUrl = sfConfig::get('op_base_url');
     $form = new sfForm();
     $this->token = $form->getCSRFToken();
+    $this->viewPhoto = opTimeline::getViewPhoto();
 
     return sfView::SUCCESS;
   }
@@ -113,6 +124,7 @@ class timelineComponents extends sfComponents
     $this->member = Doctrine::getTable('Member')->find($this->id);
     $form = new sfForm();
     $this->token = $form->getCSRFToken();
+    $this->viewPhoto = opTimeline::getViewPhoto();
   }
 
   public function executeSmtTimelineCommunity(sfWebRequest $request)
@@ -120,6 +132,7 @@ class timelineComponents extends sfComponents
     $form = new sfForm();
     $this->token = $form->getCSRFToken();
     $this->id = $request->getParameter('id');
+    $this->viewPhoto = opTimeline::getViewPhoto();
   }
 }
 

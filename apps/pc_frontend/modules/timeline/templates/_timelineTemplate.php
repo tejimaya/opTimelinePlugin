@@ -8,8 +8,15 @@
             <div class="timeline-member-name">
               <a class="screen-name" href="${member.profile_url}">${member.screen_name}</a>
             </div>
-            <div class="timeline-post-body">
-              {{html body_html}}
+            <div class="timeline-post-body" id="timeline-post-body-${id}">
+              {{html body_html}} 
+            </div>
+            <div class="timeline-post-control">
+              {{if public_status == 'friend' }}
+              <span class="public-flag">公開範囲:マイフレンドまで公開</span>
+              {{else public_status == 'private' }}
+              <span class="public-flag">公開範囲:公開しない</span>
+              {{/if}}
             </div>
             <div class="timeline-post-control">
             <a class="timeline-comment-link">コメントする</a>{{if member.self==true}} | <a href="#timeline-post-delete-confirm-${id}" class="timeline-post-delete-confirm-link">削除する</a>
@@ -28,6 +35,28 @@
             </div>
 
             </div>
+            <!--Like Plugin -->
+            <div class="like" style="display: none;">
+              <span class="like-wrapper" data-like-id="${id}" data-like-target="A" member-id="${member.id}">
+                <span class="like-post">いいね！</span>
+                <span class="like-cancel">いいね！を取り消す&nbsp;</span>
+                <span class="like-you">あなたが「いいね！」と言っています。</span><div></div>
+                  <a class="like-list" href="#likeModal" data-toggle="modal"></a>
+                <div class="like-list-member"></div>
+                <span class="like-friend-list"></span>
+              </span>
+            </div>
+
+            <a>
+              <div id="timeline-comment-loadmore-${id}" data-timeline-id="${id}" class="timeline-comment-loadmore">
+                <i class="icon-comment"></i>&nbsp;以前のコメントを見る
+                <span id="timeline-comment-loader-${id}" class="timeline-comment-loader">
+                  <?php echo op_image_tag('ajax-loader.gif', array()) ?>
+                </span>
+              </div>
+            </a>
+            <span id="timeline-comment-show-control-${id}"></span>
+            <a id="timlien-comment-hide-${id}"></a>
 
             <div class="timeline-post-comments" id="commentlist-${id}">
 
@@ -110,16 +139,15 @@
               </div>
               {{/if}}
             </div>
-
             <!--Like Plugin -->
             <div class="like" style="display: none;">
-            <span class="like-wrapper font-small" data-like-id="${id}" data-like-target="A" member-id="${member.id}">
-            <span class="like-post">いいね！</span>
-            <span class="like-cancel">いいね！を取り消す&nbsp;</span>
-            <span class="like-you">あなたが「いいね！」と言っています。</span><div></div>
-            <a class="like-list" href="#likeModal" data-toggle="modal"></a>
-            <div class="like-list-member"></div>
-            <span class="like-friend-list"></span>
-            </span>
+              <span class="like-wrapper font-small" data-like-id="${id}" data-like-target="A" member-id="${member.id}">
+                <span class="like-post">いいね！</span>
+                <span class="like-cancel">いいね！を取り消す&nbsp;</span>
+                <span class="like-you">あなたが「いいね！」と言っています。</span><div></div>
+                  <a class="like-list" href="#likeModal" data-toggle="modal"></a>
+                <div class="like-list-member"></div>
+                <span class="like-friend-list"></span>
+              </span>
             </div>
 </script>

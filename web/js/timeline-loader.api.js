@@ -1,8 +1,11 @@
+var isUploadSuccess = 'hoge';
+
 $(function(){
   var timerID;
   var timerArray = new Array();
   var timer;
   timelineAllLoad();
+
   if ( gorgon.timer != undefined )
   {
     timer = gorgon.timer;
@@ -11,6 +14,7 @@ $(function(){
   {
     timer = 15000;
   }
+
   timerID = setInterval('timelineDifferenceLoad()', timer);
   if ( gorgon.notify !== undefined )
   {
@@ -22,17 +26,23 @@ $(function(){
   }
 
   $('#timeline-submit-button').click( function() {
+
+
     $('#timeline-submit-error').text('');
     $('#timeline-submit-error').hide();
     $('#timeline-submit-loader').show();
+    $('#photo-file-name').text('');
+
     var body = $('#timeline-textarea').val();
+
     if (gorgon)
     {
       var data = {
         body: body,
         target: gorgon.post.foreign,
         target_id: gorgon.post.foreignId,
-        apiKey: openpne.apiKey
+        apiKey: openpne.apiKey,
+        public_flag: $('#timeline-public-flag option:selected').val()
       };
     }
     else
@@ -42,28 +52,59 @@ $(function(){
         apiKey: openpne.apiKey
       };
     }
-    $.ajax({
-      url: openpne.apiBase + 'activity/post.json',
-      type: 'POST',
-      data: data,
-      dataType: 'json',
-      success: function(json) {
-        timelineAllLoad();
-        $('#timeline-submit-loader').hide();
-        $('#timeline-textarea').val('');
-      },
-      error: function(x, r, e){
-        $('#timeline-submit-loader').hide();
-        $('#timeline-submit-error').text('投稿に失敗しました');
-        $('#timeline-submit-error').show();
-      }
-    });
+    
+    tweetByData(data);    
   });
 
   $('#timeline-loadmore').click( function() {
     $('#timeline-loadmore').hide();
     $('#timeline-loadmore-loading').show();
     timelineLoadmore();
+  });
+
+  $('.timeline-comment-loadmore').live('click', function() {
+    var timelineId = $(this).attr('data-timeline-id');
+    var commentlist = $('#commentlist-' + timelineId);
+    var commentLength = commentlist.children('.timeline-post-comment').length;
+    $('#timeline-comment-loader-' + timelineId).show();
+
+    $.ajax({
+      type: 'GET',
+      url: openpne.apiBase + 'timeline/commentSearch.json?apiKey=' + openpne.apiKey,
+      data: {
+        'timeline_id': timelineId,
+        'count': commentLength + 20
+      },
+      success: function(json){
+        commentlist.children().remove();
+        $('#timelineCommentTemplate').tmpl(json.data.reverse()).prependTo(commentlist);
+        $('#timeline-comment-loader-' + timelineId).hide();
+
+        if (json.data.length < commentLength + 20)
+        {
+          $('#timeline-comment-loadmore-' + timelineId).hide();
+        }
+      },
+      error: function(XMLHttpRequest, textStatus, errorThrown){
+        $(commentlist).hide();
+      }  
+    }); 
+  });
+
+  $('#timeline-submit-upload').change(function() {
+    var fileName = $('#timeline-submit-upload').val();
+    if (20 > fileName.length)
+    {
+      $('#photo-file-name').text(fileName);
+    }
+    else
+    {
+      $('#photo-file-name').text(fileName.substring(0, 19) + '…');
+    }
+  });
+
+  $('#timeline-upload-photo-button').click(function() {
+    $('#timeline-submit-upload').click();
   });
 });
 
@@ -73,7 +114,7 @@ function timelineAllLoad() {
     gorgon.apiKey = openpne.apiKey;
     $.ajax({
       type: 'GET',
-      url: openpne.apiBase + 'activity/search.json',
+      url: openpne.apiBase + 'timeline/search.json',
       data: gorgon,
       success: function(json){
         renderJSON(json, 'all');
@@ -82,38 +123,44 @@ function timelineAllLoad() {
         $('#timeline-loading').hide();
         $('#timeline-list').text('タイムラインは投稿されていません。');
         $('#timeline-list').show();
-      },  
+      }  
     }); 
   }
   else
   {
     $.ajax({
       type: 'GET',
-      url: openpne.apiBase + 'activity/search.json?apiKey=' + openpne.apiKey,
+      url: openpne.apiBase + 'timeline/search.json?apiKey=' + openpne.apiKey,
       success: function(json){
         renderJSON(json, 'all');
       },
       error: function(XMLHttpRequest, textStatus, errorThrown){
-      $('#timeline-loading').hide();
-      $('#timeline-list').text('タイムラインは投稿されていません。');
-      $('#timeline-list').show();
-      },  
+        $('#timeline-loading').hide();
+        $('#timeline-list').text('タイムラインは投稿されていません。');
+        $('#timeline-list').show();
+      }  
     }); 
   }
 }
 
 function timelineDifferenceLoad() {
   var lastId = $('#timeline-list').attr('data-last-id');
+
   if (gorgon)
   {
     gorgon.apiKey = openpne.apiKey;
   }
   else
   {
-    gorgon = {apiKey: openpne.apiKey,}
+    gorgon = {
+      apiKey: openpne.apiKey
+    }
   }
-  $.getJSON( openpne.apiBase + 'activity/search.json?count=20&since_id=' + lastId, gorgon, function(json){
-    renderJSON(json, 'diff');
+  $.getJSON( openpne.apiBase + 'timeline/search.json?count=20&since_id=' + lastId, gorgon, function(json){
+    if (json.data)
+    {
+      renderJSON(json, 'diff');
+    }
   });
 }
 
@@ -126,20 +173,22 @@ function timelineLoadmore() {
   }
   else
   {
-    gorgon = {apiKey: openpne.apiKey,}
+    gorgon = {
+      apiKey: openpne.apiKey
+    }
   }
   gorgon.max_id = loadmoreId;
 
   $.ajax({
     type: 'GET',
-    url: openpne.apiBase + 'activity/search.json',
+    url: openpne.apiBase + 'timeline/search.json',
     data: gorgon,
     success: function(json){
       renderJSON(json, 'more');
     },
     error: function(XMLHttpRequest, textStatus, errorThrown){
       $('#timeline-loadmore-loading').hide();
-    },  
+    }  
   }); 
 }
 
@@ -151,6 +200,10 @@ function renderJSON(json, mode) {
   if ('all' == mode)
   {
     $('#timeline-list').empty();
+  }
+  if(json.data && 0 < viewPhoto)
+  {
+    autoLinker(json);
   }
 
   $timelineData = $('#timelineTemplate').tmpl(json.data);
@@ -189,8 +242,12 @@ function renderJSON(json, mode) {
     {
       if(json.data[i].replies)
       {
-        $('#timelineCommentTemplate').tmpl(json.data[i].replies).prependTo('#commentlist-' +json.data[i].id);
+        $('#timelineCommentTemplate').tmpl(json.data[i].replies.reverse()).prependTo('#commentlist-' +json.data[i].id);
         $('#timeline-post-comment-form-' + json.data[i].id, $timelineData).show();
+      }
+      if(10 < parseInt(json.data[i].repliesCount))
+      {
+        $('#timeline-comment-loadmore-' + json.data[i].id).show();
       }
     }
   }
@@ -207,7 +264,7 @@ function renderJSON(json, mode) {
     },
     onClosed: function(){
       timelineAllLoad();
-    },
+    }
   });
   if ('all' == mode)
   {
@@ -227,4 +284,90 @@ function convertTag(str) {
   str = str.replace(/</g,'&lt;');
   str = str.replace(/>/g,'&gt;');
   return str;
+}
+
+function lengthCheck(obj)
+{
+  if (MAXLENGTH < obj.value.length)
+  {
+    $('#timeline-submit-button').attr('disabled','disabled');
+  }
+  else if ($('#timeline-submit-button').attr('disabled'))
+  {
+    $('#timeline-submit-button').removeAttr('disabled');
+  }
+}
+
+function tweetByData(data)
+{
+  //reference　http://lagoscript.org/jquery/upload/documentation
+  $('#timeline-submit-upload').upload(
+    openpne.apiBase + 'timeline/post.json', data,
+    function (res) {
+      returnData = JSON.parse(res);
+
+      if (returnData.status === "error") {
+
+        var errorMessages = {
+          file_size: 'ファイルサイズは' + fileMaxSize + 'までです',
+          upload: 'アップロードに失敗しました',
+          not_image: '画像をアップロードしてください',
+          tweet: '投稿に失敗しました'
+        };
+
+        var errorType = returnData.type;
+
+        $('#timeline-submit-error').text(errorMessages[errorType]);
+        if ($.browser.msie && $.browser.version > 6)
+        {
+        }
+        $('#timeline-submit-error').show();
+
+      } else {
+        $('#timeline-submit-error').text('');
+        timelineAllLoad();
+      }
+
+      $('#timeline-submit-upload').val('');
+      $('#timeline-textarea').val('');
+      $('#timeline-submit-loader').hide();
+      $('#timeline-textarea').val('');
+      $('#counter').text(MAXLENGTH);
+
+    },
+    'text' //なぜかJSON形式でうけとることができなかった
+    );
+}
+
+function autoLinker(json)
+{
+  for(i=0;i<json.data.length;i++)
+  {
+    if (!json.data[i].body_html.match(/img.*src=/))
+    {
+      if (json.data[i].body.match(/\.(jpg|jpeg|png|gif)/))
+      {
+        json.data[i].body_html = json.data[i].body.replace(/((http:|https:)\/\/[\x21-\x26\x28-\x7e]+.(jpg|jpeg|png|gif))/gi, '<div><a href="$1"><img src="$1"></img></a></div>');
+      }
+      else if (json.data[i].body.match(/((http:|https:)\/\/www\.youtube\.com\/watch\?v=([a-zA-Z0-9_\-]+))/))
+      {
+        var youtubeId = json.data[i].body.substring(json.data[i].body.lastIndexOf('v=') + 2, json.data[i].body.length);
+        var iframe = '<iframe width="370" height="277" src="http://www.youtube.com/embed/' + youtubeId + '" frameborder="0" allowfullscreen></iframe>';
+        json.data[i].body_html = json.data[i].body.replace(/((http:|https:)\/\/www\.youtube\.com\/watch\?v=([a-zA-Z0-9_\-]+))/gi, '<div>' + iframe + '</div>');
+      }
+      else if (json.data[i].body.match(/((http:|https:)\/\/www\.amazon\..*\/([a-zA-Z0-9_\-]+)\/.*)/))
+      {
+        var match_id = json.data[i].body.match(/(?:ASIN|product|dp)\/([^\/]+)/i);
+        if (match_id) {
+          id = RegExp.$1;
+        }
+        var url = 'http://amazon.openpne.jp/?id=' + id + '&tag=';
+        json.data[i].body_html = json.data[i].body.replace(/((http:|https:)\/\/www\.amazon\..*\/([a-zA-Z0-9_\-]+)\/.*)/, '<div><iframe MARGINWIDTH="0" MARGINHEIGHT="0" HSPACE="0" VSPACE="0" FRAMEBORDER="0" SCROLLING="no" BORDERCOLOR="#000000" src="' + url + '" name="sample" width="360" height="320">この部分はインラインフレームを使用しています。</iframe></div>');
+      }
+      else if (json.data[i].body.match(/((http:|https:)\/\/[\x21-\x26\x28-\x7e]+)/))
+      {
+        json.data[i].body_html = json.data[i].body.replace(/((http:|https:)\/\/[\x21-\x26\x28-\x7e]+)/gi, '<a href="$1"><div class="urlBlock"><img src="http://mozshot.nemui.org/shot?$1"><br />$1</div></a>');
+      }
+    }
+  }
 }

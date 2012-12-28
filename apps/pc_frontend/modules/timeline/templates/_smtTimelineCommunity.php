@@ -10,6 +10,7 @@ var gorgon = {
         'foreignId': '<?php echo $id; ?>',
       }
     };
+var viewPhoto = <?php echo $viewPhoto ?>;
 //]]>
 </script>
 <?php op_smt_use_stylesheet('/opTimelinePlugin/css/jquery.colorbox.css') ?>
@@ -44,11 +45,30 @@ var gorgon = {
             </div>
 
           </div>
+          <!-- LikePlugin -->
+            <div class="row like-wrapper" data-like-id="${id}" data-like-target="A" member-id="${member.id}" style="display: none;">
+              <span class="span5" style="text-align: center;"> 
+                <a class="like-post">いいね！</a>
+                <a class="like-cancel">いいね！を取り消す</a>
+              </span>
+              <span class="span3" style="text-align: center;">
+                <a class="like-list"></a>
+              </span>
+            </div>
 
 
           <div class="timeline-post-control">
             <a href="#timeline-${id}" class="timeline-comment-link">コメントする</a>
           </div>
+
+          <a>
+            <div id="timeline-comment-loadmore-${id}" data-timeline-id="${id}" class="timeline-comment-loadmore">
+              <i class="icon-comment"></i>&nbsp;以前のコメントを見る
+              <span id="timeline-comment-loader-${id}" class="timeline-comment-loader">
+                <?php echo op_image_tag('ajax-loader.gif', array()) ?>
+              </span>
+            </div>
+          </a>
 
           <div class="timeline-post-comments" id="commentlist-${id}">
 
@@ -83,13 +103,13 @@ var gorgon = {
               </div>
               <!-- Like Plugin -->
               <div class="row like-wrapper" data-like-id="${id}" data-like-target="A" member-id="${member.id}" style="display: none;">
-              <span class="span5" style="text-align: center;"> 
-              <a class="like-post">いいね！</a>
-              <a class="like-cancel">いいね！を取り消す</a>
-              </span>
-              <span class="span3" style="text-align: center;">
-              <a class="like-list"></a>
-              </span>
+                <span class="span5" style="text-align: center;"> 
+                  <a class="like-post">いいね！</a>
+                  <a class="like-cancel">いいね！を取り消す</a>
+                </span>
+                  <span class="span3" style="text-align: center;">
+                  <a class="like-list"></a>
+                </span>
               </div>
             </div>
 </script>

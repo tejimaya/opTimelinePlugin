@@ -115,3 +115,35 @@
   margin-right: 4px;
 }
 
+.timeline-comment-loadmore {
+  display: none;
+  cursor: pointer;
+  padding: 2px 0 2px 6px;
+  margin: 3px 0 -8px 25px;
+  font-size: 12px;
+  background-color: whiteSmoke;
+}
+
+.timeline-comment-loader {
+  display: none;
+}
+
+.timestamp {
+  color: #999!important;
+  float: right;
+  font-size: x-small;
+}
+
+#timeline-submit-upload {
+  position: absolute;
+  left: -9999px;
+  top: -9999px;
+  display: none;
+}
+
+#photo-file-name {
+  position: absolute;
+  bottom: 10px;
+  left: 50px;
+  width: 200px;
+}
