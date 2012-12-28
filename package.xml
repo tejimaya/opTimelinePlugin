@@ -58,17 +58,10 @@ $ ./symfony opTimelinePlugin:install
   <active>yes</active>
  </developer>
  <date>2012-12-28</date>
-<<<<<<< HEAD
- <time>11:42:30</time>
+ <time>17:16:44</time>
  <version>
-  <release>1.1.0</release>
-  <api>1.1.0</api>
-=======
- <time>16:52:59</time>
- <version>
-  <release>1.1.1</release>
-  <api>1.1.1</api>
->>>>>>> development
+  <release>1.1.2</release>
+  <api>1.1.2</api>
  </version>
  <stability>
   <release>alpha</release>
@@ -107,11 +100,7 @@ alpha release.
    <file baseinstalldir="/" md5sum="5559ab4f73502323436069c86e9eefdd" name="apps/pc_frontend/modules/timeline/config/view.yml" role="data" />
    <file baseinstalldir="/" md5sum="fabc1c085b1bd6dafc4162c33c2b5d2f" name="apps/pc_frontend/modules/timeline/templates/communitySuccess.php" role="data" />
    <file baseinstalldir="/" md5sum="a5ba3cc418b75d605d93bf968bb1536f" name="apps/pc_frontend/modules/timeline/templates/memberSuccess.php" role="data" />
-<<<<<<< HEAD
-   <file baseinstalldir="/" md5sum="9502e7c2ed6bf62c38643043714e0eeb" name="apps/pc_frontend/modules/timeline/templates/showSuccess.php" role="data" />
-=======
    <file baseinstalldir="/" md5sum="7452ac43f80d61bfe5ec1192782cab0b" name="apps/pc_frontend/modules/timeline/templates/showSuccess.php" role="data" />
->>>>>>> development
    <file baseinstalldir="/" md5sum="4e40150c3a98809df75c8b508a74973e" name="apps/pc_frontend/modules/timeline/templates/smtCommunitySuccess.php" role="data" />
    <file baseinstalldir="/" md5sum="73fa2368ae8541090f65860588afccde" name="apps/pc_frontend/modules/timeline/templates/smtMemberSuccess.php" role="data" />
    <file baseinstalldir="/" md5sum="c154cb4c5eae03912b70295e9d5766a4" name="apps/pc_frontend/modules/timeline/templates/smtShowError.php" role="data" />
@@ -120,27 +109,15 @@ alpha release.
    <file baseinstalldir="/" md5sum="7d4d22b3f34a1da4eae082855f41314a" name="apps/pc_frontend/modules/timeline/templates/_communityTimelineBy5.php" role="data" />
    <file baseinstalldir="/" md5sum="a33f8e8887c19b781e6b9c70e189c89e" name="apps/pc_frontend/modules/timeline/templates/_smtCommunityTimelineBy1.php" role="data" />
    <file baseinstalldir="/" md5sum="1735483cc78e52beba0199328c4437d1" name="apps/pc_frontend/modules/timeline/templates/_smtMemberTimelineBy1.php" role="data" />
-<<<<<<< HEAD
-   <file baseinstalldir="/" md5sum="3003b95ecc653fc4cba6d112f6030eb6" name="apps/pc_frontend/modules/timeline/templates/_smtTimeline.php" role="data" />
-   <file baseinstalldir="/" md5sum="51e2a4869d488663c249954d970854ee" name="apps/pc_frontend/modules/timeline/templates/_smtTimelineCommunity.php" role="data" />
-   <file baseinstalldir="/" md5sum="9c202be8bdb9d0ab032e3c70023b1f88" name="apps/pc_frontend/modules/timeline/templates/_smtTimelineMember.php" role="data" />
-   <file baseinstalldir="/" md5sum="5a67b31eba756fe3169053fad8d41049" name="apps/pc_frontend/modules/timeline/templates/_smtTimelinePostButton.php" role="data" />
-   <file baseinstalldir="/" md5sum="79afa33160d64e132ccd3658ffa19da5" name="apps/pc_frontend/modules/timeline/templates/_timelineAll.php" role="data" />
-   <file baseinstalldir="/" md5sum="2594b80f12c12d2bbc5ae97baf6dc493" name="apps/pc_frontend/modules/timeline/templates/_timelineCommunity.php" role="data" />
-   <file baseinstalldir="/" md5sum="0ad56f6dcb0aa672585651f8f7d60ba2" name="apps/pc_frontend/modules/timeline/templates/_timelineMentions.php" role="data" />
-   <file baseinstalldir="/" md5sum="6aa5093a0118cf2271aeb81f5c0ad35e" name="apps/pc_frontend/modules/timeline/templates/_timelineProfile.php" role="data" />
-   <file baseinstalldir="/" md5sum="a42b41ff6fa7a9185770ddf4ed524073" name="apps/pc_frontend/modules/timeline/templates/_timelineTemplate.php" role="data" />
-=======
    <file baseinstalldir="/" md5sum="8171f36f528a91dc3a7b2107a850ece4" name="apps/pc_frontend/modules/timeline/templates/_smtTimeline.php" role="data" />
-   <file baseinstalldir="/" md5sum="fd02bc583604c30af8efd3837d274caa" name="apps/pc_frontend/modules/timeline/templates/_smtTimelineCommunity.php" role="data" />
+   <file baseinstalldir="/" md5sum="25fdbb74238d259906e08ab1ff6844fc" name="apps/pc_frontend/modules/timeline/templates/_smtTimelineCommunity.php" role="data" />
    <file baseinstalldir="/" md5sum="9c202be8bdb9d0ab032e3c70023b1f88" name="apps/pc_frontend/modules/timeline/templates/_smtTimelineMember.php" role="data" />
    <file baseinstalldir="/" md5sum="5a67b31eba756fe3169053fad8d41049" name="apps/pc_frontend/modules/timeline/templates/_smtTimelinePostButton.php" role="data" />
    <file baseinstalldir="/" md5sum="43c2e269ca84114bbf800c55a2a66d59" name="apps/pc_frontend/modules/timeline/templates/_timelineAll.php" role="data" />
    <file baseinstalldir="/" md5sum="b24c9d2ebdb32436cbb6c188c2e9fddb" name="apps/pc_frontend/modules/timeline/templates/_timelineCommunity.php" role="data" />
    <file baseinstalldir="/" md5sum="0ad56f6dcb0aa672585651f8f7d60ba2" name="apps/pc_frontend/modules/timeline/templates/_timelineMentions.php" role="data" />
    <file baseinstalldir="/" md5sum="c5456f25ff4be0b207dbe05d4e989aad" name="apps/pc_frontend/modules/timeline/templates/_timelineProfile.php" role="data" />
-   <file baseinstalldir="/" md5sum="5798f12cc534160825e418886aba96d5" name="apps/pc_frontend/modules/timeline/templates/_timelineTemplate.php" role="data" />
->>>>>>> development
+   <file baseinstalldir="/" md5sum="6ae061c9e88ecb1d4bb5018c4d261dd6" name="apps/pc_frontend/modules/timeline/templates/_timelineTemplate.php" role="data" />
    <file baseinstalldir="/" md5sum="1c328bdc62855d492c0547291849c2b0" name="config/gadget.yml" role="data" />
    <file baseinstalldir="/" md5sum="81f82bfd969955c770e57bad6a52a8aa" name="config/member_config.yml" role="data" />
    <file baseinstalldir="/" md5sum="f092338b0355ecdaf2a8318e00c26a0d" name="config/mobile_gadget.yml" role="data" />
@@ -167,11 +144,8 @@ alpha release.
    <file baseinstalldir="/" md5sum="8a98cacfcc151f2808c399543fd52679" name="test/functional/mobile_frontend/skeletonActionsTest.php" role="data" />
    <file baseinstalldir="/" md5sum="1faa199e87c1ce270e86edee706b37fd" name="test/functional/pc_frontend/skeletonActionsTest.php" role="data" />
    <file baseinstalldir="/" md5sum="b6ef8bac2e60ac12f0ebe27ab4f6f440" name="test/functional/pc_frontend/timelineAllGadgetTest.php" role="data" />
-<<<<<<< HEAD
-=======
    <file baseinstalldir="/" md5sum="b3bbf06d61ddd1bf63a41d6dd033cc38" name="test/js/timeline.html" role="data" />
    <file baseinstalldir="/" md5sum="d41d8cd98f00b204e9800998ecf8427e" name="test/js/timeline.js" role="data" />
->>>>>>> development
    <file baseinstalldir="/" md5sum="52440ab0abcc01c98551283f1e9942e1" name="test/unit/model/SkeletonTest.php" role="data" />
    <file baseinstalldir="/" md5sum="7308493692cffb210773cde14c98c68c" name="web/apitest/timeline.html" role="data" />
    <file baseinstalldir="/" md5sum="9026af36b6032a37da30254a7a25e044" name="web/apitest/timeline.js" role="data" />
@@ -184,13 +158,8 @@ alpha release.
    <file baseinstalldir="/" md5sum="77e2af95cdf25680a158fd372d5785c8" name="web/css/gorgon-home.css" role="data" />
    <file baseinstalldir="/" md5sum="cd8309040b99e12dca722c75349eb90f" name="web/css/gorgon.css" role="data" />
    <file baseinstalldir="/" md5sum="6e335bebd4a3c50533e2159c1a794183" name="web/css/jquery.colorbox.css" role="data" />
-<<<<<<< HEAD
-   <file baseinstalldir="/" md5sum="3130753d966bf107a6f507d57a9c7c90" name="web/css/timeline-smartphone.css" role="data" />
-   <file baseinstalldir="/" md5sum="503ceeb6e15acb52d0fc2d8f02dc5760" name="web/css/timeline.css" role="data" />
-=======
    <file baseinstalldir="/" md5sum="1f11485015f50daa11111b5091d26d08" name="web/css/timeline-smartphone.css" role="data" />
    <file baseinstalldir="/" md5sum="67b5633adc1d90e07ba21818d01fd0fc" name="web/css/timeline.css" role="data" />
->>>>>>> development
    <file baseinstalldir="/" md5sum="1a567b26a5e730bea96ef41b6afd1aca" name="web/css/images/clock.png" role="data" />
    <file baseinstalldir="/" md5sum="c766e172b9c6dba8c569815e3eb72ba3" name="web/css/images/trash_can.png" role="data" />
    <file baseinstalldir="/" md5sum="8500d55d530b57b31375625d1ca99059" name="web/css/images/prettyPopin/b_close.gif" role="data" />
@@ -232,19 +201,14 @@ alpha release.
    <file baseinstalldir="/" md5sum="0fa78a621a85700338f794cafb1898f6" name="web/js/jquery.colorbox.js" role="data" />
    <file baseinstalldir="/" md5sum="007640beb5613c6aab970d8d6ef753cb" name="web/js/jquery.desktopify.js" role="data" />
    <file baseinstalldir="/" md5sum="dec10d474ae3072207dcabe2365b1852" name="web/js/jquery.timeline.js" role="data" />
-<<<<<<< HEAD
-   <file baseinstalldir="/" md5sum="793ee0d00048d2b8ee8ca7d730c58db1" name="web/js/timeline-loader-smartphone.js" role="data" />
-   <file baseinstalldir="/" md5sum="d2a81759329a342da68b5bda629a0c24" name="web/js/timeline-loader.api.js" role="data" />
-=======
    <file baseinstalldir="/" md5sum="94466a640d5b6830cd9724d071a8e9bf" name="web/js/jquery.upload-1.0.2.js" role="data" />
    <file baseinstalldir="/" md5sum="315d5adad3b44483df9dfa168d4da340" name="web/js/timeline-loader-smartphone.js" role="data" />
    <file baseinstalldir="/" md5sum="de0eea0762bdad2541ecacf1f4b91bb7" name="web/js/timeline-loader.api.js" role="data" />
->>>>>>> development
    <file baseinstalldir="/" md5sum="41d4e18b4ad695410c8526f607f9df79" name="web/js/timeline-loader.js" role="data" />
    <file baseinstalldir="/" md5sum="d68f452e78f4ed9d29fc37894175c506" name="dependencies.yml" role="data" />
    <file baseinstalldir="/" md5sum="617856c3fb2b7177fe7fffa8a1ddd1a1" name="dependencies.yml.sample" role="data" />
    <file baseinstalldir="/" md5sum="f34dd7a47996e29f48fe9629cc0dcbd1" name="README" role="data" />
-   <file baseinstalldir="/" md5sum="2aa7dc22e781b2353a82378feba6a001" name="README.md" role="data" />
+   <file baseinstalldir="/" md5sum="260ad510a7f53928e13f3321c48906e9" name="README.md" role="data" />
   </dir>
  </contents>
  <dependencies>
@@ -266,68 +230,8 @@ alpha release.
  <changelog>
   <release>
    <version>
-    <release>1.0.1</release>
-    <api>1.0.1</api>
-   </version>
-   <stability>
-    <release>beta</release>
-    <api>beta</api>
-   </stability>
-   <date>2012-12-12</date>
-   <license>Apache</license>
-   <notes>
-beta release.
-   </notes>
-  </release>
-  <release>
-   <version>
-    <release>1.0.2</release>
-    <api>1.0.2</api>
-   </version>
-   <stability>
-    <release>alpha</release>
-    <api>alpha</api>
-   </stability>
-   <date>2012-12-18</date>
-   <license>Apache</license>
-   <notes>
-alpha release.
-   </notes>
-  </release>
-  <release>
-   <version>
-    <release>1.1.0</release>
-    <api>1.1.0</api>
-   </version>
-   <stability>
-    <release>alpha</release>
-    <api>alpha</api>
-   </stability>
-   <date>2012-12-28</date>
-   <license>Apache</license>
-   <notes>
-alpha release.
-   </notes>
-  </release>
-  <release>
-   <version>
-    <release>1.0.0</release>
-    <api>1.0.0</api>
-   </version>
-   <stability>
-    <release>stable</release>
-    <api>stable</api>
-   </stability>
-   <date>2012-11-22</date>
-   <license>Apache</license>
-   <notes>
-stable release.
-   </notes>
-  </release>
-  <release>
-   <version>
-    <release>1.1.1</release>
-    <api>1.1.1</api>
+    <release>1.1.2</release>
+    <api>1.1.2</api>
    </version>
    <stability>
     <release>alpha</release>
