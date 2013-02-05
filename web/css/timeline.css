@@ -26,8 +26,7 @@ a.screen-name:link {
 
 .timeline-postform {
   position: relative; 
-  padding: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 }
 
 #timeline-textarea {
@@ -219,8 +218,10 @@ a.screen-name:link {
 
 #timeline-public-flag {
   position: absolute;
+  margin: 0;
   width: 100px;
   right: 110px;
+  bottom: 5px;
 }
 
 #timeline-submit-upload {
@@ -232,13 +233,25 @@ a.screen-name:link {
 
 #timeline-upload-photo-button {
   position: absolute;
-  padding: 7px;
+  padding: 6px 7px;
   bottom: 5px;
 }
 
 #photo-file-name {
   position: absolute;
   bottom: 10px;
-  left: 50px;
+  left: 68px;
   width: 200px;
+}
+
+#photo-remove {
+  display: none;
+  cursor: pointer;
+  position: absolute;
+  bottom: 12px;
+  left: 53px;
+}
+
+#timeline-submit-button {
+  margin-right: 9px;
 }

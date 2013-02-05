@@ -24,6 +24,7 @@
         $timelineLoader.next().hide();
         $timelineLoader.show();
         $(this).parent().hide();
+        $(this).attr('disabled', 'disabled');
         $.ajax({
           url: openpne.apiBase + 'activity/post.json',
           type: 'POST',
@@ -46,7 +47,10 @@
             }
             else
             {
-              alert(data.message);
+              $timelineLoader.hide();
+              $timelineLoader.next().text('投稿に失敗しました');
+              $timelineLoader.next().show();
+              $timelineLoader.prev().show();
             }
           },
           error: function(x, r, t) {

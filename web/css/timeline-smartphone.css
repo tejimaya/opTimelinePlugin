@@ -28,12 +28,14 @@
   width: 285px;
   display: block;
   padding: 0 5px;
+  font-weight: bold;
+  margin-top: -3px;
 }
 
 .timeline-post-body {
   width: 285px;
   display: block;
-  padding: 5px;
+  padding: 15px 5px;
 }
 
 .timeline-post-control {
@@ -72,6 +74,8 @@
   display: inline;
   float: left;
   font-size: 12px;
+  font-weight: bold;
+  margin-top: -3px;
 }
 
 .timeline-post-comment-control {
@@ -81,7 +85,11 @@
   font-size: 11px;
 }
 
-
+.timeline-post-comment-body {
+  font-size: 11px;
+  margin-left: 28px;
+  padding: 5px 0;
+}
 
 .timeline-post-comment-form {
   display: none;
@@ -130,7 +138,8 @@
 
 .timestamp {
   color: #999!important;
-  float: right;
+  //float: right;
+  font-weight: normal;
   font-size: x-small;
 }
 
@@ -142,8 +151,60 @@
 }
 
 #photo-file-name {
-  position: absolute;
-  bottom: 10px;
-  left: 50px;
   width: 200px;
+  color: #fff;
+}
+
+#photo-remove {
+  cursor: pointer;
+}
+
+.photo-info {
+  margin: 7px 0 0 7px;
+}
+
+#timeline-submit-error {
+  display: none;
+  color: darkorange;
+  padding-left: 5px;
+}
+
+#timeline-public-flag {
+  margin: -5px 0 0 75px;
+  width: 100px;
+  height: 28px;
+}
+
+#timeline_postform_submit {
+  float: right;
+}
+
+.only-border-top {
+  border-top: dotted 10px #e7eaf2;
+  //border-top: dashed 10px #e7eaf2;
+  padding: 0 0 7px;
+  margin-top: -3px;
+}
+
+.only-border-bottom {
+  border-top: dotted 10px #e7eaf2;
+  //border-bottom: dashed 10px #e7eaf2;
+  padding: 7px 0 0 0;
+  margin-bottom: -10px;
+}
+
+.timeline-public-flag-show {
+  font-size: small;
+  color: #999!important;
+  padding-left: 8px;
+}
+
+#timeline-upload-photo-button {
+  padding: 6px 7px;
+}
+
+.timeline-community-name {
+  padding-left: 60px;
+  color: #fff;
+  font-size: 13px;
 }

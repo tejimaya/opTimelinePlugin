@@ -4,23 +4,33 @@
 var gorgon = {
       'member_id': <?php echo $id; ?>,
     };
+var viewPhoto = '<?php echo $viewPhoto ?>';
+var MAXLENGTH = 140;
+var fileMaxSize = '<?php echo opTimelinePluginUtil::getFileSizeMax() ?>';
 //]]>
 </script>
 <?php op_smt_use_stylesheet('/opTimelinePlugin/css/jquery.colorbox.css') ?>
 <?php op_smt_use_stylesheet('/opTimelinePlugin/css/timeline-smartphone.css', 'last') ?>
 <?php op_smt_use_javascript('/opTimelinePlugin/js/jquery.colorbox.js', 'last') ?>
 <?php op_smt_use_javascript('/opTimelinePlugin/js/jquery.timeline.js', 'last') ?>
+<?php op_smt_use_javascript('/opTimelinePlugin/js/jquery.timeago.js', 'last') ?>
 <?php op_smt_use_javascript('/opTimelinePlugin/js/timeline-loader-smartphone.js', 'last') ?>
 
 <script id="timelineTemplate" type="text/x-jquery-tmpl">
         <div class="timeline-post">
+        {{if public_status != 'sns' }}
+        <div class="only-border-top"></div>
+        {{/if}}
           <a name="timeline-${id}"></a>
           <div class="timeline-post-member-image">
-            <a href="${member.profile_url}"><img src="${member.profile_image}" alt="member-image" width="23" /></a>
+            <a href="${member.profile_url}"><img src="${member.profile_image}" alt="member-image" width="23" class="rad6" /></a>
           </div>
           <div class="timeline-post-content">
             <div class="timeline-member-name">
               <a href="${member.profile_url}">{{if member.screen_name}} ${member.screen_name} {{else}} ${member.name} {{/if}}</a>
+              <a href="<?php echo url_for('@homepage', array('absolute' => true)) ?>timeline/show/id/${id}">
+              <div class="timestamp timeago" title="${created_at}"></div>
+              </a>
             </div>
             <div class="timeline-post-body" id="timeline-body-context-${id}">
               {{html body_html}}
@@ -29,17 +39,27 @@ var gorgon = {
 
           <div class="timeline-post-control">
             <a href="#timeline-${id}" class="timeline-comment-link">コメントする</a>
+            <span class="timeline-post-control-show">
+              {{if public_status == 'friend' }}
+              <span class="public-flag">マイフレンドまで</span>
+              {{else public_status == 'private' }}
+              <span class="public-flag">公開しない</span>
+              {{/if}}
+            </span>
           </div>
 
           <div class="timeline-post-comments" id="commentlist-${id}">
 
             <div id="timeline-post-comment-form-${id}" class="timeline-post-comment-form">
-            <input class="timeline-post-comment-form-input" type="text" data-timeline-id="${id}" id="comment-textarea-${id}" /><button data-timeline-id="${id}" class="btn btn-primary btn-mini timeline-comment-button">投稿</button>
+            <input class="timeline-post-comment-form-input" type="text" data-timeline-id="${id}" id="comment-textarea-${id}" /><button data-timeline-id="${id}" class="btn btn-primary btn-mini timeline-comment-button" disabled="disabled">投稿</button>
             </div>
             <div id="timeline-post-comment-form-loader-${id}" class="timeline-post-comment-form-loader">
               <?php echo op_image_tag('ajax-loader.gif', array()) ?>
             </div>
           </div>
+        {{if public_status != 'sns' }}
+        <div class="only-border-bottom"></div>
+        {{/if}}
         </div>
 </script>
 
@@ -47,18 +67,16 @@ var gorgon = {
             <div class="timeline-post-comment">
 
               <div class="timeline-post-comment-member-image">
-                <a href="${member.profile_url}"><img src="${member.profile_image}" alt="" width="23" /></a>
+                <a href="${member.profile_url}"><img src="${member.profile_image}" alt="" width="23" class="rad6" /></a>
               </div>
               <div class="timeline-post-comment-content">
                 <div class="timeline-post-comment-name-and-body">
-                <a href="${member.profile_url}">{{if member.screen_name}} ${member.screen_name} {{else}} ${member.name} {{/if}}</a>
-                <span class="timeline-post-comment-body">
-                {{html body_html}}
-                </span>
+                  <a href="${member.profile_url}">{{if member.screen_name}} ${member.screen_name} {{else}} ${member.name} {{/if}}</a>
                 </div>
               </div>
-              <div class="timeline-post-comment-control">
-              ${created_at}
+              <div class="timestamp timeline-post-control timeago" title="${created_at}"></div>
+              <div class="timeline-post-comment-body">
+              {{html body_html}}
               </div>
             </div>
 </script>

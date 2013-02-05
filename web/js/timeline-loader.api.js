@@ -4,6 +4,9 @@ $(function(){
   var timerID;
   var timerArray = new Array();
   var timer;
+
+  gorgon.image_size = 'large';
+
   timelineAllLoad();
 
   if ( gorgon.timer != undefined )
@@ -26,23 +29,29 @@ $(function(){
   }
 
   $('#timeline-submit-button').click( function() {
-
-
+    $(this).attr('disabled', 'disabled');
     $('#timeline-submit-error').text('');
     $('#timeline-submit-error').hide();
     $('#timeline-submit-loader').show();
     $('#photo-file-name').text('');
+    $('#photo-remove').hide();
 
     var body = $('#timeline-textarea').val();
 
     if (gorgon)
     {
+      var publicFlag = 1;
+      if ('community' != gorgon.target)
+      {
+        publicFlag = $('#timeline-public-flag option:selected').val()
+      }
+  
       var data = {
         body: body,
         target: gorgon.post.foreign,
         target_id: gorgon.post.foreignId,
         apiKey: openpne.apiKey,
-        public_flag: $('#timeline-public-flag option:selected').val()
+        public_flag: publicFlag
       };
     }
     else
@@ -70,7 +79,7 @@ $(function(){
 
     $.ajax({
       type: 'GET',
-      url: openpne.apiBase + 'timeline/commentSearch.json?apiKey=' + openpne.apiKey,
+      url: openpne.apiBase + 'activity/commentSearch.json?apiKey=' + openpne.apiKey,
       data: {
         'timeline_id': timelineId,
         'count': commentLength + 20
@@ -93,6 +102,7 @@ $(function(){
 
   $('#timeline-submit-upload').change(function() {
     var fileName = $('#timeline-submit-upload').val();
+    $('#photo-remove').show();
     if (20 > fileName.length)
     {
       $('#photo-file-name').text(fileName);
@@ -105,19 +115,66 @@ $(function(){
 
   $('#timeline-upload-photo-button').click(function() {
     $('#timeline-submit-upload').click();
+
+  });
+
+  $('#timeline-submit-upload').change(function() {
+
+      $('#timeline-submit-error').hide();
+      $('#timeline-submit-error').text('');
+
+      var size = this.files[0].size;
+
+      if (size >= fileMaxSizeInfo['size']) {
+        $('#timeline-submit-error').show();
+
+        var errorMessage = 'ファイルは' + fileMaxSizeInfo['format'] + '以上はアップロードできません';
+        $('#timeline-submit-error').text(errorMessage);
+
+        $('#timeline-submit-upload').val('');
+        $('#photo-file-name').text('');
+
+      }
+
+  });
+
+  $('#timeline-textarea').keyup( function() {
+    lengthCheck($(this), $('#timeline-submit-button'));
+  });
+
+  $('.timeline-post-comment-form-input').live('keyup', function() {
+    lengthCheck($(this), $('button[data-timeline-id=' + $(this).attr('data-timeline-id') + ']'));
+  });
+  
+  $('#photo-remove').click( function() {
+    $('#timeline-submit-upload').val('');
+    $('#photo-file-name').text('');
+    $(this).hide();
   });
 });
 
 function timelineAllLoad() {
+
   if (gorgon)
   {
     gorgon.apiKey = openpne.apiKey;
     $.ajax({
       type: 'GET',
-      url: openpne.apiBase + 'timeline/search.json',
+      url: openpne.apiBase + 'activity/search.json',
       data: gorgon,
-      success: function(json){
-        renderJSON(json, 'all');
+      success: function(response){
+
+        if ($.isEmptyObject(response.data))
+        {
+          $('#timeline-loading').hide();
+          $('#timeline-list').text('タイムラインは投稿されていません。');
+          $('#timeline-list').show();
+        }
+        else
+        {
+          renderJSON(response, 'all');
+        }
+        
       },
       error: function(XMLHttpRequest, textStatus, errorThrown){
         $('#timeline-loading').hide();
@@ -130,9 +187,20 @@ function timelineAllLoad() {
   {
     $.ajax({
       type: 'GET',
-      url: openpne.apiBase + 'timeline/search.json?apiKey=' + openpne.apiKey,
-      success: function(json){
-        renderJSON(json, 'all');
+      url: openpne.apiBase + 'activity/search.json?apiKey=' + openpne.apiKey,
+      success: function(response){
+
+        if ($.isEmptyObject(response.data))
+        {
+          $('#timeline-loading').hide();
+          $('#timeline-list').text('タイムラインは投稿されていません。');
+          $('#timeline-list').show();
+        }
+        else
+        {
+          renderJSON(response, 'all');
+        }
+
       },
       error: function(XMLHttpRequest, textStatus, errorThrown){
         $('#timeline-loading').hide();
@@ -156,7 +224,7 @@ function timelineDifferenceLoad() {
       apiKey: openpne.apiKey
     }
   }
-  $.getJSON( openpne.apiBase + 'timeline/search.json?count=20&since_id=' + lastId, gorgon, function(json){
+  $.getJSON( openpne.apiBase + 'activity/search.json?count=20&since_id=' + lastId, gorgon, function(json){
     if (json.data)
     {
       renderJSON(json, 'diff');
@@ -181,7 +249,7 @@ function timelineLoadmore() {
 
   $.ajax({
     type: 'GET',
-    url: openpne.apiBase + 'timeline/search.json',
+    url: openpne.apiBase + 'activity/search.json',
     data: gorgon,
     success: function(json){
       renderJSON(json, 'more');
@@ -245,7 +313,7 @@ function renderJSON(json, mode) {
         $('#timelineCommentTemplate').tmpl(json.data[i].replies.reverse()).prependTo('#commentlist-' +json.data[i].id);
         $('#timeline-post-comment-form-' + json.data[i].id, $timelineData).show();
       }
-      if(10 < parseInt(json.data[i].repliesCount))
+      if(10 < parseInt(json.data[i].replies_count))
       {
         $('#timeline-comment-loadmore-' + json.data[i].id).show();
       }
@@ -275,6 +343,7 @@ function renderJSON(json, mode) {
     $('#timeline-loadmore').show();
     $('#timeline-loadmore-loading').hide();
   }
+  $('.timeago').timeago();
 }
 
 function convertTag(str) {
@@ -286,24 +355,23 @@ function convertTag(str) {
   return str;
 }
 
-function lengthCheck(obj)
-{
-  if (MAXLENGTH < obj.value.length)
-  {
-    $('#timeline-submit-button').attr('disabled','disabled');
-  }
-  else if ($('#timeline-submit-button').attr('disabled'))
-  {
-    $('#timeline-submit-button').removeAttr('disabled');
-  }
-}
-
 function tweetByData(data)
 {
   //reference　http://lagoscript.org/jquery/upload/documentation
   $('#timeline-submit-upload').upload(
-    openpne.apiBase + 'timeline/post.json', data,
+    openpne.apiBase + 'activity/post.json', data,
     function (res) {
+      var resCheck = responceCheck(res);
+      if (false !== resCheck)
+      {
+        $('#timeline-submit-error').text(resCheck);
+        $('#timeline-submit-error').show();
+        $('#timeline-submit-loader').hide();
+        return;
+      }
+
+      //jquery.uploadだとbrタグがなぜか<br ="">みたいな感じでレスポンスが戻ってきた API自体は問題ないが
+      res = res.replace(/<br \\=\"\">/g,  '<br />');
       returnData = JSON.parse(res);
 
       if (returnData.status === "error") {
@@ -322,6 +390,7 @@ function tweetByData(data)
         {
         }
         $('#timeline-submit-error').show();
+        $('#timeline-submit-loader').hide();
 
       } else {
         $('#timeline-submit-error').text('');
@@ -329,9 +398,9 @@ function tweetByData(data)
       }
 
       $('#timeline-submit-upload').val('');
+      $('#timeline-submit-upload').text('');
       $('#timeline-textarea').val('');
       $('#timeline-submit-loader').hide();
-      $('#timeline-textarea').val('');
       $('#counter').text(MAXLENGTH);
 
     },
@@ -369,5 +438,27 @@ function autoLinker(json)
         json.data[i].body_html = json.data[i].body.replace(/((http:|https:)\/\/[\x21-\x26\x28-\x7e]+)/gi, '<a href="$1"><div class="urlBlock"><img src="http://mozshot.nemui.org/shot?$1"><br />$1</div></a>');
       }
     }
+    json.data[i].body_html = json.data[i].body_html.replace(/&lt;br \/&gt;/g, '<br />');
   }
+}
+
+function lengthCheck(obj, target)
+{
+  if (0 < $.trim(obj.val()).length && 140 >= obj.val().length)
+  {
+    target.removeAttr('disabled');
+  }
+  else
+  {
+    target.attr('disabled', 'disabled');
+  }
+}
+
+function responceCheck(res)
+{
+  if (0 <= res.indexOf('\<pre'))
+  {
+    return 'エラーが発生しました。再度読み込んで下さい。';
+  }
+  return false;
 }

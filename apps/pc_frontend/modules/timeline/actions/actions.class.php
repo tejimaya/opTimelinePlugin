@@ -61,6 +61,26 @@ class timelineActions extends sfActions
     return sfView::SUCCESS; 
   }
 
+  public function executeSns(opWebRequest $request)
+  {
+    $this->forwardIf($request->isSmartphone(), 'timeline', 'smtSns');
+    $this->forward('default', 'error');
+
+    return sfView::SUCCESS; 
+  }
+
+  public function executeSmtSns(opWebRequest $request)
+  {
+    $this->baseUrl = sfConfig::get('op_base_url');
+    $form = new sfForm();
+    $this->token = $form->getCSRFToken();
+    $this->viewPhoto = opTimeline::getViewPhoto();
+
+    $this->setTemplate('smtSns');
+
+    return sfView::SUCCESS; 
+  }
+
   public function executeSmtShow(opWebRequest $request)
   {
     $activityId = (int)$request['id'];
@@ -88,6 +108,7 @@ class timelineActions extends sfActions
   {
     $this->communityId = (int)$request->getParameter('id');
     $this->community = Doctrine::getTable('Community')->find($this->communityId);
+    $this->forward404If(!$this->community->isPrivilegeBelong($this->getUser()->getMemberId()));
     opSmartphoneLayoutUtil::setLayoutParameters(array('community' => $this->community));
     $this->setTemplate('smtCommunity');
 

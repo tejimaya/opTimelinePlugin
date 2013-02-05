@@ -1,3 +1,4 @@
+<?php if ($community->isPrivilegeBelong($memberId)): ?>
 <div id="communityTimeline" class="dparts communityTimeline"><div class="parts">
 
 <script type="text/javascript">
@@ -21,7 +22,12 @@ var gorgon = {
     };
 var MAXLENGTH = 140;
 var viewPhoto = '<?php echo $viewPhoto ?>';
-var fileMaxSize = '<?php echo $fileMaxSize ?>';
+
+var fileMaxSizeInfo = {
+  'format': '<?php echo $fileMaxSize['format'] ?>',
+  'size'  : '<?php echo $fileMaxSize['size'] ?>'
+}
+
 //]]>
 </script>
 
@@ -29,6 +35,9 @@ var fileMaxSize = '<?php echo $fileMaxSize ?>';
 <?php use_javascript('/opTimelinePlugin/js/jquery.desktopify.js', 'last'); ?>
 <?php use_javascript('/opTimelinePlugin/js/timeline-loader.api.js', 'last') ?>
 <?php use_javascript('/opTimelinePlugin/js/counter.js', 'last') ?>
+<?php use_javascript('/opTimelinePlugin/js/jquery.timeago.js', 'last') ?>
+<?php use_javascript('/opTimelinePlugin/js/lightbox.js', 'last') ?>
+<?php use_stylesheet('/opTimelinePlugin/css/lightbox.css', 'last') ?>
 <?php use_stylesheet('/opTimelinePlugin/css/counter.css', 'last') ?>
 <?php use_stylesheet('/opTimelinePlugin/css/bootstrap.css', 'last') ?>
 <?php use_stylesheet('/opTimelinePlugin/css/timeline.css', 'last') ?>
@@ -45,7 +54,7 @@ $(function(){
       $('#timeline-submit-upload').css('display', 'inline');
       $('#timeline-submit-upload').css('position', 'relative');
       $('#timeline-submit-upload').css('left', '0px');
-      $('#timeline-submit-upload').css('top', '-40px');
+      $('#timeline-submit-upload').css('top', '-3px');
       $('#timeline-submit-upload').css('width', '150px');
       $('#timeline-public-flag').css('display', 'inline');
       $('#timeline-public-flag').css('position', 'relative');
@@ -60,20 +69,15 @@ $(function(){
 <div class="partsHeading"><h3>コミュニティタイムライン</h3></div>
     <div class="timeline">
       <div class="timeline-postform well">
-        <textarea id="timeline-textarea" class="input-xlarge" rows="1" placeholder="今何してる？" onkeyup="lengthCheck(this);"></textarea>
+        <textarea id="timeline-textarea" class="input-xlarge" rows="1" tabindex="1" placeholder="今何してる？"></textarea>
         <div id="timeline-submit-loader"><?php echo op_image_tag('ajax-loader.gif', array()) ?></div>
         <div id="timeline-submit-error"></div>
         <div id="timeline-submit-area">
           <span id="timeline-upload-photo-button" class="btn"><i class="icon-camera"></i></span>
-          <span id="photo-file-name"></span>
+          <span id="photo-remove"><span class="icon-remove"></span></span><span id="photo-file-name"></span>
           <span id="counter"></span>
-          <select id="timeline-public-flag">
-          <?php foreach ($publicFlags as $value => $text): ?>
-            <option value="<?php echo $value ?>"><?php echo __($text) ?></option>
-          <?php endforeach; ?>
-          </select>
           <input id="timeline-submit-upload" type="file" name="timeline-submit-upload" enctype="multipart/form-data">
-          <button id="timeline-submit-button" class="btn btn-primary timeline-submit">投稿</button>
+          <button id="timeline-submit-button" class="btn btn-primary timeline-submit" tabindex="2" disabled="disabled">投稿</button>
         </div>
       </div>
 
@@ -86,3 +90,4 @@ $(function(){
     </div>
 
 </div></div>
+<?php endif; ?>
