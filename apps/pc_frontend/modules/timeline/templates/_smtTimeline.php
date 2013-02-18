@@ -57,16 +57,6 @@ var fileMaxSizeInfo = {
               {{/if}}
             </span>
           </div>
-          <!--Like Plugin -->
-          <div class="row like-wrapper" data-like-id="${id}" data-like-target="A" member-id="${member.id}" style="display: none; margin-left: 28px;">
-            <span class="span6" style="text-align: center;"> 
-              <a class="like-post">いいね！</a>
-              <a class="like-cancel">いいね！を取り消す</a>
-            </span>
-            <span class="span5" style="text-align: center;">
-              <a class="like-list"></a>
-            </span>
-          </div>
 
           <a>
             <div id="timeline-comment-loadmore-${id}" data-timeline-id="${id}" class="timeline-comment-loadmore">
@@ -107,16 +97,6 @@ var fileMaxSizeInfo = {
               <div class="timestamp timeline-post-control timeago" title="${created_at}"></div>
               <div class="timeline-post-comment-body">
               {{html body_html}}
-              </div>
-              <!-- Like Plugin -->
-              <div class="row like-wrapper" data-like-id="${id}" data-like-target="A" member-id="${member.id}" style="display: none; margin-left: 28px;">
-                <span class="span5" style="text-align: center;"> 
-                  <a class="like-post">いいね！</a>
-                  <a class="like-cancel">いいね！を取り消す</a>
-                </span>
-                <span class="span4" style="text-align: center;">
-                  <a class="like-list"></a>
-                </span>
               </div>
             </div>
 </script>
