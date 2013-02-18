@@ -72,6 +72,7 @@
           </div>
           {{/if}}
         </div>
+      </div>
 </script>
 
 <script id="timelineCommentTemplate" type="text/x-jquery-tmpl">
