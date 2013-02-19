@@ -277,7 +277,7 @@ function renderJSON(json, mode) {
   $timelineData = $('#timelineTemplate').tmpl(json.data);
   $('.timeline-comment-button', $timelineData).timelineComment();
   $('.timeline-comment-link', $timelineData).click(function(){
-    $commentBoxArea = $(this).parent().siblings().find('.timeline-post-comment-form');
+    $commentBoxArea = $(this).parent().find('.timeline-post-comment-form');
     $commentBoxArea.show();
     $commentBoxArea.children('.timeline-post-comment-form-input').focus();
   });

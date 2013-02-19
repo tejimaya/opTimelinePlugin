@@ -80,7 +80,7 @@ function renderJSON(json) {
   $timelineData = $('#timelineTemplate').tmpl(json.data);
   $('button.timeline-comment-button', $timelineData).timelineComment();
   $('.timeline-comment-link', $timelineData).click(function(){
-    $commentBoxArea = $(this).parent().siblings().find('.timeline-post-comment-form');
+    $commentBoxArea = $(this).parent().find('.timeline-post-comment-form');
     $commentBoxArea.show();
     $commentBoxArea.children('.timeline-post-comment-form-input').focus();
   });
@@ -157,7 +157,7 @@ function timelineDifferenceLoad() {
     $timelineData = $('#timelineTemplate').tmpl(json.data);
     $('button.timeline-comment-button', $timelineData).timelineComment();
     $('.timeline-comment-link', $timelineData).click(function(){
-      $commentBoxArea = $(this).parent().siblings().find('.timeline-post-comment-form');
+      $commentBoxArea = $(this).parent().find('.timeline-post-comment-form');
       $commentBoxArea.show();
       $commentBoxArea.children('.timeline-post-comment-form-input').focus();
     });
@@ -206,7 +206,7 @@ function timelineLoadmore() {
     $timelineData = $('#timelineTemplate').tmpl(json.data);
     $('button.timeline-comment-button', $timelineData).timelineComment();
     $('.timeline-comment-link', $timelineData).click(function(){
-      $commentBoxArea = $(this).parent().siblings().find('.timeline-post-comment-form');
+      $commentBoxArea = $(this).parent().find('.timeline-post-comment-form');
       $commentBoxArea.show();
       $commentBoxArea.children('.timeline-post-comment-form-input').focus();
     });
