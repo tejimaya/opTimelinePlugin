@@ -1,21 +1,20 @@
 <?php
 
 /**
- * opGyoenKintaiPlugin components.
+ * opTimelinePlugin components.
  *
  * @package    OpenPNE
  * @subpackage opTimelinePlugin
  * @author     tatsuya ichikawa <ichikawa@tejimaya.com>
  */
-
 class timelineComponents extends sfComponents
 {
   public function executeTimelineAll(sfWebRequest $request)
   {
     if ($this->gadget->getConfig('is_viewable_activity_form') && opConfig::get('is_allow_post_activity'))
-    {   
+    {
       $this->form = new ActivityDataForm();
-    }   
+    }
 
     $builder = opActivityQueryBuilder::create()
             ->setViewerId($this->getUser()->getMemberId());
@@ -65,6 +64,6 @@ class timelineComponents extends sfComponents
       $this->form = new TimelineDataForm();
       $this->form->setDefault('foreign_table', 'community');
       $this->form->setDefault('foreign_id', $communityId);
-    }     
+    }
   }
 }

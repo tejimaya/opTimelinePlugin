@@ -9,7 +9,7 @@
 */
 
 /**
-* opMemberAction
+* timelineActions
 *
 * @package    OpenPNE
 * @subpackage action
@@ -31,12 +31,12 @@ class timelineActions extends opTimelineAction
     $this->forward404Unless($this->activity->getMemberId() == $this->getUser()->getMemberId());
 
     if ($request->isMethod(sfWebRequest::POST))
-    {   
+    {
       $request->checkCSRFProtection();
       $this->activity->delete();
       $this->getUser()->setFlash('notice', 'An %activity% was deleted.');
       $this->redirect('@homepage');
-    }     
+    }
   }
 
   public function executeComment($request)

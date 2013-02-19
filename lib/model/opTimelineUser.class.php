@@ -252,7 +252,6 @@ class opTimelineUser
       $searchResult = $q->fetchArray();
     }
 
-
     $friendIds = array();
     $blockIds = array();
 
@@ -271,6 +270,4 @@ class opTimelineUser
 
     return array('friend' => $friendIds, 'block' => $blockIds);
   }
-
-
 }

@@ -28,7 +28,7 @@ class opTimelinePluginInstallTask extends sfBaseTask
 Use this command to install "opTimelinePlugin".
 EOF;
   }
- 
+
   protected function execute($arguments = array(), $options = array())
   {
     // execute ./symfony doctrine:data-load

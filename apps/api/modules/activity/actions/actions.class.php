@@ -30,7 +30,7 @@ class activityActions extends opJsonApiActions
     parent::preExecute();
 
     $user = new opTimelineUser();
-    
+
     $params = array();
     $params['image_size'] = $this->getRequestParameter('image_size', self::DEFAULT_IMAGE_SIZE);
 
@@ -271,7 +271,7 @@ class activityActions extends opJsonApiActions
 
   private function _activitySearchAPI(sfWebRequest $request)
   {
-    
+
     return $responseDatas;
   }
 
@@ -403,5 +403,4 @@ class activityActions extends opJsonApiActions
 
     $this->setTemplate('array');
   }
-
 }

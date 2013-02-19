@@ -22,15 +22,15 @@ function op_timeline_plugin_body_filter($activity, $body, $is_auto_link = true)
   {
     $config = $activity->getTable()->getTemplateConfig();
     if (!isset($config[$activity->getTemplate()]))
-    {   
-      return $body; 
-    }   
+    {
+      return $body;
+    }
 
     $params = array();
     foreach ($activity->getTemplateParam() as $key => $value)
-    {   
+    {
       $params[$key] = $value;
-    }   
+    }
     $body = __($config[$activity->getTemplate()], $params);
     $event = sfContext::getInstance()->getEventDispatcher()->filter(new sfEvent(null, 'op_activity.template.filter_body'), $body);
     $body = $event->getReturnValue();
@@ -47,9 +47,9 @@ function op_timeline_plugin_body_filter($activity, $body, $is_auto_link = true)
   if ($is_auto_link)
   {
     if ('mobile_frontend' === sfConfig::get('sf_app'))
-    {   
+    {
       return op_auto_link_text_for_mobile($body);
-    }   
+    }
 
     return op_auto_link_text($body);
   }
@@ -66,7 +66,7 @@ function op_timeline_plugin_screen_name($body, $options = array())
     foreach ($matches[2] as $screenName)
     {
       $member = Doctrine::getTable('MemberConfig')->findOneByNameAndValue('op_screen_name', $screenName);
-      
+
       if ($member)
       {
         $memberId = $member->getMemberId();

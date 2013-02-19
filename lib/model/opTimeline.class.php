@@ -519,5 +519,4 @@ class opTimeline
     }
     return 1;
   }
-
 }

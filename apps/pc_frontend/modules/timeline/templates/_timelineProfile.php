@@ -33,7 +33,7 @@ var MAXLENGTH = 140;
 
   <div id="timeline-list" data-last-id=""data-loadmore-id="">
   </div>
-    
+
   <button class="gorgon-button button" id="timeline-loadmore">もっと読む</button>
   <div id="timeline-loadmore-loading"><?php echo op_image_tag('ajax-loader.gif', array()) ?></div>
 </div>

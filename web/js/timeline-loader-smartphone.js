@@ -2,15 +2,15 @@ $(function(){
   gorgon.image_size = 'small';
 
   timelineAllLoad();
-  
+
   $('.basic-mode').remove();
   $('.timeline-mode').show();
-  
+
   if ((navigator.userAgent.indexOf('iPhone') > 0 && navigator.userAgent.indexOf('iPad') == -1) || navigator.userAgent.indexOf('iPod') > 0) {
     $('#timeline-upload-photo-button').hide();
     $('#timeline-public-flag').css('margin', '0 0 0 0');
   }
- 
+
   $('#timeline_postform_submit').click( function() {
     $('#timeline-submit-error').hide();
     $('.photo-info').hide();
@@ -132,15 +132,15 @@ $(function(){
       },  
     }); 
   });
-  
+
   $('#tosaka_postform_body').keyup( function() {
     lengthCheck($(this), $('#timeline_postform_submit'));
   });
-  
+
   $('.timeline-post-comment-form-input').live('keyup', function() {
     lengthCheck($(this), $('button[data-timeline-id=' + $(this).attr('data-timeline-id') + ']'));
   });
-  
+
   $('#timeline-submit-upload').change(function() {
     var fileName = $('#timeline-submit-upload').val();
     var dom = $('#photo-file-name');
@@ -154,7 +154,7 @@ $(function(){
     }
     $('.photo-info').show();
   });
-  
+
   $('#photo-remove').click( function() {
     $('#timeline-submit-upload').val('');
     $('#photo-file-name').text('');
@@ -258,20 +258,20 @@ function renderJSON(json, mode) {
   if(json.data && 0 < viewPhoto)
   {
     for(i=0;i<json.data.length;i++)
-    {   
+    {
       if (!json.data[i].body_html.match(/img.*src=/))
-      {   
+      {
         if (json.data[i].body.match(/\.(jpg|jpeg|bmg|png|gif)/gi))
-        {   
+        {
           json.data[i].body_html = json.data[i].body.replace(/((http:|https:)\/\/[\x21-\x26\x28-\x7e]+.(jpg|jpeg|bmg|png|gif))/gi, '<div><a href="$1"><img src="$1"></img></a></div>');
-        }   
+        }
         else if (json.data[i].body.match(/((http:|https:)\/\/[\x21-\x26\x28-\x7e]+)/gi))
-        {   
+        {
           json.data[i].body_html = json.data[i].body.replace(/((http:|https:)\/\/[\x21-\x26\x28-\x7e]+)/gi, '<a href="$1"><div class="urlBlock"><img src="http://mozshot.nemui.org/shot?$1"><br />$1</div></a>');
-        }   
-      }   
+        }
+      }
       json.data[i].body_html = json.data[i].body_html.replace(/&lt;br \/&gt;/g, '<br />');
-    }   
+    }
   }
 
 
