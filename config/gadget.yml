@@ -19,12 +19,3 @@ timelineAll:
         10: 10
         15: 15
         20: 20
-
-timelineMentions:
-  caption:
-    ja_JP: "自分宛のタイムライン"
-    en_US: "Time line to you"
-  description:
-    ja_JP: "自分宛のタイムラインが表示されます。"
-    en_US: "Time line to you is displayed."
-  component: [timeline, timelineMentions]
