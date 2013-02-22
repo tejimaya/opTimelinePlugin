@@ -14,7 +14,6 @@
  * @package    OpenPNE
  * @subpackage timeline
  * @author     Shouta Kashiwagi <kashiwagi@tejimaya.com>
- * @version    SVN: $Id: actions.class.php 9301 2008-05-27 01:08:46Z dwhittle $
  */
 
 class timelineActions extends sfActions
@@ -125,7 +124,7 @@ class timelineActions extends sfActions
     $memberConfig = Doctrine::getTable('MemberConfig')->findOneByMemberIdAndName($memberId, 'op_screen_name');
     if ($memberConfig)
     {
-      return "@".$memberConfig->getValue();
+      return '@'.$memberConfig->getValue();
     }
     else
     {

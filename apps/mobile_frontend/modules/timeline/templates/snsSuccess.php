@@ -7,7 +7,7 @@
 <?php if (isset($form)): ?>
 <?php slot('activity_form') ?>
 <?php echo $form->renderFormTag(url_for('member/updateActivity')) ?>
-<?php echo __('Public flag') ?><?php echo $form['public_flag'] ?><br />
+<?php echo __('Public flag') ?><?php echo $form['public_flag'] ?><br>
 <?php echo $form['body'] ?>
 <?php echo $form->renderHiddenFields() ?>
 <input type="submit" value="<?php echo __('%post_activity%') ?>" />

@@ -116,7 +116,7 @@ class opTimeline
     return $memberIds;
   }
 
-  private function _createActivityDatasByActivityDatasAndMemberDatasForSearchAPI($activityDatas, $memberDatas)
+  private function _createActivityDatasByActivityDatasAndMemberDatasForSearchAPI($activityDatas, $memberData)
   {
     $activityIds = array();
     foreach ($activityDatas as $activity)
@@ -144,7 +144,7 @@ class opTimeline
       $imageUrls = $this->_getImageUrlInfoByImageUrl($activityImageUrl);
 
       $responseData['id'] = $activity->getId();
-      $responseData['member'] = $memberDatas[$activity->getMemberId()];
+      $responseData['member'] = $memberData[$activity->getMemberId()];
 
       $responseData['body'] = $activity->getBody();
       $responseData['body_html'] = op_activity_linkification(nl2br(op_api_force_escape($activity->getBody())));
@@ -164,11 +164,11 @@ class opTimeline
 
   private function _getImageUrlInfoByImageUrl($imageUrl)
   {
-    if ($imageUrl === null)
+    if (null === $imageUrl)
     {
       return array(
-          'large' => null,
-          'small' => null,
+        'large' => null,
+        'small' => null,
       );
     }
 
@@ -177,8 +177,8 @@ class opTimeline
     if (!file_exists($imagePath))
     {
       return array(
-          'large' => opTimelineImage::getNotImageUrl(),
-          'small' => opTimelineImage::getNotImageUrl(),
+        'large' => opTimelineImage::getNotImageUrl(),
+        'small' => opTimelineImage::getNotImageUrl(),
       );
     }
 
@@ -189,16 +189,16 @@ class opTimeline
     if (!file_exists($minimumImagePath))
     {
       return array(
-          'large' => $imageUrl,
-          'small' => $imageUrl,
+        'large' => $imageUrl,
+        'small' => $imageUrl,
       );
     }
 
     $minimumImageUrl = str_replace(sfConfig::get('sf_web_dir'), $this->_baseUrl, $minimumImagePath);
 
     return array(
-        'large' => $imageUrl,
-        'small' => $minimumImageUrl,
+      'large' => $imageUrl,
+      'small' => $minimumImageUrl,
     );
   }
 
@@ -240,12 +240,10 @@ class opTimeline
   {
     static $queryCacheHash;
 
-    $q = Doctrine_Query::create();
-
     if (!$queryCacheHash)
     {
       $q = Doctrine_Query::create();
-      $q->from('ActivityData ad');
+      $q->from('ActivityData');
       $q->whereIn('in_reply_to_activity_id', $activityIds);
       $q->orderBy('in_reply_to_activity_id, created_at DESC');
       $searchResult = $q->fetchArray();
@@ -377,9 +375,9 @@ class opTimeline
     $imageUrls = array();
     foreach ($responseDatas as $row)
     {
-      if ($row['image_url'] !== null)
+      if (null !== $row['image_url'])
       {
-        if ($this->_imageContentSize === 'large')
+        if ('large' === $this->_imageContentSize)
         {
           $imageUrls[$row['id']] = $row['image_large_url'];
         }
@@ -387,7 +385,6 @@ class opTimeline
         {
           $imageUrls[$row['id']] = $row['image_url'];
         }
-        
       }
     }
 
@@ -442,9 +439,6 @@ class opTimeline
     return Doctrine::getTable('ActivityData')->updateActivity($memberId, $body, $options);
   }
 
-  /**
-   *
-   */
   public function createActivityImageByFileInfoAndActivityId(array $fileInfo, $activityId)
   {
     $file = new File();

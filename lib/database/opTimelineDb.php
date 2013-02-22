@@ -11,7 +11,7 @@ class opTimelineDb
     $sth->execute(array($name));
     $searchResult = $sth->fetch();
 
-    if ($searchResult === false)
+    if (false === $searchResult)
     {
       return false;
     }
@@ -34,7 +34,7 @@ class opTimelineDb
 
     $db = $dbManager->getDatabase($names[0]);
 
-    return new PDO($db->getParameter("dsn"), $db->getParameter("username"), $db->getParameter("password"));
+    return new PDO($db->getParameter('dsn'), $db->getParameter('username'), $db->getParameter('password'));
   }
 
 }

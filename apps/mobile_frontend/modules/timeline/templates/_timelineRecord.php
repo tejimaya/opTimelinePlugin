@@ -7,9 +7,9 @@
 <font color="<?php echo $op_color['core_color_19'] ?>">[<?php echo $activity->getPublicFlagCaption() ?>]</font>
 <?php endif; ?>
 <?php if (!isset($isOperation) || $isOperation): ?>
-  <div align="right">
+<div align="right">
 <?php $replies = $activity->getReplies() ?>
-<?php if (0 !== count($replies)): ?>
+<?php if (0 < count($replies)): ?>
 <?php echo link_to('ｺﾒﾝﾄ'.count($replies).'件', '@comment_timeline?id='.$activity->getId()) ?>
 <?php else: ?>
 <?php echo link_to('ｺﾒﾝﾄする', '@comment_timeline?id='.$activity->getId()) ?>

@@ -44,6 +44,16 @@ var fileMaxSizeInfo = {
             <div class="timeline-post-body" id="timeline-body-context-${id}">
               {{html body_html}}
             </div>
+              <!-- Like Plugin -->
+              <div class="row like-wrapper" data-like-id="${id}" data-like-target="A" member-id="${member.id}" style="display: none;">
+              <span class="span5" style="text-align: center;"> 
+              <a class="like-post">いいね！</a>
+              <a class="like-cancel">いいね！を取り消す</a>
+              </span>
+              <span class="span3" style="text-align: center;">
+              <a class="like-list"></a>
+              </span>
+              </div>
             </div>
 
           </div>
@@ -59,6 +69,17 @@ var fileMaxSizeInfo = {
               <span class="icon-lock"></span>
               <span class="public-flag">公開しない</span>
               {{/if}}
+            </span>
+          </div>
+
+          <!-- LikePlugin -->
+          <div class="row like-wrapper" data-like-id="${id}" data-like-target="A" member-id="${member.id}" style="display: none; margin-left: 28px;">
+            <span class="span6" style="text-align: center;"> 
+              <a class="like-post">いいね！</a>
+              <a class="like-cancel">いいね！を取り消す</a>
+            </span>
+              <span class="span5" style="text-align: center;">
+              <a class="like-list"></a>
             </span>
           </div>
 
@@ -102,6 +123,16 @@ var fileMaxSizeInfo = {
               <div class="timeline-post-comment-control timestamp timeago" title="${created_at}"></div>
               <div class="timeline-post-comment-body">
               {{html body_html}}
+              </div>
+              <!-- Like Plugin -->
+              <div class="row like-wrapper" data-like-id="${id}" data-like-target="A" member-id="${member.id}" style="display: none; margin-left: 28px;">
+                <span class="span5" style="text-align: center;"> 
+                  <a class="like-post">いいね！</a>
+                  <a class="like-cancel">いいね！を取り消す</a>
+                </span>
+                <span class="span4" style="text-align: center;">
+                  <a class="like-list"></a>
+                </span>
               </div>
             </div>
 </script>

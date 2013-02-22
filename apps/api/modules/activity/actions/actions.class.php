@@ -7,6 +7,15 @@
  * For the full copyright and license information, please view the LICENSE
  * file and the NOTICE file that were distributed with this source code.
  */
+
+
+/**
+ * activity actions.
+ *
+ * @package    OpenPNE
+ * @subpackage opTimelinePlugin
+ * @author     tatsuya ichikawa <ichikawa@tejimaya.com>
+ */
 class activityActions extends opJsonApiActions
 {
 
@@ -14,10 +23,10 @@ class activityActions extends opJsonApiActions
   const COMMENT_DEFAULT_LIMIT = 15;
 
   /**
-   * POSTAPIで作成されたアクティブデータモデル
-   * 
+   * active data model maked by POSTAPI
    */
   private $_createdActivity;
+
   /**
    * @var opTimeline
    */
@@ -113,7 +122,7 @@ class activityActions extends opJsonApiActions
 
       $stream = fopen($fileInfo['tmp_name'], 'r');
 
-      if ($stream === false)
+      if (false === $stream)
       {
         return array('status' => 'error', 'message' => 'file upload error', 'type' => 'upload');
       }
@@ -133,7 +142,7 @@ class activityActions extends opJsonApiActions
     $activity = op_api_activity($this->_createdActivity);
 
     $replies = $this->_createdActivity->getReplies();
-    if (0 !== count($replies))
+    if (0 < count($replies))
     {
       $activity['replies'] = array();
 
@@ -176,15 +185,7 @@ class activityActions extends opJsonApiActions
 
   private function _createActivityDataByRequest(sfWebRequest $request)
   {
-    if ($request->isMethod('get'))
-    {
-      $saveData = $request->getGetParameters();
-    }
-    else
-    {
-      $saveData = $request->getPostParameters();
-    }
-
+    $saveData = $request->getParameterHolder()->getAll();
     $memberId = $this->getUser()->getMemberId();
 
     $this->_createdActivity = $this->_timeline->createPostActivityFromAPIByApiDataAndMemberId($saveData, $memberId);
@@ -202,15 +203,17 @@ class activityActions extends opJsonApiActions
 
     $errorInfo = array('status' => 'error', 'type' => 'tweet');
 
-    if (empty($body))
+    if (is_null($body) || '' == $body)
     {
       $errorInfo['message'] = 'body parameter not specified.';
+
       return $errorInfo;
     }
 
     if (mb_strlen($body) > self::TWEET_MAX_LENGTH)
     {
       $errorInfo['message'] = 'The body text is too long.';
+
       return $errorInfo;
     }
 
@@ -219,6 +222,7 @@ class activityActions extends opJsonApiActions
       if (!isset($request['target_id']))
       {
         $errorInfo['message'] = 'target_id parameter not specified.';
+
         return $errorInfo;
       }
     }
@@ -278,12 +282,13 @@ class activityActions extends opJsonApiActions
   private function _loadHelperForUseOpJsonAPI()
   {
     //op_api_activityを使用するために必要なヘルパーを読み込む
-    $this->getContext()->getConfiguration()->loadHelpers('opJsonApi');
-    $this->getContext()->getConfiguration()->loadHelpers('opUtil');
-    $this->getContext()->getConfiguration()->loadHelpers('Asset');
-    $this->getContext()->getConfiguration()->loadHelpers('Helper');
-    $this->getContext()->getConfiguration()->loadHelpers('Tag');
-    $this->getContext()->getConfiguration()->loadHelpers('sfImage');
+    $configuration = $this->getContext()->getConfiguration();
+    $configuration->loadHelpers('opJsonApi');
+    $configuration->loadHelpers('opUtil');
+    $configuration->loadHelpers('Asset');
+    $configuration->loadHelpers('Helper');
+    $configuration->loadHelpers('Tag');
+    $configuration->loadHelpers('sfImage');
   }
 
   private function _forward400IfInvalidTargetForSearchAPI(array $params)
@@ -295,7 +300,7 @@ class activityActions extends opJsonApiActions
       return $this->forward400('target parameter is invalid.');
     }
 
-    if ($params['target'] === 'community')
+    if ('community' === $params['target'])
     {
       $this->forward400Unless(
               Doctrine::getTable('CommunityMember')->isMember($this->getUser()->getMemberId(), $params['target_id']),

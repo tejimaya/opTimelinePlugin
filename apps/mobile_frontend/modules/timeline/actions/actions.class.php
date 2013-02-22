@@ -26,7 +26,7 @@ class timelineActions extends opTimelineAction
   {
     $this->forward404Unless($request->hasParameter('id'));
 
-    $this->activity = Doctrine::getTable('ActivityData')->find($this->id);
+    $this->activity = Doctrine::getTable('ActivityData')->find($request->getParameter('id'));
     $this->forward404Unless($this->activity instanceof ActivityData);
     $this->forward404Unless($this->activity->getMemberId() == $this->getUser()->getMemberId());
 
