@@ -164,7 +164,7 @@ class opTimeline
 
   private function _getImageUrlInfoByImageUrl($imageUrl)
   {
-    if (null === $imageUrl)
+    if (is_null($imageUrl))
     {
       return array(
         'large' => null,
@@ -375,7 +375,7 @@ class opTimeline
     $imageUrls = array();
     foreach ($responseDatas as $row)
     {
-      if (null !== $row['image_url'])
+      if (!is_null($row['image_url']))
       {
         if ('large' === $this->_imageContentSize)
         {
