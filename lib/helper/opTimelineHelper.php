@@ -12,7 +12,7 @@
  * opTimelineHelper provides timeline helper functions.
  *
  * @package    OpenPNE
- * @subpackage helper
+ * @subpackage opTimelinePlugin
  * @author     Shoua Kashiwagi <kashiwagi@tejimaya.com>
  */
 

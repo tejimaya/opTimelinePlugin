@@ -12,7 +12,7 @@
  * opTimelinePluginInstallTask
  *
  * @package    opTimelinePlugin
- * @subpackage task
+ * @subpackage opTimelinePlugin
  * @author     Shouta Kashiwagi <kashiwagi@tejimaya.com>
  */
 

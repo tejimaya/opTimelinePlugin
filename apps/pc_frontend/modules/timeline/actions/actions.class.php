@@ -12,7 +12,7 @@
  * timeline actions.
  *
  * @package    OpenPNE
- * @subpackage timeline
+ * @subpackage opTimelinePlugin
  * @author     Shouta Kashiwagi <kashiwagi@tejimaya.com>
  */
 

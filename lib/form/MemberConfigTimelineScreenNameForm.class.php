@@ -12,7 +12,7 @@
  * MemberConfigTimelineScreenNameForm.
  *
  * @package    opTimelinePlugin
- * @subpackage form
+ * @subpackage opTimelinePlugin
  * @author     Shouta Kashiwagi <kashiwagi@tejimaya.com>
  */
 class MemberConfigTimelineScreenNameForm extends MemberConfigForm

@@ -12,7 +12,7 @@
  * timeline actions.
  *
  * @package    OpenPNE
- * @subpackage timeline
+ * @subpackage opTimelinePlugin
  * @author     tatsuya ichikawa <ichikawa@tejimaya.com>
  */
 class opTimelinePluginActions extends sfActions
