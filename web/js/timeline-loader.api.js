@@ -372,6 +372,7 @@ function tweetByData(data)
 
       //jquery.uploadだとbrタグがなぜか<br ="">みたいな感じでレスポンスが戻ってきた API自体は問題ないが
       res = res.replace(/<br \\=\"\">/g,  '<br />');
+      res = res.replace(/href=\"(.*)\"\starget=\"_blank\"/g, 'href=\\"$1\\" target=\\"_blank\\"');
       returnData = JSON.parse(res);
 
       if (returnData.status === "error") {
