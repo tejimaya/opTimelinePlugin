@@ -4,9 +4,11 @@
 
 <?php $list = array() ?>
 <?php $replies = $activity->getReplies() ?>
+<?php if (FALSE !== $replies): ?>
 <?php foreach ($replies as $reply): ?>
 <?php $list[] = get_partial('timeline/timelineComment', array('activity' => $reply)) ?>
 <?php endforeach; ?>
+<?php endif; ?>
 
 <?php if (isset($form)): ?>
 <?php slot('activity_form') ?>
