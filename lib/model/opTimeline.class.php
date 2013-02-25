@@ -64,10 +64,10 @@ class opTimeline
       return array();
     }
 
-    $replayActivityDatas = $this->findReplayActivityDatasByActivityIdsGroupByActivityId($activityIds);
+    $replyActivityDatas = $this->findReplyActivityDatasByActivityIdsGroupByActivityId($activityIds);
 
-    $memberIds = $this->_extractionMemberIdByActivitieyDatasAndReplayActivityDataRows(
-                    $activityDatas, $replayActivityDatas);
+    $memberIds = $this->_extractionMemberIdByActivitieyDatasAndReplyActivityDataRows(
+                    $activityDatas, $replyActivityDatas);
     $memberDatas = $this->_user->createMemberDatasByViewerMemberIdAndMemberIdsForAPIResponse($viewerMemberId, $memberIds);
 
     $responseDatas = $this->_createActivityDatasByActivityDatasAndMemberDatasForSearchAPI($activityDatas, $memberDatas);
@@ -76,12 +76,12 @@ class opTimeline
     {
       $id = $response['id'];
 
-      if (isset($replayActivityDatas[$id]))
+      if (isset($replyActivityDatas[$id]))
       {
-        $replaies = $replayActivityDatas[$id];
+        $replies = $replyActivityDatas[$id];
 
-        $response['replies'] = $this->_createActivityDatasByActivityDataRowsAndMemberDatasForSearchAPI($replaies['data'], $memberDatas);
-        $response['replies_count'] = $replaies['count'];
+        $response['replies'] = $this->_createActivityDatasByActivityDataRowsAndMemberDatasForSearchAPI($replies['data'], $memberDatas);
+        $response['replies_count'] = $replies['count'];
       }
       else
       {
@@ -95,7 +95,7 @@ class opTimeline
     return $responseDatas;
   }
 
-  private function _extractionMemberIdByActivitieyDatasAndReplayActivityDataRows($activities, $replayActivitiyRows)
+  private function _extractionMemberIdByActivitieyDatasAndReplyActivityDataRows($activities, $replyActivitiyRows)
   {
     $memberIds = array();
     foreach ($activities as $activity)
@@ -103,7 +103,7 @@ class opTimeline
       $memberIds[] = $activity->getMemberId();
     }
 
-    foreach ($replayActivitiyRows as $activityDatas)
+    foreach ($replyActivitiyRows as $activityDatas)
     {
       foreach ($activityDatas['data'] as $activityData)
       {
@@ -236,7 +236,7 @@ class opTimeline
     return $responseDatas;
   }
 
-  public function findReplayActivityDatasByActivityIdsGroupByActivityId(array $activityIds)
+  public function findReplyActivityDatasByActivityIdsGroupByActivityId(array $activityIds)
   {
     static $queryCacheHash;
 
@@ -256,27 +256,27 @@ class opTimeline
       $searchResult = $q->fetchArray();
     }
 
-    $replaies = array();
+    $replies = array();
     foreach ($searchResult as $row)
     {
       $targetId = $row['in_reply_to_activity_id'];
 
-      if (!isset($replaies[$targetId]['data']) || count($replaies[$targetId]['data']) < self::COMMENT_DISPLAY_MAX)
+      if (!isset($replies[$targetId]['data']) || count($replies[$targetId]['data']) < self::COMMENT_DISPLAY_MAX)
       {
-        $replaies[$targetId]['data'][] = $row;
+        $replies[$targetId]['data'][] = $row;
       }
 
-      if (isset($replaies[$targetId]['count']))
+      if (isset($replies[$targetId]['count']))
       {
-        $replaies[$targetId]['count']++;
+        $replies[$targetId]['count']++;
       }
       else
       {
-        $replaies[$targetId]['count'] = 1;
+        $replies[$targetId]['count'] = 1;
       }
     }
 
-    return $replaies;
+    return $replies;
   }
 
   public function searchActivityDatasByAPIRequestDatasAndMemberId($requestDatas, $memberId)
