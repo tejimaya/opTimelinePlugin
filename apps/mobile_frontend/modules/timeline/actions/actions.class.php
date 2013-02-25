@@ -17,11 +17,6 @@
 */
 class timelineActions extends opTimelineAction
 {
-  public function preExecute()
-  {
-    $this->id = $this->getRequestParameter('id', $this->getUser()->getMemberId());
-  }
-
   public function executeDeleteTimeline($request)
   {
     $this->forward404Unless($request->hasParameter('id'));
@@ -43,11 +38,11 @@ class timelineActions extends opTimelineAction
   {
     $this->forward404Unless($request->hasParameter('id'));
 
-    $this->activity = Doctrine::getTable('ActivityData')->find($this->id);
+    $this->activity = Doctrine::getTable('ActivityData')->find($request->getParameter('id'));
     $this->forward404Unless($this->activity instanceof ActivityData);
 
     $this->form = new TimelineDataForm();
-    $this->form->setDefault('in_reply_to_activity_id', $this->id);
+    $this->form->setDefault('in_reply_to_activity_id', $request->getParameter('id'));
     $this->form->setDefault('public_flag', $this->activity->getPublicFlag());
   }
 
