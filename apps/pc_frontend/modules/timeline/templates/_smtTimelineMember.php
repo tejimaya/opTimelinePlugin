@@ -84,11 +84,6 @@ var fileMaxSize = '<?php echo opTimelinePluginUtil::getFileSizeMax() ?>';
 <div class="row">
   <div class="gadget_header span12"><?php if ($member): ?><?php echo $member->getName(); ?>さんのタイムライン<?php else: ?>タイムライン<?php endif; ?></div>
 </div>
-<?php if ($member): ?>
-<?php if ($sf_user->getMemberId() === $member->getId()): ?>
-<a href="<?php echo url_for('@homepage'); ?>member/config?category=timelineScreenName">■スクリーンネーム設定画面</a><br />
-<?php endif; ?>
-<?php endif; ?>
 
 <div id="timeline-list" class="span12" data-post-baseurl="<?php echo url_for('@homepage'); ?>" data-last-id="" data-loadmore-id="" style="margin-left: 0px;">
 </div>

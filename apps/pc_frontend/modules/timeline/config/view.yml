@@ -1,15 +1,8 @@
 indexSuccess:
   javascripts: [%OP_JQUERY_URL%, %OP_JQUERYUI_URL%, util]
 
-memberSuccess:
-  javascripts: [%OP_JQUERY_URL%, %OP_JQUERYUI_URL%, util]
-
 mentionsSuccess:
   javascripts: [%OP_JQUERY_URL%, %OP_JQUERYUI_URL%, util]
-
-communitySuccess:
-  javascripts: ["https://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.js", "http://ajax.microsoft.com/ajax/jquery.templates/beta1/jquery.tmpl.js", "/opTimelinePlugin/js/jquery.timeline.js"]
-  stylesheets: ["/opTimelinePlugin/css/prettyPopin.css", "/opTimelinePlugin/css/gorgon-home.css", "/opTimelinePlugin/css/blueandgreen.css"]
 
 smtIndexSuccess:
   javascripts: [%OP_JQUERY_URL%, %OP_JQUERYUI_URL%, util]

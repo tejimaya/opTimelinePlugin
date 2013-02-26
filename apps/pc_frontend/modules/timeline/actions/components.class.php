@@ -66,6 +66,8 @@ class timelineComponents extends sfComponents
     $this->_setFileMaxSize();
 
     $this->memberId = $this->getUser()->getMember()->getId();
+    $this->communityId = $request->getParameter('id');
+    $this->community = Doctrine::getTable('Community')->find($this->communityId);
   }
 
   public function executeCommunityTimelineBy5(sfWebRequest $request)
