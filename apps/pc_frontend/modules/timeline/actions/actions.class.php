@@ -97,6 +97,7 @@ class timelineActions extends sfActions
   {
     $this->memberId = (int)$request->getParameter('id', $this->getUser()->getMember()->getId());
     $this->member = Doctrine::getTable('Member')->find($this->memberId);
+    $this->forward404If(false === $this->member);
     opSmartphoneLayoutUtil::setLayoutParameters(array('member' => $this->member));
     $this->setTemplate('smtMember');
 
