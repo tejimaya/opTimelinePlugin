@@ -17,6 +17,7 @@ $(function(){
     $('#timeline_postform_submit').attr('disabled', 'disabled');
 
     var body = $.trim($('#tosaka_postform_body').val());
+    body = body.replace(/"/g, '&quot;')
 
     var faceName = $('.face-name').text();
     var faceImg = $('#face').children('.span2').children('img').attr('src');
@@ -356,8 +357,7 @@ function tweetByData(data)
         return;
       }
 
-      res = res.replace(/<br \\=\"\">/g,  '<br />');
-      res = res.replace(/href=\"(.*)\"\starget=\"_blank\"/g, 'href=\\"$1\\" target=\\"_blank\\"');
+      res = res.replace(/,\"body.*\"/g, '');
       returnData = JSON.parse(res);
 
       if (returnData.status === "error") {
