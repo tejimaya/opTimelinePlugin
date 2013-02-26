@@ -219,8 +219,8 @@ class opTimeline
       $responseData['id'] = $row['id'];
       $responseData['member'] = $memberDatas[$row['member_id']];
 
-      $responseData['body'] = $row['body'];
-      $responseData['body_html'] = op_activity_linkification(nl2br(op_api_force_escape($row['body'])));
+      $responseData['body'] = htmlspecialchars($row['body'], ENT_QUOTES, 'UTF-8', false);
+      $responseData['body_html'] = op_activity_linkification(nl2br(htmlspecialchars($row['body'], ENT_QUOTES, 'UTF-8', false)));
       $responseData['uri'] = $row['uri'];
       $responseData['source'] = $row['source'];
       $responseData['source_uri'] = $row['source_uri'];
