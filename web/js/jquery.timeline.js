@@ -45,6 +45,22 @@
               $('#timeline-post-comment-form-'+id).show();
               $postData = $('#timelineCommentTemplate').tmpl(data.data);
               $('#timeline-post-comment-form-'+id).before($postData);
+
+              $('button.timeline-post-delete-button').timelineDelete();
+              $('.timeline-post-delete-confirm-link').colorbox({
+                inline: true,
+                width: '610px',
+                opacity: '0.8',
+                onOpen: function(){ 
+                  $($(this).attr('href')).show(); 
+                },
+                onCleanup: function(){ 
+                  $($(this).attr('href')).hide();
+                },
+                onClosed: function(){
+                  timelineAllLoad();
+                }
+              });
             }
             else
             {
