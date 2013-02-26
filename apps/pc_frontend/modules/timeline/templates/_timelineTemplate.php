@@ -20,7 +20,7 @@
             </div>
             <div class="timeline-post-control">
             <a class="timeline-comment-link">コメントする</a>{{if member.self==true}} | <a href="#timeline-post-delete-confirm-${id}" class="timeline-post-delete-confirm-link">削除する</a>
-            {{/if}} | <a href="<?php echo url_for('@homepage', array('absolute' => true)) ?>timeline/show/id/${id}"><span class="timestamp">${created_at}</span></a>
+            {{/if}} | <a href="<?php echo url_for('@homepage', array('absolute' => true)) ?>timeline/show/id/${id}"><span class="timestamp timeago" title="${created_at}"></span></a>
 
             <!--Like Plugin -->
             <div class="like" style="display: none;">
