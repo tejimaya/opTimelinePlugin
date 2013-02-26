@@ -39,6 +39,7 @@
           success: function(data) {
             if ('success' == data.status)
             {
+              data.data.body_html = data.data.body;
               $('#comment-textarea-'+id).val('');
               $timelineLoader.hide();
               $('#timeline-post-comment-form-'+id).show();
