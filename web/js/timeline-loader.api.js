@@ -30,10 +30,10 @@ $(function(){
 
   $('#timeline-submit-button').click( function() {
     $(this).attr('disabled', 'disabled');
-    $('#timeline-submit-error').text('');
+    $('#timeline-submit-error').empty();
     $('#timeline-submit-error').hide();
     $('#timeline-submit-loader').show();
-    $('#photo-file-name').text('');
+    $('#photo-file-name').empty();
     $('#photo-remove').hide();
 
     var body = $('#timeline-textarea').val();
@@ -120,23 +120,26 @@ $(function(){
   });
 
   $('#timeline-submit-upload').change(function() {
+    if ($.browser.msie)
+    {
+      return;
+    }
 
-      $('#timeline-submit-error').hide();
-      $('#timeline-submit-error').text('');
+    $('#timeline-submit-error').hide();
+    $('#timeline-submit-error').empty();
 
-      var size = this.files[0].size;
+    var size = this.files[0].size;
 
-      if (size >= fileMaxSizeInfo['size']) {
-        $('#timeline-submit-error').show();
+    if (size >= fileMaxSizeInfo['size']) {
+      $('#timeline-submit-error').show();
 
-        var errorMessage = 'ファイルは' + fileMaxSizeInfo['format'] + '以上はアップロードできません';
-        $('#timeline-submit-error').text(errorMessage);
+      var errorMessage = 'ファイルは' + fileMaxSizeInfo['format'] + '以上はアップロードできません';
+      $('#timeline-submit-error').text(errorMessage);
 
-        $('#timeline-submit-upload').val('');
-        $('#photo-file-name').text('');
-
-      }
-
+      $('#timeline-submit-upload').empty();
+      $('#timeline-submit-upload').val('');
+      $('#photo-file-name').empty();
+    }
   });
 
   $('#timeline-textarea').keyup( function() {
@@ -149,7 +152,7 @@ $(function(){
   
   $('#photo-remove').click( function() {
     $('#timeline-submit-upload').val('');
-    $('#photo-file-name').text('');
+    $('#photo-file-name').empty();
     $(this).hide();
   });
 });
@@ -377,7 +380,7 @@ function tweetByData(data)
       if (returnData.status === "error") {
 
         var errorMessages = {
-          file_size: 'ファイルサイズは' + fileMaxSize + 'までです',
+          file_size: 'ファイルサイズは' + fileMaxSizeInfo['size'] + 'までです',
           upload: 'アップロードに失敗しました',
           not_image: '画像をアップロードしてください',
           tweet: '投稿に失敗しました'
@@ -393,12 +396,12 @@ function tweetByData(data)
         $('#timeline-submit-loader').hide();
 
       } else {
-        $('#timeline-submit-error').text('');
+        $('#timeline-submit-error').empty();
         timelineAllLoad();
       }
 
       $('#timeline-submit-upload').val('');
-      $('#timeline-submit-upload').text('');
+      $('#timeline-submit-upload').empty();
       $('#timeline-textarea').val('');
       $('#timeline-submit-loader').hide();
       $('#counter').text(MAXLENGTH);
