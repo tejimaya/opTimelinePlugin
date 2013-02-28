@@ -162,6 +162,7 @@ function timelineAllLoad() {
   if (gorgon)
   {
     gorgon.apiKey = openpne.apiKey;
+    delete gorgon.max_id;
     $.ajax({
       type: 'GET',
       url: openpne.apiBase + 'activity/search.json',
