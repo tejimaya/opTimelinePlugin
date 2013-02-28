@@ -398,7 +398,6 @@ class opTimeline
         $data['body_html'] = $data['body_html'].'<a href="'.$imageUrls[$id].'" rel="lightbox"><div><img src="'.$imageUrls[$id].'"></div></a>';
       }
     }
-    unset($data);
 
     return $responseDataList;
   }
