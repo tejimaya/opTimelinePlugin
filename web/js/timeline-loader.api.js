@@ -86,8 +86,13 @@ $(function(){
         'count': commentLength + 20
       },
       success: function(json){
-        commentlist.children().remove();
-        $('#timelineCommentTemplate').tmpl(json.data.reverse()).prependTo(commentlist);
+        commentlist.children('.timeline-post-comment').remove();
+        var reverseJson = new Array();
+        for (var i = 0; i <= json.data.length; i++)
+        {
+          reverseJson[i] = json.data[json.data.length - i];
+        }
+        $('#timelineCommentTemplate').tmpl(reverseJson).prependTo(commentlist);
         $('#timeline-comment-loader-' + timelineId).hide();
 
         if (json.data.length < commentLength + 20)
