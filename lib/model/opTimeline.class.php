@@ -23,10 +23,10 @@ class opTimeline
   const COMMENT_DISPLAY_MAX = 10;
   const MINIMUM_IMAGE_WIDTH = 285;
 
-  public function addPublicFlagByActivityDatasForSearchAPIByActivityDatas(array $responseDatas, $activityDatas)
+  public function addPublicFlagByActivityDataForSearchAPIByActivityData(array $responseDataList, $activityDataList)
   {
     $publicFlags = array();
-    foreach ($activityDatas as $activity)
+    foreach ($activityDataList as $activity)
     {
       $publicFlags[$activity->getId()] = $activity->getPublicFlag();
     }
@@ -38,23 +38,23 @@ class opTimeline
         ActivityDataTable::PUBLIC_FLAG_PRIVATE => 'private'
     );
 
-    foreach ($responseDatas as &$data)
+    foreach ($responseDataList as &$data)
     {
       $publicFlag = $publicFlags[$data['id']];
       $data['public_status'] = $publicStatusTextList[$publicFlag];
     }
     unset($data);
 
-    return $responseDatas;
+    return $responseDataList;
   }
 
   /**
    * メソッドを実行する前にopJsonApiをロードしておく必要がある
    */
-  public function createActivityDatasByActivityDataAndViewerMemberIdForSearchAPI($activityDatas, $viewerMemberId)
+  public function createActivityDataByActivityDataAndViewerMemberIdForSearchAPI($activityDataList, $viewerMemberId)
   {
     $activityIds = array();
-    foreach ($activityDatas as $activity)
+    foreach ($activityDataList as $activity)
     {
       $activityIds[] = $activity->getId();
     }
@@ -64,23 +64,23 @@ class opTimeline
       return array();
     }
 
-    $replyActivityDatas = $this->findReplyActivityDatasByActivityIdsGroupByActivityId($activityIds);
+    $replyActivityDataList = $this->findReplyActivityDataByActivityIdsGroupByActivityId($activityIds);
 
-    $memberIds = $this->_extractionMemberIdByActivitieyDatasAndReplyActivityDataRows(
-                    $activityDatas, $replyActivityDatas);
-    $memberDatas = $this->_user->createMemberDatasByViewerMemberIdAndMemberIdsForAPIResponse($viewerMemberId, $memberIds);
+    $memberIds = $this->_extractionMemberIdByActivitieyDataAndReplyActivityDataRows(
+                    $activityDataList, $replyActivityDataList);
+    $memberDataList = $this->_user->createMemberDataByViewerMemberIdAndMemberIdsForAPIResponse($viewerMemberId, $memberIds);
 
-    $responseDatas = $this->_createActivityDatasByActivityDatasAndMemberDatasForSearchAPI($activityDatas, $memberDatas);
+    $responseDataList = $this->_createActivityDataByActivityDataAndMemberDataForSearchAPI($activityDataList, $memberDataList);
 
-    foreach ($responseDatas as &$response)
+    foreach ($responseDataList as &$response)
     {
       $id = $response['id'];
 
-      if (isset($replyActivityDatas[$id]))
+      if (isset($replyActivityDataList[$id]))
       {
-        $replies = $replyActivityDatas[$id];
+        $replies = $replyActivityDataList[$id];
 
-        $response['replies'] = $this->_createActivityDatasByActivityDataRowsAndMemberDatasForSearchAPI($replies['data'], $memberDatas);
+        $response['replies'] = $this->_createActivityDataByActivityDataRowsAndMemberDataForSearchAPI($replies['data'], $memberDataList);
         $response['replies_count'] = $replies['count'];
       }
       else
@@ -92,10 +92,10 @@ class opTimeline
     }
     unset($response);
 
-    return $responseDatas;
+    return $responseDataList;
   }
 
-  private function _extractionMemberIdByActivitieyDatasAndReplyActivityDataRows($activities, $replyActivitiyRows)
+  private function _extractionMemberIdByActivitieyDataAndReplyActivityDataRows($activities, $replyActivitiyRows)
   {
     $memberIds = array();
     foreach ($activities as $activity)
@@ -103,9 +103,9 @@ class opTimeline
       $memberIds[] = $activity->getMemberId();
     }
 
-    foreach ($replyActivitiyRows as $activityDatas)
+    foreach ($replyActivitiyRows as $activityDataList)
     {
-      foreach ($activityDatas['data'] as $activityData)
+      foreach ($activityDataList['data'] as $activityData)
       {
         $memberIds[] = $activityData['member_id'];
       }
@@ -116,18 +116,18 @@ class opTimeline
     return $memberIds;
   }
 
-  private function _createActivityDatasByActivityDatasAndMemberDatasForSearchAPI($activityDatas, $memberData)
+  private function _createActivityDataByActivityDataAndMemberDataForSearchAPI($activityDataList, $memberData)
   {
     $activityIds = array();
-    foreach ($activityDatas as $activity)
+    foreach ($activityDataList as $activity)
     {
       $activityIds[] = $activity->getId();
     }
 
     $activityImageUrls = $this->findActivityImageUrlsByActivityIds($activityIds);
 
-    $responseDatas = array();
-    foreach ($activityDatas as $activity)
+    $responseDataList = array();
+    foreach ($activityDataList as $activity)
     {
       if (isset($activityImageUrls[$activity->getId()]))
       {
@@ -156,10 +156,10 @@ class opTimeline
       $responseData['image_large_url'] = $imageUrls['large'];
       $responseData['created_at'] = date('r', strtotime($activity->getCreatedAt()));
 
-      $responseDatas[] = $responseData;
+      $responseDataList[] = $responseData;
     }
 
-    return $responseDatas;
+    return $responseDataList;
   }
 
   private function _getImageUrlInfoByImageUrl($imageUrl)
@@ -210,14 +210,14 @@ class opTimeline
     return str_replace($match[1], sfConfig::get('sf_web_dir'), $imageUrl);
   }
 
-  private function _createActivityDatasByActivityDataRowsAndMemberDatasForSearchAPI($activityDataRows, $memberDatas)
+  private function _createActivityDataByActivityDataRowsAndMemberDataForSearchAPI($activityDataRows, $memberDataList)
   {
 
-    $responseDatas = array();
+    $responseDataList = array();
     foreach ($activityDataRows as $row)
     {
       $responseData['id'] = $row['id'];
-      $responseData['member'] = $memberDatas[$row['member_id']];
+      $responseData['member'] = $memberDataList[$row['member_id']];
 
       $responseData['body'] = htmlspecialchars($row['body'], ENT_QUOTES, 'UTF-8', false);
       $responseData['body_html'] = op_activity_linkification(nl2br(htmlspecialchars($row['body'], ENT_QUOTES, 'UTF-8', false)));
@@ -230,13 +230,13 @@ class opTimeline
       $responseData['image_large_url'] = null;
       $responseData['created_at'] = date('r', strtotime($row['created_at']));
 
-      $responseDatas[] = $responseData;
+      $responseDataList[] = $responseData;
     }
 
-    return $responseDatas;
+    return $responseDataList;
   }
 
-  public function findReplyActivityDatasByActivityIdsGroupByActivityId(array $activityIds)
+  public function findReplyActivityDataByActivityIdsGroupByActivityId(array $activityIds)
   {
     static $queryCacheHash;
 
@@ -279,32 +279,32 @@ class opTimeline
     return $replies;
   }
 
-  public function searchActivityDatasByAPIRequestDatasAndMemberId($requestDatas, $memberId)
+  public function searchActivityDataByAPIRequestDataAndMemberId($requestDataList, $memberId)
   {
     $builder = opActivityQueryBuilder::create()
                     ->setViewerId($memberId);
 
-    if (isset($requestDatas['target']))
+    if (isset($requestDataList['target']))
     {
-      if ('friend' === $requestDatas['target'])
+      if ('friend' === $requestDataList['target'])
       {
-        $builder->includeFriends($requestDatas['target_id'] ? $requestDatas['target_id'] : null);
+        $builder->includeFriends($requestDataList['target_id'] ? $requestDataList['target_id'] : null);
       }
 
-      if ('community' === $requestDatas['target'])
+      if ('community' === $requestDataList['target'])
       {
         $builder
                 ->includeSelf()
                 ->includeFriends()
                 ->includeSns()
-                ->setCommunityId($requestDatas['target_id']);
+                ->setCommunityId($requestDataList['target_id']);
       }
     }
     else
     {
-      if (isset($requestDatas['member_id']))
+      if (isset($requestDataList['member_id']))
       {
-        $builder->includeMember($requestDatas['member_id']);
+        $builder->includeMember($requestDataList['member_id']);
       }
       else
       {
@@ -317,34 +317,34 @@ class opTimeline
 
     $query = $builder->buildQuery();
 
-    if (isset($requestDatas['keyword']))
+    if (isset($requestDataList['keyword']))
     {
-      $query->andWhereLike('body', $requestDatas['keyword']);
+      $query->andWhereLike('body', $requestDataList['keyword']);
     }
 
     $globalAPILimit = sfConfig::get('op_json_api_limit', 20);
-    if (isset($requestDatas['count']) && (int) $requestDatas['count'] < $globalAPILimit)
+    if (isset($requestDataList['count']) && (int) $requestDataList['count'] < $globalAPILimit)
     {
-      $query->limit($requestDatas['count']);
+      $query->limit($requestDataList['count']);
     }
     else
     {
       $query->limit($globalAPILimit);
     }
 
-    if (isset($requestDatas['max_id']))
+    if (isset($requestDataList['max_id']))
     {
-      $query->addWhere('id <= ?', $requestDatas['max_id']);
+      $query->addWhere('id <= ?', $requestDataList['max_id']);
     }
 
-    if (isset($requestDatas['since_id']))
+    if (isset($requestDataList['since_id']))
     {
-      $query->addWhere('id > ?', $requestDatas['since_id']);
+      $query->addWhere('id > ?', $requestDataList['since_id']);
     }
 
-    if (isset($requestDatas['activity_id']))
+    if (isset($requestDataList['activity_id']))
     {
-      $query->addWhere('id = ?', $requestDatas['activity_id']);
+      $query->addWhere('id = ?', $requestDataList['activity_id']);
     }
 
     $query->andWhere('in_reply_to_activity_id IS NULL');
@@ -370,10 +370,10 @@ class opTimeline
     return $imageUrls;
   }
 
-  public function embedImageUrlToContentForSearchAPI(array $responseDatas)
+  public function embedImageUrlToContentForSearchAPI(array $responseDataList)
   {
     $imageUrls = array();
-    foreach ($responseDatas as $row)
+    foreach ($responseDataList as $row)
     {
       if (!is_null($row['image_url']))
       {
@@ -388,7 +388,7 @@ class opTimeline
       }
     }
 
-    foreach ($responseDatas as &$data)
+    foreach ($responseDataList as &$data)
     {
       $id = $data['id'];
 
@@ -400,7 +400,7 @@ class opTimeline
     }
     unset($data);
 
-    return $responseDatas;
+    return $responseDataList;
   }
 
   public function createPostActivityFromAPIByApiDataAndMemberId($apiData, $memberId)

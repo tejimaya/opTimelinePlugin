@@ -158,10 +158,10 @@ class activityActions extends opJsonApiActions
   /**
    * なぜかPOSTAPIだとJSONレンダーがうまくうごかなかった
    */
-  private function _renderJSONDirect(array $datas)
+  private function _renderJSONDirect(array $data)
   {
     //header("Content-Type: application/json; charset=utf-8");
-    echo json_encode($datas);
+    echo json_encode($data);
     exit;
   }
 
@@ -254,29 +254,29 @@ class activityActions extends opJsonApiActions
       $this->_forward400IfInvalidTargetForSearchAPI($parameters);
     }
 
-    $activityDatas = $this->_timeline->searchActivityDatasByAPIRequestDatasAndMemberId(
+    $activityData = $this->_timeline->searchActivityDataByAPIRequestDataAndMemberId(
                     $request->getGetParameters(), $this->getUser()->getMemberId());
 
-    $activitySearchDatas = $activityDatas->getData();
+    $activitySearchData = $activityData->getData();
     //一回も投稿していない
-    if (empty($activitySearchDatas))
+    if (empty($activitySearchData))
     {
       return $this->renderJSON(array('status' => 'success', 'data' => array()));
     }
 
-    $responseDatas = $this->_timeline->createActivityDatasByActivityDataAndViewerMemberIdForSearchAPI(
-                    $activityDatas, $this->getUser()->getMemberId());
+    $responseData = $this->_timeline->createActivityDataByActivityDataAndViewerMemberIdForSearchAPI(
+                    $activityData, $this->getUser()->getMemberId());
 
-    $responseDatas = $this->_timeline->addPublicFlagByActivityDatasForSearchAPIByActivityDatas($responseDatas, $activityDatas);
-    $responseDatas = $this->_timeline->embedImageUrlToContentForSearchAPI($responseDatas);
+    $responseData = $this->_timeline->addPublicFlagByActivityDataForSearchAPIByActivityData($responseData, $activityData);
+    $responseData = $this->_timeline->embedImageUrlToContentForSearchAPI($responseData);
 
-    return $this->renderJSON(array('status' => 'success', 'data' => $responseDatas));
+    return $this->renderJSON(array('status' => 'success', 'data' => $responseData));
   }
 
   private function _activitySearchAPI(sfWebRequest $request)
   {
 
-    return $responseDatas;
+    return $responseData;
   }
 
   private function _loadHelperForUseOpJsonAPI()

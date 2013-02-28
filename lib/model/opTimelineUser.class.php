@@ -3,7 +3,7 @@
 class opTimelineUser
 {
 
-  public function createMemberDatasByViewerMemberIdAndMemberIdsForAPIResponse($viewerMemberId, $memberIds)
+  public function createMemberDataByViewerMemberIdAndMemberIdsForAPIResponse($viewerMemberId, $memberIds)
   {
 
     $freindAndBlocks = $this->findFriendMemberIdsAndBlockMemberIdsByMemberId($viewerMemberId);
@@ -16,7 +16,7 @@ class opTimelineUser
 
     $memberNames = $this->findMemberNamesByMemberIds($memberIds);
 
-    $memberDatas = array();
+    $memberDataList = array();
 
     foreach ($memberIds as $memberId)
     {
@@ -32,10 +32,10 @@ class opTimelineUser
       $memberData['friends_count'] = $firendCounts[$memberId];
       $memberData['self_introduction'] = isset($introductions[$memberId]) ? (string) $introductions[$memberId] : null;
 
-      $memberDatas[$memberId] = $memberData;
+      $memberDataList[$memberId] = $memberData;
     }
 
-    return $memberDatas;
+    return $memberDataList;
   }
 
   public function findMemberNamesByMemberIds(array $memberIds)
