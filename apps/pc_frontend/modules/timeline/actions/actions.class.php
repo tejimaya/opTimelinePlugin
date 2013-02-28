@@ -55,6 +55,14 @@ class timelineActions extends sfActions
     {
       $this->redirect('default/error');
     }
+
+    if ('community' === $this->activity->getForeign_table())
+    {
+      $this->isCommunity = true;
+      $this->communityId = $this->activity->getForeign_id();
+      $this->community = Doctrine::getTable('Community')->find($this->communityId);
+      $this->memberId = $this->getUser()->getMember()->getId();
+    }
     $this->comment = Doctrine_Query::create()->from('ActivityData ad')->where('ad.in_reply_to_activity_id = ?', $activityId)->execute();
     $this->viewPhoto = opTimeline::getViewPhoto();
 
