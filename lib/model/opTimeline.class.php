@@ -205,7 +205,7 @@ class opTimeline
   private function _convertImageUrlToImagePath($imageUrl)
   {
     $match = array();
-    preg_match("/(http:\/\/.*)(\/cache)/", $imageUrl, $match);
+    preg_match("/(https?:\/\/.*)(\/cache)/", $imageUrl, $match);
 
     return str_replace($match[1], sfConfig::get('sf_web_dir'), $imageUrl);
   }
