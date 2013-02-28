@@ -49,6 +49,7 @@ class activityActions extends opJsonApiActions
     $this->_timeline = new opTimeline($user, $params);
 
     $this->_loadHelperForUseOpJsonAPI();
+    $this->memberId = $this->getUser()->getMemberId();
   }
 
   public function executeCommentSearch(sfWebRequest $request)
