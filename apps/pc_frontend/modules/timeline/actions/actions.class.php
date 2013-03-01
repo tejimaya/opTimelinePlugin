@@ -98,6 +98,7 @@ class timelineActions extends sfActions
       $this->redirect('default/error');
     }
     $this->comment = Doctrine_Query::create()->from('ActivityData ad')->where('ad.in_reply_to_activity_id = ?', $activityId)->execute();
+    $this->viewPhoto = opTimeline::getViewPhoto();
 
     return sfView::SUCCESS;
   }
