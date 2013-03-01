@@ -444,7 +444,13 @@ class opTimeline
     $file->setOriginalFilename(basename($fileInfo['name']));
     $file->setType($fileInfo['type']);
 
-    $fileBaseName = md5(time()).'_'.$file->getImageFormat();
+    $fileFormat = $file->getImageFormat();
+    if (is_null($fileFormat) || '' == $fileFormat)
+    {
+      $fileFormat = pathinfo($fileInfo['name'], PATHINFO_EXTENSION);
+    }
+
+    $fileBaseName = md5(time()).'_'.$fileFormat;
     $filename = 'ac_'.$fileInfo['member_id'].'_'.$fileBaseName;
 
     $file->setName($filename);
