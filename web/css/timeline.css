@@ -37,9 +37,10 @@ a.screen-name:link {
 }
 
 #timeline-submit-loader {
+  position: absolute;
   display: none;
-  text-align: center;
-  float: left;
+  margin-left: 230px;
+  margin-top: 3px;
 }
 
 #timeline-submit-loader img {
