@@ -6,7 +6,7 @@ class opTimelineUser
   public function createMemberDataByViewerMemberIdAndMemberIdsForAPIResponse($viewerMemberId, $memberIds)
   {
 
-    $freindAndBlocks = $this->findFriendMemberIdsAndBlockMemberIdsByMemberId($viewerMemberId);
+    $friendAndBlocks = $this->findFriendMemberIdsAndBlockMemberIdsByMemberId($viewerMemberId);
     $imageUrls = $this->findImageFileUrlsByMemberIds($memberIds);
 
     $introductionId = $this->findIntroductionIdFromProfile();
@@ -26,8 +26,8 @@ class opTimelineUser
       $memberData['screen_name'] = $memberNames[$memberId];
       $memberData['name'] = $memberNames[$memberId];
       $memberData['profile_url'] = op_api_member_profile_url($memberId);
-      $memberData['friend'] = isset($freindAndBlocks['friend'][$memberId]);
-      $memberData['blocking'] = isset($freindAndBlocks['block'][$memberId]);
+      $memberData['friend'] = isset($friendAndBlocks['friend'][$memberId]);
+      $memberData['blocking'] = isset($friendAndBlocks['block'][$memberId]);
       $memberData['self'] = $viewerMemberId === $memberId;
       $memberData['friends_count'] = $firendCounts[$memberId];
       $memberData['self_introduction'] = isset($introductions[$memberId]) ? (string) $introductions[$memberId] : null;
@@ -73,7 +73,7 @@ class opTimelineUser
   /**
    *
    * @param array $memberIds
-   * @return array (member_id => freind_count)
+   * @return array (member_id => friend_count)
    */
   public function findFriendCountByMemberIds(array $memberIds)
   {
@@ -146,7 +146,7 @@ class opTimelineUser
   /**
    *
    * @return array
-   *  (memberId => Introducton)
+   *  (memberId => Introduction)
    */
   public function findMemberIntroductionByMemberIdsAndIntroductionId(array $memberIds, $introductionId)
   {
@@ -227,7 +227,7 @@ class opTimelineUser
   /**
    *
    * @return array
-   *   freind => array(memberId...)
+   *   friend => array(memberId...)
    *   block  => array(memberId...)
    */
   public function findFriendMemberIdsAndBlockMemberIdsByMemberId($memberId)

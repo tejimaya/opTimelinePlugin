@@ -24,7 +24,7 @@ $(function(){
     var flashTimelineDom = 
           '<div class="flashTimelineDom">'
           + '<div class="timeline-post-member-image">'
-            + '<img src="' + faceImg + '" alt="member-image" width="23">'
+            + '<img src="' + faceImg + '" alt="member-image" width="23" />'
           + '</div>'
           + '<div class="timeline-post-content">'
             + '<div class="timeline-member-name">'
@@ -33,7 +33,7 @@ $(function(){
             + '</div>'
             + '<div class="timeline-post-body">' + body + '</div>'
             + '<span class="timeline-post-control">'
-              + '<img style="float: right; padding-right: 20px;" src="/images/ajax-loader.gif">'
+              + '<img style="float: right; padding-right: 20px;" src="/images/ajax-loader.gif" />'
             + '</span>'
           + '</div>'
           + '<div class="timeline-post-control">'
@@ -105,7 +105,7 @@ $(function(){
     $('#gorgon-loadmore').show();
   });
 
-  $('.timeline-comment-loadmore').live('click', function() {
+  $(document).on('click', '.timeline-comment-loadmore', function() {
     var timelineId = $(this).attr('data-timeline-id');
     var commentlist = $('#commentlist-' + timelineId);
     var commentLength = commentlist.children('.timeline-post-comment').length;
@@ -130,15 +130,15 @@ $(function(){
       },
       error: function(XMLHttpRequest, textStatus, errorThrown){
         $('#commentlist-' + timelineId).hide();
-      },  
-    }); 
+      }
+    });
   });
 
   $('#tosaka_postform_body').keyup( function() {
     lengthCheck($(this), $('#timeline_postform_submit'));
   });
 
-  $('.timeline-post-comment-form-input').live('keyup', function() {
+  $(document).on('keyup', '.timeline-post-comment-form-input', function() {
     lengthCheck($(this), $('button[data-timeline-id=' + $(this).attr('data-timeline-id') + ']'));
   });
 
@@ -180,7 +180,7 @@ function timelineAllLoad() {
         $('#timeline-list').text('タイムラインは投稿されていません。');
         $('#timeline-list').show();
         $('.flashTimelineDom').remove();
-      },
+      }
     });
 
   }
@@ -203,22 +203,6 @@ function timelineAllLoad() {
   }
 }
 
-function timelineDifferenceLoad() {
-  var lastId = $('#timeline-list').attr('data-last-id');
-  if (gorgon)
-  {
-    gorgon.apiKey = openpne.apiKey;
-  }
-  else
-  {
-    gorgon = {apiKey: openpne.apiKey,}
-  }
-  //$.getJSON( openpne.apiBase + 'activity/search.json?count=20&since_id=' + lastId, gorgon, function(json){
-  $.getJSON( openpne.apiBase + 'activity/search.json?count=20&since_id=' + lastId, gorgon, function(json){
-    renderJSON(json, 'diff');
-  });
-}
-
 function timelineLoadmore() {
   var loadmoreId = $('#timeline-list').attr('data-loadmore-id');
   loadmoreId = loadmoreId - 1;
@@ -235,7 +219,6 @@ function timelineLoadmore() {
   $.ajax({
     type: 'GET',
     url: openpne.apiBase + 'activity/search.json',
-    //url: openpne.apiBase + 'activity/search.json',
     data: gorgon,
     success: function(json){
       renderJSON(json, 'more');
@@ -243,8 +226,8 @@ function timelineLoadmore() {
     },
     error: function(XMLHttpRequest, textStatus, errorThrown){
       $('#timeline-loadmore-loading').hide();
-    },  
-  }); 
+    }
+  });
 }
 
 function renderJSON(json, mode) {
@@ -264,11 +247,11 @@ function renderJSON(json, mode) {
       {
         if (json.data[i].body.match(/\.(jpg|jpeg|bmg|png|gif)/gi))
         {
-          json.data[i].body_html = json.data[i].body.replace(/((http:|https:)\/\/[\x21-\x26\x28-\x7e]+.(jpg|jpeg|bmg|png|gif))/gi, '<div><a href="$1"><img src="$1"></img></a></div>');
+          json.data[i].body_html = json.data[i].body.replace(/((http:|https:)\/\/[\x21-\x26\x28-\x7e]+.(jpg|jpeg|bmg|png|gif))/gi, '<div><a href="$1"><img src="$1" /></a></div>');
         }
         else if (json.data[i].body.match(/((http:|https:)\/\/[\x21-\x26\x28-\x7e]+)/gi))
         {
-          json.data[i].body_html = json.data[i].body.replace(/((http:|https:)\/\/[\x21-\x26\x28-\x7e]+)/gi, '<a href="$1"><div class="urlBlock"><img src="http://mozshot.nemui.org/shot?$1"><br />$1</div></a>');
+          json.data[i].body_html = json.data[i].body.replace(/((http:|https:)\/\/[\x21-\x26\x28-\x7e]+)/gi, '<a href="$1"><div class="urlBlock"><img src="http://mozshot.nemui.org/shot?$1" /><br />$1</div></a>');
         }
       }
       json.data[i].body_html = json.data[i].body_html.replace(/&lt;br \/&gt;/g, '<br />');
@@ -333,15 +316,6 @@ function renderJSON(json, mode) {
   $('.timeago').timeago();
 }
 
-function convertTag(str) {
-  str = str.replace(/&/g,'&amp;');
-  str = str.replace(/"/g,'&quot;');
-  str = str.replace(/'/g,'&#039;');
-  str = str.replace(/</g,'&lt;');
-  str = str.replace(/>/g,'&gt;');
-  return str;
-}
-
 function tweetByData(data)
 {
   //reference　http://lagoscript.org/jquery/upload/documentation
@@ -386,7 +360,7 @@ function tweetByData(data)
       $('#counter').text(MAXLENGTH);
 
     },
-    'text' //なぜかJSON形式でうけとることができなかった
+    'text'
     );
 }
 

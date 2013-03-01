@@ -66,7 +66,7 @@ class timelineActions extends sfActions
     $this->comment = Doctrine_Query::create()->from('ActivityData ad')->where('ad.in_reply_to_activity_id = ?', $activityId)->execute();
     $this->viewPhoto = opTimeline::getViewPhoto();
 
-    return sfView::SUCCESS; 
+    return sfView::SUCCESS;
   }
 
   public function executeSns(opWebRequest $request)
@@ -74,7 +74,7 @@ class timelineActions extends sfActions
     $this->forwardIf($request->isSmartphone(), 'timeline', 'smtSns');
     $this->forward('default', 'error');
 
-    return sfView::SUCCESS; 
+    return sfView::SUCCESS;
   }
 
   public function executeSmtSns(opWebRequest $request)
@@ -86,7 +86,7 @@ class timelineActions extends sfActions
 
     $this->setTemplate('smtSns');
 
-    return sfView::SUCCESS; 
+    return sfView::SUCCESS;
   }
 
   public function executeSmtShow(opWebRequest $request)
@@ -99,7 +99,7 @@ class timelineActions extends sfActions
     }
     $this->comment = Doctrine_Query::create()->from('ActivityData ad')->where('ad.in_reply_to_activity_id = ?', $activityId)->execute();
 
-    return sfView::SUCCESS; 
+    return sfView::SUCCESS;
   }
 
   public function executeSmtMember(opWebRequest $request)
@@ -127,18 +127,5 @@ class timelineActions extends sfActions
   public function executeTimelinePlugin(sfWebRequest $request)
   {
     return sfView::SUCCESS;
-  }
-
-  private function getScreenName($memberId)
-  {
-    $memberConfig = Doctrine::getTable('MemberConfig')->findOneByMemberIdAndName($memberId, 'op_screen_name');
-    if ($memberConfig)
-    {
-      return '@'.$memberConfig->getValue();
-    }
-    else
-    {
-      return false;
-    }
   }
 }

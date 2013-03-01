@@ -72,7 +72,7 @@ $(function(){
     timelineLoadmore();
   });
 
-  $('.timeline-comment-loadmore').live('click', function() {
+  $(document).on('click', '.timeline-comment-loadmore', function() {
     var timelineId = $(this).attr('data-timeline-id');
     var commentlist = $('#commentlist-' + timelineId);
     var commentLength = commentlist.children('.timeline-post-comment').length;
@@ -102,8 +102,8 @@ $(function(){
       },
       error: function(XMLHttpRequest, textStatus, errorThrown){
         $(commentlist).hide();
-      }  
-    }); 
+      }
+    });
   });
 
   $('#timeline-submit-upload').change(function() {
@@ -151,7 +151,7 @@ $(function(){
     lengthCheck($(this), $('#timeline-submit-button'));
   });
 
-  $('.timeline-post-comment-form-input').live('keyup', function() {
+  $(document).on('keyup', '.timeline-post-comment-form-input', function() {
     lengthCheck($(this), $('button[data-timeline-id=' + $(this).attr('data-timeline-id') + ']'));
   });
   
@@ -190,8 +190,8 @@ function timelineAllLoad() {
         $('#timeline-loading').hide();
         $('#timeline-list').text('タイムラインは投稿されていません。');
         $('#timeline-list').show();
-      }  
-    }); 
+      }
+    });
   }
   else
   {
@@ -216,8 +216,8 @@ function timelineAllLoad() {
         $('#timeline-loading').hide();
         $('#timeline-list').text('タイムラインは投稿されていません。');
         $('#timeline-list').show();
-      }  
-    }); 
+      }
+    });
   }
 }
 
@@ -266,8 +266,8 @@ function timelineLoadmore() {
     },
     error: function(XMLHttpRequest, textStatus, errorThrown){
       $('#timeline-loadmore-loading').hide();
-    }  
-  }); 
+    }
+  });
 }
 
 function renderJSON(json, mode) {
@@ -356,15 +356,6 @@ function renderJSON(json, mode) {
   $('.timeago').timeago();
 }
 
-function convertTag(str) {
-  str = str.replace(/&/g,'&amp;');
-  str = str.replace(/"/g,'&quot;');
-  str = str.replace(/'/g,'&#039;');
-  str = str.replace(/</g,'&lt;');
-  str = str.replace(/>/g,'&gt;');
-  return str;
-}
-
 function tweetByData(data)
 {
   //reference　http://lagoscript.org/jquery/upload/documentation
@@ -413,7 +404,7 @@ function tweetByData(data)
       $('#counter').text(MAXLENGTH);
 
     },
-    'text' //なぜかJSON形式でうけとることができなかった
+    'text'
     );
 }
 

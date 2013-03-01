@@ -1,7 +1,7 @@
 <?php
 
 /**
- * opGyoenKintaiPlugin components.
+ * opTimelinePlugin components.
  *
  * @package    OpenPNE
  * @subpackage opTimelinePlugin

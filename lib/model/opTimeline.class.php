@@ -66,7 +66,7 @@ class opTimeline
 
     $replyActivityDataList = $this->findReplyActivityDataByActivityIdsGroupByActivityId($activityIds);
 
-    $memberIds = $this->_extractionMemberIdByActivitieyDataAndReplyActivityDataRows(
+    $memberIds = $this->_extractionMemberIdByActivityDataAndReplyActivityDataRows(
                     $activityDataList, $replyActivityDataList);
     $memberDataList = $this->_user->createMemberDataByViewerMemberIdAndMemberIdsForAPIResponse($viewerMemberId, $memberIds);
 
@@ -95,7 +95,7 @@ class opTimeline
     return $responseDataList;
   }
 
-  private function _extractionMemberIdByActivitieyDataAndReplyActivityDataRows($activities, $replyActivitiyRows)
+  private function _extractionMemberIdByActivityDataAndReplyActivityDataRows($activities, $replyActivitiyRows)
   {
     $memberIds = array();
     foreach ($activities as $activity)

@@ -274,12 +274,6 @@ class activityActions extends opJsonApiActions
     return $this->renderJSON(array('status' => 'success', 'data' => $responseData));
   }
 
-  private function _activitySearchAPI(sfWebRequest $request)
-  {
-
-    return $responseData;
-  }
-
   private function _loadHelperForUseOpJsonAPI()
   {
     //op_api_activityを使用するために必要なヘルパーを読み込む

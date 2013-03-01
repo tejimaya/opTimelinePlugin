@@ -39,7 +39,7 @@ EOF;
     $sfPluginPublishAssetsTask = new sfPluginPublishAssetsTask($this->dispatcher, $this->formatter);
     $sfPluginPublishAssetsTask->run();
 
-    // execute ./symfomy cc
+    // execute ./symfony cc
     $sfCacheClearTask = new sfCacheClearTask($this->dispatcher, $this->formatter);
     $sfCacheClearTask->run($arguments = array(), $options = array('type' => 'all'));
   }

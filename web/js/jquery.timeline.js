@@ -1,5 +1,5 @@
 /*********************************************************
-** jQuery timeilinePlugin functions
+** jQuery timelinePlugin functions
 ** how to use : $('#element').timelineComment();
 **              $('#element').timelineDelete();
 ** @parts     : opTimelinePlugin
@@ -8,10 +8,6 @@
 (function($){
 
   $.fn.timelineComment = function(settings){
-    settings = jQuery.extend({
-      loader_path: '',
-      callback: function(){},
-    });
 
     return this.each(function(){
       $(this).click(function(){

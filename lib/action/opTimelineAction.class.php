@@ -22,7 +22,6 @@ class opTimelineAction extends sfActions
       $this->form->save();
       if ($request->isXmlHttpRequest())
       {
-        $activities = Doctrine::getTable('ActivityData')->getFriendActivityList();
         $this->getContext()->getConfiguration()->loadHelpers('Partial');
         return $this->renderText(get_partial('default/activityRecord', array('activity' => $this->form->getObject())));
       }
