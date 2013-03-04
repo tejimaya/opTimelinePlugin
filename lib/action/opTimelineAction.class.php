@@ -8,6 +8,13 @@
  * file and the NOTICE file that were distributed with this source code.
  */
 
+/**
+ * opTimelineAction
+ *
+ * @package    OpenPNE
+ * @subpackage opTimelinePlugin
+ */
+
 class opTimelineAction extends sfActions
 {
   public function updateTimeline($request)

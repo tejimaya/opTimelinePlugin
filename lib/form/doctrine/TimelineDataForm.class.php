@@ -8,6 +8,13 @@
  * file and the NOTICE file that were distributed with this source code.
  */
 
+/**
+ * TimelineDataForm
+ *
+ * @package    OpenPNE
+ * @subpackage opTimelinePlugin
+ */
+
 class TimelineDataForm extends BaseActivityDataForm
 {
   public function configure()

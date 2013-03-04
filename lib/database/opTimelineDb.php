@@ -8,6 +8,13 @@
  * file and the NOTICE file that were distributed with this source code.
  */
 
+/**
+ * opTimelineDb
+ *
+ * @package    OpenPNE
+ * @subpackage opTimelinePlugin
+ */
+
 class opTimelineDb
 {
 
