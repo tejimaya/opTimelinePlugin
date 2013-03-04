@@ -23,7 +23,7 @@ class opTimelinePluginInstallTask extends sfBaseTask
     $this->namespace        = 'opTimelinePlugin';
     $this->name             = 'install';
     $this->briefDescription = 'Install Command for "opTimelinePlugin".';
- 
+
     $this->detailedDescription = <<<EOF
 Use this command to install "opTimelinePlugin".
 EOF;
