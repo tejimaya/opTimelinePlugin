@@ -337,7 +337,7 @@ function tweetByData(data)
       if (returnData.status === "error") {
 
         var errorMessages = {
-          file_size: 'ファイルサイズは' + fileMaxSize + 'までです',
+          file_size: 'ファイルサイズは' + fileMaxSizeInfo['format'] + 'までです',
           upload: 'アップロードに失敗しました',
           not_image: '画像をアップロードしてください',
           tweet: '投稿に失敗しました'
