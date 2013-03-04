@@ -54,7 +54,7 @@ var fileMaxSizeInfo = {
             <span class="timeline-post-control-show">
               {{if public_status == 'friend' }}
               <span class="icon-lock"></span>
-              <span class="public-flag">マイフレンドまで</span>
+              <span class="public-flag"><?php echo $op_term['my_friend'] ?>まで</span>
               {{else public_status == 'private' }}
               <span class="icon-lock"></span>
               <span class="public-flag">公開しない</span>
@@ -107,7 +107,7 @@ var fileMaxSizeInfo = {
 </script>
 
 <div class="row">
-  <div class="gadget_header span12">コミュニティタイムライン</div>
+<div class="gadget_header span12"><?php echo $op_term['community'] ?><?php echo $op_term['activity'] ?></div>
 </div>
 
 <div id="timeline-list" class="span12" data-post-baseurl="<?php echo url_for('@homepage', array('absolute' => true)); ?>" data-last-id="" data-loadmore-id="" style="margin-left: 0px;">

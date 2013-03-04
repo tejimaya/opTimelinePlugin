@@ -50,7 +50,7 @@ var fileMaxSizeInfo = {
             <span class="timeline-public-flag-show">
               {{if public_status == 'friend' }}
               <span class="icon-lock"></span>
-              <span class="public-flag">マイフレンドまで</span>
+              <span class="public-flag"><?php echo $op_term['my_friend'] ?>まで</span>
               {{else public_status == 'private' }}
               <span class="icon-lock"></span>
               <span class="public-flag">公開しない</span>
@@ -113,7 +113,7 @@ var fileMaxSizeInfo = {
 </div>
 
 <div class="row">
-  <div class="gadget_header span12">SNS全体のタイムライン</div>
+  <div class="gadget_header span12">SNS全体の<?php echo $op_term['activity'] ?></div>
 </div>
 
 <div class="timeline" style="margin-left: 0px;">

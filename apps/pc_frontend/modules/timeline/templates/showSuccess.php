@@ -24,7 +24,7 @@ var fileMaxSize = '<?php echo opTimelinePluginUtil::getFileSizeMax() ?>';
 
 <?php include_partial('timeline/timelineTemplate') ?>
 
-<div class="partsHeading"><h3><?php echo $activity->getMember()->getName(); ?>さんのタイムライン</h3></div>
+<div class="partsHeading"><h3><?php echo $activity->getMember()->getName(); ?>さんの<?php echo $op_term['activity'] ?></h3></div>
 
     <div class="timeline-large">
       <div id="timeline-loading" style="text-align: center;"><?php echo op_image_tag('ajax-loader.gif', array()) ?></div>

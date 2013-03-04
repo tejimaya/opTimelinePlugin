@@ -13,7 +13,7 @@
             </div>
             <div class="timeline-post-control">
               {{if public_status == 'friend' }}
-              <span class="public-flag">公開範囲:マイフレンドまで公開</span>
+              <span class="public-flag">公開範囲:<?php echo $op_term['my_friend'] ?>まで公開</span>
               {{else public_status == 'private' }}
               <span class="public-flag">公開範囲:公開しない</span>
               {{/if}}

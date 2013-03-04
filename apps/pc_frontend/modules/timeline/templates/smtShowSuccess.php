@@ -42,7 +42,7 @@ var viewPhoto = '<?php echo $viewPhoto ?>';
             <span class="timeline-public-flag-show">
               {{if public_status == 'friend' }}
               <span class="icon-lock"></span>
-              <span class="public-flag">マイフレンドまで</span>
+              <span class="public-flag"><?php echo $op_term['my_friend'] ?>まで</span>
               {{else public_status == 'private' }}
               <span class="icon-lock"></span>
               <span class="public-flag">公開しない</span>
@@ -95,7 +95,7 @@ var viewPhoto = '<?php echo $viewPhoto ?>';
 </script>
 
 <div class="row">
-  <div class="gadget_header span12"><?php echo $activity->getMember()->getName(); ?>さんのタイムライン</div>
+  <div class="gadget_header span12"><?php echo $activity->getMember()->getName(); ?>さんの<?php echo $op_term['activity'] ?></div>
 </div>
 
 <div id="timeline-list" class="span12" data-post-baseurl="<?php echo url_for('@homepage'); ?>" data-last-id="" data-loadmore-id="">

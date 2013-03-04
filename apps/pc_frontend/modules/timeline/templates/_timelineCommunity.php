@@ -66,7 +66,7 @@ $(function(){
 });
 </script>
 <?php include_partial('timeline/timelineTemplate') ?>
-<div class="partsHeading"><h3>コミュニティタイムライン</h3></div>
+<div class="partsHeading"><h3><?php echo $op_term['community'] ?><?php echo $op_term['activity'] ?></h3></div>
     <div class="timeline">
       <div class="timeline-postform well">
         <textarea id="timeline-textarea" class="input-xlarge" rows="1" tabindex="1" placeholder="今何してる？"></textarea>

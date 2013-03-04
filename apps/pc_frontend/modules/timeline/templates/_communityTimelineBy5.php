@@ -1,4 +1,4 @@
-<div class="partsHeading"><h3><?php echo $community->getName(); ?>のタイムライン</h3></div>
+<div class="partsHeading"><h3><?php echo $community->getName(); ?>の<?php echo $op_term['activity'] ?></h3></div>
 <div class="main-content" style="min-height: 300px;">
   <div class="page-header">
     <div id="timeline-list">

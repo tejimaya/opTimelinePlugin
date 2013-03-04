@@ -41,7 +41,7 @@ var fileMaxSize = '<?php echo opTimelinePluginUtil::getFileSizeMax() ?>';
             <a href="#timeline-${id}" class="timeline-comment-link">コメントする</a>
             <span class="timeline-post-control-show">
               {{if public_status == 'friend' }}
-              <span class="public-flag">マイフレンドまで</span>
+              <span class="public-flag"><?php echo $op_term['my_friend'] ?>まで</span>
               {{else public_status == 'private' }}
               <span class="public-flag">公開しない</span>
               {{/if}}
@@ -82,7 +82,7 @@ var fileMaxSize = '<?php echo opTimelinePluginUtil::getFileSizeMax() ?>';
 </script>
 
 <div class="row">
-  <div class="gadget_header span12"><?php if ($member): ?><?php echo $member->getName(); ?>さんのタイムライン<?php else: ?>タイムライン<?php endif; ?></div>
+  <div class="gadget_header span12"><?php if ($member): ?><?php echo $member->getName(); ?>さんの<?php echo $op_term['activity'] ?><?php else: ?><?php echo $op_term['activity'] ?><?php endif; ?></div>
 </div>
 
 <div id="timeline-list" class="span12" data-post-baseurl="<?php echo url_for('@homepage'); ?>" data-last-id="" data-loadmore-id="" style="margin-left: 0px;">

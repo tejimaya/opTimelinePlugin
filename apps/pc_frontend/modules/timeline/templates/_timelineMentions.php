@@ -29,7 +29,7 @@ $(function(){
 
 <?php include_partial('timeline/timelineTemplate') ?>
 
-<div class="partsHeading"><h3>自分宛のタイムライン</h3></div>
+<div class="partsHeading"><h3>自分宛の<?php echo $op_term['activity'] ?></h3></div>
 
     <div class="timeline">
       <div class="timeline-postform well">

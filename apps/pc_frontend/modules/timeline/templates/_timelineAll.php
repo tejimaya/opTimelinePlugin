@@ -55,7 +55,7 @@ $(function(){
 
 <?php include_partial('timeline/timelineTemplate') ?>
 
-<div class="partsHeading"><h3>SNSメンバー全員のタイムライン</h3></div>
+<div class="partsHeading"><h3>SNSメンバー全員の<?php echo $op_term['activity'] ?></h3></div>
 
     <div class="timeline">
       <div class="timeline-postform well">
