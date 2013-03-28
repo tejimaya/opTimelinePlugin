@@ -52,6 +52,9 @@ opTimelinePlugin
  モデルとデータベースを更新します。  
     ./symfony opTimelinePlugin:install  
   
+## 次期対応予定
+アクセスブロックした相手につぶやきを見えないようにする  
+
 ## 要望・フィードバック
 要望・フィードバックは #opTimelinePlugin のハッシュタグをつけてつぶやいてください。    
    GitHubのアカウントを持っている人は [issues](https://github.com/kashiwasan/opTimelinePlugin/issues)に
