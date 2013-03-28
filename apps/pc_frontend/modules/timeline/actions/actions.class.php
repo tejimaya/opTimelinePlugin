@@ -117,9 +117,4 @@ class timelineActions extends sfActions
 
     return sfView::SUCCESS;
   }
-
-  public function executeTimelinePlugin(sfWebRequest $request)
-  {
-    return sfView::SUCCESS;
-  }
 }
