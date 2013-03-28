@@ -25,12 +25,12 @@ class activityActions extends opJsonApiActions
   /**
    * active data model maked by POSTAPI
    */
-  private $_createdActivity;
+  private $createdActivity;
 
   /**
    * @var opTimeline
    */
-  private $_timeline;
+  private $timeline;
 
   const DEFAULT_IMAGE_SIZE = 'large';
 
@@ -46,9 +46,9 @@ class activityActions extends opJsonApiActions
     $request = sfContext::getInstance()->getRequest();
     $params['base_url'] = $request->getUriPrefix().$request->getRelativeUrlRoot();
 
-    $this->_timeline = new opTimeline($user, $params);
+    $this->timeline = new opTimeline($user, $params);
 
-    $this->_loadHelperForUseOpJsonAPI();
+    $this->loadHelperForUseOpJsonAPI();
     $this->memberId = $this->getUser()->getMemberId();
   }
 
@@ -77,44 +77,44 @@ class activityActions extends opJsonApiActions
 
   public function executePost(sfWebRequest $request)
   {
-    $errorResponse = $this->_getErrorResponseIfBadRequestOfPost($request);
+    $errorResponse = $this->getErrorResponseIfBadRequestOfPost($request);
 
     if (!is_null($errorResponse))
     {
-      return $this->_renderJSONDirect($errorResponse);
+      return $this->renderJSONDirect($errorResponse);
     }
 
-    $this->_createActivityDataByRequest($request);
+    $this->createActivityDataByRequest($request);
 
-    $responseData = $this->_createResponActivityDataOfPost();
+    $responseData = $this->createResponActivityDataOfPost();
     $responseData['body'] = htmlspecialchars($responseData['body'], ENT_QUOTES, 'UTF-8', false);
     $responseData['body_html'] = htmlspecialchars($responseData['body_html'], ENT_QUOTES, 'UTF-8', false);
 
-    if ($this->_isUploadImagePost())
+    if ($this->isUploadImagePost())
     {
-      return $this->_renderJSONDirect(array('status' => 'success', 'message' => 'file up success', 'data' => $responseData));
+      return $this->renderJSONDirect(array('status' => 'success', 'message' => 'file up success', 'data' => $responseData));
     }
 
-    return $this->_renderJSONDirect(array('status' => 'success', 'message' => 'tweet success', 'data' => $responseData));
+    return $this->renderJSONDirect(array('status' => 'success', 'message' => 'tweet success', 'data' => $responseData));
   }
 
-  private function _isUploadImagePost()
+  private function isUploadImagePost()
   {
     return (!empty($_FILES) && (int) $_FILES['timeline-submit-upload']['size'] !== 0);
   }
 
-  private function _getErrorResponseIfBadRequestOfPost(sfWebRequest $request)
+  private function getErrorResponseIfBadRequestOfPost(sfWebRequest $request)
   {
-    $errorInfo = $this->_getErrorResponseIfBadRequestOfTweetPost($request);
+    $errorInfo = $this->getErrorResponseIfBadRequestOfTweetPost($request);
 
     if (!empty($errorInfo))
     {
       return $errorInfo;
     }
 
-    if ($this->_isUploadImagePost())
+    if ($this->isUploadImagePost())
     {
-      $fileInfo = $this->_createFileInfo($request);
+      $fileInfo = $this->createFileInfo($request);
 
       if ($fileInfo['size'] >= opTimelinePluginUtil::getFileSizeMax())
       {
@@ -128,7 +128,7 @@ class activityActions extends opJsonApiActions
         return array('status' => 'error', 'message' => 'file upload error', 'type' => 'upload');
       }
 
-      if (!$this->_isImageUploadByFileInfo($fileInfo))
+      if (!$this->isImageUploadByFileInfo($fileInfo))
       {
         return array('status' => 'error', 'message' => 'not image', 'type' => 'not_image');
       }
@@ -137,12 +137,12 @@ class activityActions extends opJsonApiActions
     return null;
   }
 
-  private function _createResponActivityDataOfPost()
+  private function createResponActivityDataOfPost()
   {
-    $this->_loadHelperForUseOpJsonAPI();
-    $activity = op_api_activity($this->_createdActivity);
+    $this->loadHelperForUseOpJsonAPI();
+    $activity = op_api_activity($this->createdActivity);
 
-    $replies = $this->_createdActivity->getReplies();
+    $replies = $this->createdActivity->getReplies();
     if (0 < count($replies))
     {
       $activity['replies'] = array();
@@ -159,7 +159,7 @@ class activityActions extends opJsonApiActions
   /**
    * なぜかPOSTAPIだとJSONレンダーがうまくうごかなかった
    */
-  private function _renderJSONDirect(array $data)
+  private function renderJSONDirect(array $data)
   {
     //header("Content-Type: application/json; charset=utf-8");
     echo json_encode($data);
@@ -169,7 +169,7 @@ class activityActions extends opJsonApiActions
   /**
    * @todo ファイル情報じゃないのが含まれているので、それを分ける
    */
-  private function _createFileInfo()
+  private function createFileInfo()
   {
     $request = sfContext::getInstance()->getRequest();
 
@@ -184,21 +184,21 @@ class activityActions extends opJsonApiActions
     return $fileInfo;
   }
 
-  private function _createActivityDataByRequest(sfWebRequest $request)
+  private function createActivityDataByRequest(sfWebRequest $request)
   {
     $saveData = $request->getParameterHolder()->getAll();
     $memberId = $this->getUser()->getMemberId();
 
-    $this->_createdActivity = $this->_timeline->createPostActivityFromAPIByApiDataAndMemberId($saveData, $memberId);
+    $this->createdActivity = $this->timeline->createPostActivityFromAPIByApiDataAndMemberId($saveData, $memberId);
 
-    if ($this->_isUploadImagePost())
+    if ($this->isUploadImagePost())
     {
-      $fileInfo = $this->_createFileInfo($request);
-      $this->_timeline->createActivityImageByFileInfoAndActivityId($fileInfo, $this->_createdActivity->getId());
+      $fileInfo = $this->createFileInfo($request);
+      $this->timeline->createActivityImageByFileInfoAndActivityId($fileInfo, $this->createdActivity->getId());
     }
   }
 
-  private function _getErrorResponseIfBadRequestOfTweetPost(sfWebRequest $request)
+  private function getErrorResponseIfBadRequestOfTweetPost(sfWebRequest $request)
   {
     $body = (string) $request['body'];
 
@@ -231,7 +231,7 @@ class activityActions extends opJsonApiActions
     return null;
   }
 
-  private function _isImageUploadByFileInfo(array $fileInfo)
+  private function isImageUploadByFileInfo(array $fileInfo)
   {
     foreach (opTimelinePluginUtil::getUploadAllowImageTypeList() as $type)
     {
@@ -252,10 +252,10 @@ class activityActions extends opJsonApiActions
 
     if (isset($parameters['target']))
     {
-      $this->_forward400IfInvalidTargetForSearchAPI($parameters);
+      $this->forward400IfInvalidTargetForSearchAPI($parameters);
     }
 
-    $activityData = $this->_timeline->searchActivityDataByAPIRequestDataAndMemberId(
+    $activityData = $this->timeline->searchActivityDataByAPIRequestDataAndMemberId(
                     $request->getGetParameters(), $this->getUser()->getMemberId());
 
     $activitySearchData = $activityData->getData();
@@ -265,16 +265,16 @@ class activityActions extends opJsonApiActions
       return $this->renderJSON(array('status' => 'success', 'data' => array()));
     }
 
-    $responseData = $this->_timeline->createActivityDataByActivityDataAndViewerMemberIdForSearchAPI(
+    $responseData = $this->timeline->createActivityDataByActivityDataAndViewerMemberIdForSearchAPI(
                     $activityData, $this->getUser()->getMemberId());
 
-    $responseData = $this->_timeline->addPublicFlagByActivityDataForSearchAPIByActivityData($responseData, $activityData);
-    $responseData = $this->_timeline->embedImageUrlToContentForSearchAPI($responseData);
+    $responseData = $this->timeline->addPublicFlagByActivityDataForSearchAPIByActivityData($responseData, $activityData);
+    $responseData = $this->timeline->embedImageUrlToContentForSearchAPI($responseData);
 
     return $this->renderJSON(array('status' => 'success', 'data' => $responseData));
   }
 
-  private function _loadHelperForUseOpJsonAPI()
+  private function loadHelperForUseOpJsonAPI()
   {
     //op_api_activityを使用するために必要なヘルパーを読み込む
     $configuration = $this->getContext()->getConfiguration();
@@ -286,7 +286,7 @@ class activityActions extends opJsonApiActions
     $configuration->loadHelpers('sfImage');
   }
 
-  private function _forward400IfInvalidTargetForSearchAPI(array $params)
+  private function forward400IfInvalidTargetForSearchAPI(array $params)
   {
     $validTargets = array('friend', 'community');
 

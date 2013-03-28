@@ -6,7 +6,7 @@ var gorgon = {
       'count': 1,
 <?php if ($isCommunity && $community->isPrivilegeBelong($memberId)): ?>
       'target': 'community',
-      'target_id': <?php echo $communityId ?>,
+      'target_id': <?php echo $community->getId() ?>,
 <?php endif; ?>
     };
 var viewPhoto = '<?php echo $viewPhoto ?>';
@@ -26,10 +26,10 @@ var fileMaxSize = '<?php echo opTimelinePluginUtil::getFileSizeMax() ?>';
 
 <div class="partsHeading"><h3><?php echo $activity->getMember()->getName(); ?>さんの<?php echo $op_term['activity'] ?></h3></div>
 
-    <div class="timeline-large">
-      <div id="timeline-loading" style="text-align: center;"><?php echo op_image_tag('ajax-loader.gif', array()) ?></div>
-      <div id="timeline-list" data-last-id=""data-loadmore-id="">
+<div class="timeline-large">
+  <div id="timeline-loading" style="text-align: center;"><?php echo op_image_tag('ajax-loader.gif', array()) ?></div>
+  <div id="timeline-list" data-last-id=""data-loadmore-id="">
 
-      </div>
-    </div>
+  </div>
+</div>
 

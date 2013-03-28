@@ -19,12 +19,12 @@ class timelineComponents extends sfComponents
     $this->publicFlags = Doctrine::getTable('ActivityData')->getPublicFlags();
     $this->viewPhoto = opTimeline::getViewPhoto();
 
-    $this->_setFileMaxSize();
+    $this->setFileMaxSize();
 
     return sfView::SUCCESS;
   }
 
-  private function _setFileMaxSize()
+  private function setFileMaxSize()
   {
     $fileMaxSize = array();
     $fileMaxSize['format'] = opTimelinePluginUtil::getFileSizeMaxOfFormat();
@@ -49,7 +49,7 @@ class timelineComponents extends sfComponents
 
     $this->viewPhoto = opTimeline::getViewPhoto();
 
-    $this->_setFileMaxSize();
+    $this->setFileMaxSize();
 
     return sfView::SUCCESS;
   }
@@ -63,7 +63,7 @@ class timelineComponents extends sfComponents
     $this->publicFlags = Doctrine::getTable('ActivityData')->getPublicFlags();
     $this->viewPhoto = opTimeline::getViewPhoto();
 
-    $this->_setFileMaxSize();
+    $this->setFileMaxSize();
 
     $this->memberId = $this->getUser()->getMember()->getId();
     $this->communityId = $request->getParameter('id');
@@ -85,7 +85,7 @@ class timelineComponents extends sfComponents
       ->limit(3)
       ->execute();
 
-    $this->_setFileMaxSize();
+    $this->setFileMaxSize();
   }
 
   public function executeSmtTimeline(sfWebRequest $request)
@@ -95,7 +95,7 @@ class timelineComponents extends sfComponents
     $this->token = $form->getCSRFToken();
     $this->viewPhoto = opTimeline::getViewPhoto();
 
-    $this->_setFileMaxSize();
+    $this->setFileMaxSize();
 
     return sfView::SUCCESS;
   }
@@ -119,7 +119,7 @@ class timelineComponents extends sfComponents
       $this->body = $this->activityData[0]->getBody();
     }
 
-    $this->_setFileMaxSize();
+    $this->setFileMaxSize();
   }
 
   public function executeSmtCommunityTimelineBy1(sfWebRequest $request)
@@ -142,7 +142,7 @@ class timelineComponents extends sfComponents
     $this->memberId = $this->getUser()->getMemberId();
     $this->community = Doctrine::getTable('Community')->find($this->communityId);
 
-    $this->_setFileMaxSize();
+    $this->setFileMaxSize();
   }
 
   public function executeSmtTimelineBy1(sfWebRequest $request)
@@ -161,7 +161,7 @@ class timelineComponents extends sfComponents
       $this->body = $this->activityData[0]->getBody();
     }
 
-    $this->_setFileMaxSize();
+    $this->setFileMaxSize();
   }
 
   public function executeSmtTimelineMember(sfWebRequest $request)
@@ -172,7 +172,7 @@ class timelineComponents extends sfComponents
     $this->token = $form->getCSRFToken();
     $this->viewPhoto = opTimeline::getViewPhoto();
 
-    $this->_setFileMaxSize();
+    $this->setFileMaxSize();
   }
 
   public function executeSmtTimelineCommunity(sfWebRequest $request)
@@ -182,7 +182,9 @@ class timelineComponents extends sfComponents
     $this->id = $request->getParameter('id');
     $this->viewPhoto = opTimeline::getViewPhoto();
 
-    $this->_setFileMaxSize();
+    $this->setFileMaxSize();
+    $this->communityId = $request->getParameter('id');
+    $this->community = Doctrine::getTable('Community')->find($this->communityId);
   }
 }
 

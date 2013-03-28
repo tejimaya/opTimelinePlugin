@@ -22,8 +22,6 @@ class timelineActions extends sfActions
   {
     $this->forwardIf($request->isSmartphone(), 'timeline', 'smtMember');
 
-    $this->memberId = $request->getParameter('id', $this->getUser()->getMember()->getId());
-
     return sfView::SUCCESS;
   }
 
@@ -35,9 +33,6 @@ class timelineActions extends sfActions
     $this->community = Doctrine::getTable('Community')->find($this->communityId);
     $this->forward404Unless($this->community, 'Undefined community.');
     sfConfig::set('sf_nav_type', 'community');
-    $this->baseUrl = sfConfig::get('op_base_url');
-    $form = new sfForm();
-    $this->token = $form->getCSRFToken();
 
     return sfView::SUCCESS;
   }
@@ -56,14 +51,13 @@ class timelineActions extends sfActions
       $this->redirect('default/error');
     }
 
-    if ('community' === $this->activity->getForeign_table())
+    if ('community' === $this->activity->getForeignTable())
     {
       $this->isCommunity = true;
-      $this->communityId = $this->activity->getForeign_id();
-      $this->community = Doctrine::getTable('Community')->find($this->communityId);
+      $communityId = $this->activity->getForeignId();
+      $this->community = Doctrine::getTable('Community')->find($communityId);
       $this->memberId = $this->getUser()->getMember()->getId();
     }
-    $this->comment = Doctrine_Query::create()->from('ActivityData ad')->where('ad.in_reply_to_activity_id = ?', $activityId)->execute();
     $this->viewPhoto = opTimeline::getViewPhoto();
 
     return sfView::SUCCESS;
@@ -97,7 +91,6 @@ class timelineActions extends sfActions
     {
       $this->redirect('default/error');
     }
-    $this->comment = Doctrine_Query::create()->from('ActivityData ad')->where('ad.in_reply_to_activity_id = ?', $activityId)->execute();
     $this->viewPhoto = opTimeline::getViewPhoto();
 
     return sfView::SUCCESS;
@@ -105,9 +98,8 @@ class timelineActions extends sfActions
 
   public function executeSmtMember(opWebRequest $request)
   {
-    $this->memberId = (int)$request->getParameter('id', $this->getUser()->getMember()->getId());
-    $this->member = Doctrine::getTable('Member')->find($this->memberId);
-    $this->forward404If(false === $this->member);
+    $memberId = (int)$request->getParameter('id', $this->getUser()->getMember()->getId());
+    $this->member = Doctrine::getTable('Member')->find($memberId);
     opSmartphoneLayoutUtil::setLayoutParameters(array('member' => $this->member));
     $this->setTemplate('smtMember');
 
@@ -118,6 +110,7 @@ class timelineActions extends sfActions
   {
     $this->communityId = (int)$request->getParameter('id');
     $this->community = Doctrine::getTable('Community')->find($this->communityId);
+    $this->forward404Unless($this->community, 'Undefined community.');
     $this->forward404If(!$this->community->isPrivilegeBelong($this->getUser()->getMemberId()));
     opSmartphoneLayoutUtil::setLayoutParameters(array('community' => $this->community));
     $this->setTemplate('smtCommunity');

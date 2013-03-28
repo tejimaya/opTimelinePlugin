@@ -4,7 +4,7 @@
 <?php endforeach; ?>
 
 <?php $params = array(
-  'title' => isset($title) ? $title : $member->getName().'のﾀｲﾑﾗｲﾝ',
+  'title' => isset($title) ? $title : $member->getName().'の'.$op_term['activity'],
   'list' => $list,
   'border' => true,
 ) ?>

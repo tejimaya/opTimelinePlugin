@@ -107,7 +107,7 @@ var fileMaxSizeInfo = {
 </script>
 
 <div class="row">
-<div class="gadget_header span12"><?php echo $op_term['community'] ?><?php echo $op_term['activity'] ?></div>
+<div class="gadget_header span12"><?php echo $community->getName() ?><?php echo $op_term['activity'] ?></div>
 </div>
 
 <div id="timeline-list" class="span12" data-post-baseurl="<?php echo url_for('@homepage', array('absolute' => true)); ?>" data-last-id="" data-loadmore-id="" style="margin-left: 0px;">

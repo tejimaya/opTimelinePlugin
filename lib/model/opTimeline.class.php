@@ -21,18 +21,18 @@ class opTimeline
   /**
    * @var opTimelineUser
    */
-  private $_user;
+  private $user;
 
-  private $_imageContentSize;
-  private $_baseUrl;
+  private $imageContentSize;
+  private $baseUrl;
 
 
   public function __construct(opTimelineUser $user, array $params)
   {
-    $this->_user = $user;
+    $this->user = $user;
 
-    $this->_imageContentSize = $params['image_size'];
-    $this->_baseUrl = $params['base_url'];
+    $this->imageContentSize = $params['image_size'];
+    $this->baseUrl = $params['base_url'];
   }
 
   const COMMENT_DISPLAY_MAX = 10;
@@ -81,11 +81,11 @@ class opTimeline
 
     $replyActivityDataList = $this->findReplyActivityDataByActivityIdsGroupByActivityId($activityIds);
 
-    $memberIds = $this->_extractionMemberIdByActivityDataAndReplyActivityDataRows(
+    $memberIds = $this->extractionMemberIdByActivityDataAndReplyActivityDataRows(
                     $activityDataList, $replyActivityDataList);
-    $memberDataList = $this->_user->createMemberDataByViewerMemberIdAndMemberIdsForAPIResponse($viewerMemberId, $memberIds);
+    $memberDataList = $this->user->createMemberDataByViewerMemberIdAndMemberIdsForAPIResponse($viewerMemberId, $memberIds);
 
-    $responseDataList = $this->_createActivityDataByActivityDataAndMemberDataForSearchAPI($activityDataList, $memberDataList);
+    $responseDataList = $this->createActivityDataByActivityDataAndMemberDataForSearchAPI($activityDataList, $memberDataList);
 
     foreach ($responseDataList as &$response)
     {
@@ -95,7 +95,7 @@ class opTimeline
       {
         $replies = $replyActivityDataList[$id];
 
-        $response['replies'] = $this->_createActivityDataByActivityDataRowsAndMemberDataForSearchAPI($replies['data'], $memberDataList);
+        $response['replies'] = $this->createActivityDataByActivityDataRowsAndMemberDataForSearchAPI($replies['data'], $memberDataList);
         $response['replies_count'] = $replies['count'];
       }
       else
@@ -111,7 +111,7 @@ class opTimeline
     return $responseDataList;
   }
 
-  private function _extractionMemberIdByActivityDataAndReplyActivityDataRows($activities, $replyActivitiyRows)
+  private function extractionMemberIdByActivityDataAndReplyActivityDataRows($activities, $replyActivitiyRows)
   {
     $memberIds = array();
     foreach ($activities as $activity)
@@ -132,7 +132,7 @@ class opTimeline
     return $memberIds;
   }
 
-  private function _createActivityDataByActivityDataAndMemberDataForSearchAPI($activityDataList, $memberData)
+  private function createActivityDataByActivityDataAndMemberDataForSearchAPI($activityDataList, $memberData)
   {
     $activityIds = array();
     foreach ($activityDataList as $activity)
@@ -157,7 +157,7 @@ class opTimeline
         $activityImageUrl = null;
       }
 
-      $imageUrls = $this->_getImageUrlInfoByImageUrl($activityImageUrl);
+      $imageUrls = $this->getImageUrlInfoByImageUrl($activityImageUrl);
 
       $responseData['id'] = $activity->getId();
       $responseData['member'] = $memberData[$activity->getMemberId()];
@@ -178,7 +178,7 @@ class opTimeline
     return $responseDataList;
   }
 
-  private function _getImageUrlInfoByImageUrl($imageUrl)
+  private function getImageUrlInfoByImageUrl($imageUrl)
   {
     if (is_null($imageUrl))
     {
@@ -188,7 +188,7 @@ class opTimeline
       );
     }
 
-    $imagePath = $this->_convertImageUrlToImagePath($imageUrl);
+    $imagePath = $this->convertImageUrlToImagePath($imageUrl);
 
     if (!file_exists($imagePath))
     {
@@ -210,7 +210,7 @@ class opTimeline
       );
     }
 
-    $minimumImageUrl = str_replace(sfConfig::get('sf_web_dir'), $this->_baseUrl, $minimumImagePath);
+    $minimumImageUrl = str_replace(sfConfig::get('sf_web_dir'), $this->baseUrl, $minimumImagePath);
 
     return array(
       'large' => $imageUrl,
@@ -218,7 +218,7 @@ class opTimeline
     );
   }
 
-  private function _convertImageUrlToImagePath($imageUrl)
+  private function convertImageUrlToImagePath($imageUrl)
   {
     $match = array();
     preg_match("/(https?:\/\/.*)(\/cache)/", $imageUrl, $match);
@@ -226,7 +226,7 @@ class opTimeline
     return str_replace($match[1], sfConfig::get('sf_web_dir'), $imageUrl);
   }
 
-  private function _createActivityDataByActivityDataRowsAndMemberDataForSearchAPI($activityDataRows, $memberDataList)
+  private function createActivityDataByActivityDataRowsAndMemberDataForSearchAPI($activityDataRows, $memberDataList)
   {
 
     $responseDataList = array();
@@ -393,7 +393,7 @@ class opTimeline
     {
       if (!is_null($row['image_url']))
       {
-        if ('large' === $this->_imageContentSize)
+        if ('large' === $this->imageContentSize)
         {
           $imageUrls[$row['id']] = $row['image_large_url'];
         }
@@ -479,16 +479,16 @@ class opTimeline
     $activityImage = new ActivityImage();
     $activityImage->setActivityDataId($activityId);
     $activityImage->setFileId($file->getId());
-    $activityImage->setUri($this->_getActivityImageUriByfileInfoAndFilename($fileInfo, $filename));
+    $activityImage->setUri($this->getActivityImageUriByfileInfoAndFilename($fileInfo, $filename));
     $activityImage->setMimeType($file->type);
     $activityImage->save();
 
-    $this->_createUploadImageFileByFileInfoAndSaveFileName($fileInfo, $filename);
+    $this->createUploadImageFileByFileInfoAndSaveFileName($fileInfo, $filename);
 
     return $activityImage;
   }
 
-  private function _getActivityImageUriByfileInfoAndFilename($fileInfo, $filename)
+  private function getActivityImageUriByfileInfoAndFilename($fileInfo, $filename)
   {
     //ファイルテーブルの名前だと拡張式がついていない
     $filename = opTimelineImage::addExtensionToBasenameForFileTable($filename);
@@ -498,7 +498,7 @@ class opTimeline
     return $fileInfo['web_base_path'].$uploadBasePath.'/'.$filename;
   }
 
-  private function _createUploadImageFileByFileInfoAndSaveFileName($fileInfo, $filename)
+  private function createUploadImageFileByFileInfoAndSaveFileName($fileInfo, $filename)
   {
     $filename = opTimelineImage::addExtensionToBasenameForFileTable($filename);
     $uploadDirPath = opTimelineImage::findUploadDirPath($fileInfo['name']);
@@ -525,7 +525,7 @@ class opTimeline
     opTimelineImage::createMinimumImageByWidthSizeAndPaths(self::MINIMUM_IMAGE_WIDTH, $paths);
   }
 
-  public function getViewPhoto()
+  public static function getViewPhoto()
   {
     $viewPhoto = Doctrine::getTable('SnsConfig')->get('op_timeline_plugin_view_photo', false);
     if (false !== $viewPhoto)

@@ -49,8 +49,8 @@ class opTimelinePluginUtil
   {
     return min(
             (int) opTimelineDb::findVariableOfMySQL('max_allowed_packet'),
-            self::_calcConfigSizeToByte(ini_get('post_max_size')),
-            self::_calcConfigSizeToByte(ini_get('upload_max_filesize')),
+            self::calcConfigSizeToByte(ini_get('post_max_size')),
+            self::calcConfigSizeToByte(ini_get('upload_max_filesize')),
             self::DB_MAX_FILE_SIZE);
   }
 
@@ -68,7 +68,7 @@ class opTimelinePluginUtil
     return $bytes.$unit;
   }
 
-  private static function _calcConfigSizeToByte($v)
+  private static function calcConfigSizeToByte($v)
   {
     $l = substr($v, -1);
     $ret = substr($v, 0, -1);

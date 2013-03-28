@@ -68,13 +68,13 @@ class opTimelineImage
 
   public static function copyByResourcePathAndTargetPath($resourcePath, $targetPath)
   {
-    self::_crateDirIfNotExists($targetPath);
+    self::crateDirIfNotExists($targetPath);
     copy($resourcePath, $targetPath);
 
     return true;
   }
 
-  private static function _crateDirIfNotExists($path)
+  private static function crateDirIfNotExists($path)
   {
     $dirPath = pathinfo($path, PATHINFO_DIRNAME);
 
@@ -110,9 +110,9 @@ class opTimelineImage
 
   public static function createMinimumImageByWidthSizeAndPaths($minimumWidthSize, $paths)
   {
-    self::_crateDirIfNotExists($paths['target']);
+    self::crateDirIfNotExists($paths['target']);
 
-    $image = self::_getImageResourceByPath($paths['resource']);
+    $image = self::getImageResourceByPath($paths['resource']);
     $fileSize = self::getImageSizeByPath($paths['resource']);
 
     $newWidth = $minimumWidthSize;
@@ -121,14 +121,14 @@ class opTimelineImage
     $newImage = ImageCreateTrueColor($newWidth, $newHeight);
     imagecopyresampled($newImage, $image, 0, 0, 0, 0, $newWidth, $newHeight, $fileSize['width'], $fileSize['height']);
 
-    self::_saveImageByImageResourceAndSavePath($newImage, $paths['target']);
+    self::saveImageByImageResourceAndSavePath($newImage, $paths['target']);
 
     return true;
   }
 
   public static function getImageSizeByPath($path)
   {
-    $image = self::_getImageResourceByPath($path);
+    $image = self::getImageResourceByPath($path);
 
     return array(
         'width' => imagesx($image),
@@ -136,7 +136,7 @@ class opTimelineImage
     );
   }
 
-  private static function _getImageResourceByPath($path)
+  private static function getImageResourceByPath($path)
   {
     $info = getimagesize($path);
     switch ($info['mime'])
@@ -157,7 +157,7 @@ class opTimelineImage
     return $image;
   }
 
-  private static function _saveImageByImageResourceAndSavePath($resource, $savePath)
+  private static function saveImageByImageResourceAndSavePath($resource, $savePath)
   {
     $extension = pathinfo($savePath, PATHINFO_EXTENSION);
 

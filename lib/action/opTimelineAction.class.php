@@ -9,13 +9,13 @@
  */
 
 /**
- * opTimelineAction
+ * opTimelineActions
  *
  * @package    OpenPNE
  * @subpackage opTimelinePlugin
  */
 
-class opTimelineAction extends sfActions
+class opTimelineActions extends sfActions
 {
   public function updateTimeline($request)
   {

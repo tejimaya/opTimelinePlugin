@@ -15,7 +15,7 @@
 * @subpackage opTimelinePlugin
 * @author     tatsuya ichikawa <ichikawa@tejimaya.com>
 */
-class timelineActions extends opTimelineAction
+class timelineActions extends opTimelineActions
 {
   public function executeDeleteTimeline($request)
   {

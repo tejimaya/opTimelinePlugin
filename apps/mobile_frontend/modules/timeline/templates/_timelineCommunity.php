@@ -14,7 +14,7 @@
 <?php endforeach; ?>
 
 <?php $params = array(
-  'title' => isset($title) ? $title : $community->getName().'のﾀｲﾑﾗｲﾝ',
+  'title' => isset($title) ? $title : $community->getName().'の'.$op_term['activity'],
   'list' => $list,
   'border' => true,
 ) ?>

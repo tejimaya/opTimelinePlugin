@@ -17,7 +17,7 @@
 <?php endforeach; ?>
 
 <?php $params = array(
-  'title' => isset($title) ? $title : 'SNSﾒﾝﾊﾞｰ全員のﾀｲﾑﾗｲﾝ',
+  'title' => isset($title) ? $title : 'SNSﾒﾝﾊﾞｰ全員の'.$op_term['activity'],
   'list' => $list,
   'border' => true,
 ) ?>
