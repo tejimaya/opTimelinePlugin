@@ -444,7 +444,13 @@ function autoLinker(json)
 
 function lengthCheck(obj, target)
 {
-  if (0 < $.trim(obj.val()).length && 140 >= obj.val().length)
+  var objLength = obj.val().length;
+  if (obj.val().match(/\n/gm))
+  {
+    objLength = objLength + obj.val().match(/\n/gm).length;
+  }
+
+  if (0 < objLength && MAXLENGTH >= objLength)
   {
     target.removeAttr('disabled');
   }

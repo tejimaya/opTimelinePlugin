@@ -17,7 +17,12 @@ $(function ()
     counter.text(allowed);
     textarea.keyup(function ()
       {
-         count = (allowed - $(this).val().length);
+         var bodyLen = $(this).val().length;
+         if ($(this).val().match(/\n/gm))
+         {
+           bodyLen = bodyLen + $(this).val().match(/\n/gm).length;
+         }
+         count = (allowed - bodyLen);
          counter.text(count);
          if (count <= warning && count >= 0) {
            counter.css({
