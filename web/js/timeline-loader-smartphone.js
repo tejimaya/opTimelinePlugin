@@ -16,10 +16,10 @@ $(function(){
     $('.photo-info').hide();
     $('#timeline_postform_submit').attr('disabled', 'disabled');
 
-    var body = $.trim($('#tosaka_postform_body').val());
-    body = body.replace(/"/g, '&quot;')
+    var body = $('#tosaka_postform_body').val();
     var a = $('<div />');
-    body = a.text(body).html();
+    var flushBody = a.text(body).html();
+    body = body.replace(/"/g, '&quot;')
 
     var faceName = $('.face-name').text();
     var faceImg = $('#face').children('.span2').children('img').attr('src');
@@ -33,7 +33,7 @@ $(function(){
               + '<a>' + faceName + '</a>'
               + '<div class="timestamp">1分前</div>'
             + '</div>'
-            + '<div class="timeline-post-body">' + body + '</div>'
+            + '<div class="timeline-post-body">' + flushBody + '</div>'
             + '<span class="timeline-post-control">'
               + '<img style="float: right; padding-right: 20px;" src="/images/ajax-loader.gif" />'
             + '</span>'
