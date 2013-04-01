@@ -18,6 +18,8 @@ $(function(){
 
     var body = $.trim($('#tosaka_postform_body').val());
     body = body.replace(/"/g, '&quot;')
+    var a = $('<div />');
+    body = a.text(body).html();
 
     var faceName = $('.face-name').text();
     var faceImg = $('#face').children('.span2').children('img').attr('src');
