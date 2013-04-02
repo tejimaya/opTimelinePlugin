@@ -1,4 +1,8 @@
+<?php if (!isset($gadget)): ?>
+<div id="profileTimeline_<?php echo $memberId ?>" class="dparts profileTimeline"><div class="parts">
+<?php else: ?>
 <div id="profileTimeline_<?php echo $gadget->id ?>" class="dparts profileTimeline"><div class="parts">
+<?php endif; ?>
 
 <script type="text/javascript">
 //<![CDATA[
