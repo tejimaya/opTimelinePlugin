@@ -204,7 +204,7 @@ class activityActions extends opJsonApiActions
 
     $errorInfo = array('status' => 'error', 'type' => 'tweet');
 
-    if (is_null($body) || '' == $body)
+    if (is_null($body) || '' == mb_ereg_replace('^(\s|　)+|(\s|　)+$', '', $body))
     {
       $errorInfo['message'] = 'body parameter not specified.';
 
