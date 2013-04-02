@@ -1,24 +1,20 @@
-var isUploadSuccess = 'hoge';
-
 $(function(){
-  var timerID;
-  var timerArray = new Array();
-  var timer;
+  var timerCount;
 
   gorgon.image_size = 'large';
 
   timelineAllLoad();
 
-  if ( gorgon.timer != undefined )
+  if ( gorgon.timerCount != undefined )
   {
-    timer = gorgon.timer;
+    timerCount = gorgon.timerCount;
   }
   else
   {
-    timer = 15000;
+    timerCount = 15000;
   }
 
-  timerID = setInterval('timelineDifferenceLoad()', timer);
+  setInterval('timelineDifferenceLoad()', timerCount);
   if ( gorgon.notify !== undefined )
   {
     $('#timeline-desktopify').desktopify({

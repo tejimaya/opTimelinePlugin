@@ -73,9 +73,6 @@ class timelineActions extends sfActions
 
   public function executeSmtSns(opWebRequest $request)
   {
-    $this->baseUrl = sfConfig::get('op_base_url');
-    $form = new sfForm();
-    $this->token = $form->getCSRFToken();
     $this->viewPhoto = opTimeline::getViewPhoto();
 
     $this->setTemplate('smtSns');
