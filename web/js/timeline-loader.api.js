@@ -358,7 +358,7 @@ function tweetByData(data)
   $('#timeline-submit-upload').upload(
     openpne.apiBase + 'activity/post.json', data,
     function (res) {
-      var resCheck = responceCheck(res);
+      var resCheck = responseCheck(res);
       if (false !== resCheck)
       {
         $('#timeline-submit-error').text(resCheck);
@@ -456,9 +456,9 @@ function lengthCheck(obj, target)
   }
 }
 
-function responceCheck(res)
+function responseCheck(res)
 {
-  if (0 <= res.indexOf('\<pre'))
+  if (0 <= res.match(/\\<pre/))
   {
     return 'エラーが発生しました。再度読み込んで下さい。';
   }
