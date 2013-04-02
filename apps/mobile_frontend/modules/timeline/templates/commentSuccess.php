@@ -15,7 +15,7 @@
 <?php echo $form->renderFormTag(url_for('@update_timeline')) ?>
 <?php echo $form['body'] ?>
 <?php echo $form->renderHiddenFields() ?>
-<input type="submit" value="<?php echo 'ｺﾒﾝﾄする' ?>" />
+<input type="submit" value="<?php echo 'ｺﾒﾝﾄする' ?>">
 </form>
 <?php end_slot() ?>
 <?php $list[] = get_slot('activity_form') ?>

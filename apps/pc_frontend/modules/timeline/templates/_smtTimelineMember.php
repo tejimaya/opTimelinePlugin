@@ -2,7 +2,7 @@
 <script type="text/javascript">
 //<![CDATA[
 var gorgon = {
-      'member_id': <?php echo $id; ?>,
+      'member_id': <?php echo $id; ?>
     };
 var viewPhoto = '<?php echo $viewPhoto ?>';
 var MAXLENGTH = 140;

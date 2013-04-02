@@ -3,11 +3,11 @@
 //<![CDATA[
 var gorgon = {
       'target': 'community',
-      'target_id': <?php echo $id; ?>, 
+      'target_id': <?php echo $id; ?>,
       'count': '20',
       'post': {
         'foreign': 'community',
-        'foreignId': '<?php echo $id; ?>',
+        'foreignId': '<?php echo $id; ?>'
       }
     };
 var viewPhoto = '<?php echo $viewPhoto ?>';

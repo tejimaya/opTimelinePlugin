@@ -49,7 +49,7 @@ class timelineActions extends opTimelineActions
   public function executeUpdateTimeline($request)
   {
     if ($request->isMethod(sfWebRequest::POST))
-    {   
+    {
       $this->forward404Unless(opConfig::get('is_allow_post_activity'));
       parent::updateTimeline($request);
     }
@@ -59,10 +59,10 @@ class timelineActions extends opTimelineActions
   {
     $this->form = new ActivityDataForm();
 
-    $this->size = 15;
-    $this->pager = new opNonCountQueryPager('ActivityData', $this->size);
+    $size = 15;
+    $this->pager = new opNonCountQueryPager('ActivityData', $size);
     $q = Doctrine::getTable('ActivityData')->createQuery()
-      ->where('public_flag = 1')
+      ->where('public_flag = ?', ActivityDataTable::PUBLIC_FLAG_SNS)
       ->andWhere('foreign_table is null')
       ->orderBy('id desc');
     $this->pager->setQuery($q);

@@ -3,7 +3,7 @@
 //<![CDATA[
 var gorgon = {
       'activity_id': <?php echo $activity->getId() ?>,
-      'count': 1,
+      'count': 1
     };
 var MAXLENGTH = 140;
 var viewPhoto = '<?php echo $viewPhoto ?>';

@@ -5,7 +5,7 @@ $(function(){
 
   timelineAllLoad();
 
-  if ( gorgon.timerCount != undefined )
+  if ('undefined' !== typeof gorgon.timerCount)
   {
     timerCount = gorgon.timerCount;
   }
@@ -15,7 +15,7 @@ $(function(){
   }
 
   setInterval('timelineDifferenceLoad()', timerCount);
-  if ( gorgon.notify !== undefined )
+  if ('undefined' !== typeof gorgon.notify)
   {
     $('#timeline-desktopify').desktopify({
       unsupported : function(){
@@ -42,7 +42,7 @@ $(function(){
       {
         publicFlag = $('#timeline-public-flag option:selected').val()
       }
-  
+
       var data = {
         body: body,
         target: gorgon.post.foreign,
@@ -58,8 +58,8 @@ $(function(){
         apiKey: openpne.apiKey
       };
     }
-    
-    tweetByData(data);    
+
+    tweetByData(data);
   });
 
   $('#timeline-loadmore').click( function() {
@@ -83,7 +83,7 @@ $(function(){
       },
       success: function(json){
         commentlist.children('.timeline-post-comment').remove();
-        var reverseJson = new Array();
+        var reverseJson = [];
         for (var i = 0; i <= json.data.length; i++)
         {
           reverseJson[i] = json.data[json.data.length - i];
@@ -150,7 +150,7 @@ $(function(){
   $(document).on('keyup', '.timeline-post-comment-form-input', function() {
     lengthCheck($(this), $('button[data-timeline-id=' + $(this).attr('data-timeline-id') + ']'));
   });
-  
+
   $('#photo-remove').click( function() {
     $('#timeline-submit-upload').val('');
     $('#photo-file-name').empty();
@@ -173,18 +173,18 @@ function timelineAllLoad() {
         if ($.isEmptyObject(response.data))
         {
           $('#timeline-loading').hide();
-          $('#timeline-list').text('タイムラインは投稿されていません。');
+          $('#timeline-list').text('投稿されていません。');
           $('#timeline-list').show();
         }
         else
         {
           renderJSON(response, 'all');
         }
-        
+
       },
       error: function(XMLHttpRequest, textStatus, errorThrown){
         $('#timeline-loading').hide();
-        $('#timeline-list').text('タイムラインは投稿されていません。');
+        $('#timeline-list').text('投稿されていません。');
         $('#timeline-list').show();
       }
     });
@@ -199,7 +199,7 @@ function timelineAllLoad() {
         if ($.isEmptyObject(response.data))
         {
           $('#timeline-loading').hide();
-          $('#timeline-list').text('タイムラインは投稿されていません。');
+          $('#timeline-list').text('投稿されていません。');
           $('#timeline-list').show();
         }
         else
@@ -210,7 +210,7 @@ function timelineAllLoad() {
       },
       error: function(XMLHttpRequest, textStatus, errorThrown){
         $('#timeline-loading').hide();
-        $('#timeline-list').text('タイムラインは投稿されていません。');
+        $('#timeline-list').text('投稿されていません。');
         $('#timeline-list').show();
       }
     });
@@ -267,7 +267,7 @@ function timelineLoadmore() {
 }
 
 function renderJSON(json, mode) {
-  if (undefined == mode)
+  if ('undefined' === typeof mode)
   {
     mode = 'all';
   }
@@ -330,10 +330,10 @@ function renderJSON(json, mode) {
     inline: true,
     width: '610px',
     opacity: '0.8',
-    onOpen: function(){ 
-      $($(this).attr('href')).show(); 
+    onOpen: function(){
+      $($(this).attr('href')).show();
     },
-    onCleanup: function(){ 
+    onCleanup: function(){
       $($(this).attr('href')).hide();
     },
     onClosed: function(){

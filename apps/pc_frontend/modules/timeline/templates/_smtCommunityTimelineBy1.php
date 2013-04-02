@@ -6,13 +6,13 @@
 <div class="row">
   <div class="span12">
   <?php if (isset($createdAt) && isset($body)): ?>
-  <?php echo op_format_activity_time(strtotime($createdAt)); ?> - <?php echo op_timeline_plugin_screen_name($body) ?>
+  <?php echo op_format_activity_time(strtotime($createdAt)); ?> - <?php echo $body ?>
   <?php else: ?>
   (<?php echo $op_term['activity'] ?>はまだありません。)
   <?php endif; ?>
   </div>
   <div class="span3 offset9">
-  <?php echo link_to('もっと見る', '@community_timeline?id='.$communityId); ?>
+  <?php echo link_to('もっと見る', '@community_timeline?id='.$community->getId()); ?>
   </div>
 </div>
 <?php endif; ?>

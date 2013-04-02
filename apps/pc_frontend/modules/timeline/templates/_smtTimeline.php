@@ -6,7 +6,7 @@ var gorgon = {
       'post': {
       }
     };
-    
+
 var MAXLENGTH = 140;
 var viewPhoto = '<?php echo $viewPhoto ?>';
 

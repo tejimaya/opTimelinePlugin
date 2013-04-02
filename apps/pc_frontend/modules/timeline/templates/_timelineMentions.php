@@ -7,7 +7,7 @@ var gorgon = {
       'post': {
 
       },
-      'timerCount': '60000',
+      'timerCount': '60000'
     };
 //]]>
 </script>

@@ -8,7 +8,7 @@ var gorgon = {
       'post': {
 
       },
-      'timerCount': '120000',
+      'timerCount': '120000'
     };
 var viewPhoto = '<?php echo $viewPhoto ?>';
 var MAXLENGTH = 140;

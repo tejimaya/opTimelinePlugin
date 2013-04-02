@@ -23,7 +23,7 @@ $(function(){
 
     var faceName = $('.face-name').text();
     var faceImg = $('#face').children('.span2').children('img').attr('src');
-    var flashTimelineDom = 
+    var flashTimelineDom =
           '<div class="flashTimelineDom">'
           + '<div class="timeline-post-member-image">'
             + '<img src="' + faceImg + '" alt="member-image" width="23" />'
@@ -118,7 +118,7 @@ $(function(){
       url: openpne.apiBase + 'activity/commentSearch.json?apiKey=' + openpne.apiKey,
       data: {
         'timeline_id': timelineId,
-        'count': commentLength + 20,
+        'count': commentLength + 20
       },
       success: function(json){
         commentlist.children('.timeline-post-comment').remove();
@@ -179,7 +179,7 @@ function timelineAllLoad() {
       },
       error: function(XMLHttpRequest, textStatus, errorThrown){
         $('#timeline-list-loader').hide();
-        $('#timeline-list').text('タイムラインは投稿されていません。');
+        $('#timeline-list').text('投稿されていません。');
         $('#timeline-list').show();
         $('.flashTimelineDom').remove();
       }
@@ -197,7 +197,7 @@ function timelineAllLoad() {
       },
       error: function(XMLHttpRequest, textStatus, errorThrown){
         $('#timeline-list-loader').hide();
-        $('#timeline-list').text('タイムラインは投稿されていません。');
+        $('#timeline-list').text('投稿されていません。');
         $('#timeline-list').show();
         $('.flashTimelineDom').remove();
       }
@@ -214,7 +214,7 @@ function timelineLoadmore() {
   }
   else
   {
-    gorgon = {apiKey: openpne.apiKey,}
+    gorgon = {apiKey: openpne.apiKey}
   }
   gorgon.max_id = loadmoreId;
 
@@ -233,7 +233,7 @@ function timelineLoadmore() {
 }
 
 function renderJSON(json, mode) {
-  if (undefined == mode)
+  if ('undefined' === typeof mode)
   {
     mode = 'all';
   }

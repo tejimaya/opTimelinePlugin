@@ -9,16 +9,16 @@ var gorgon = {
       'count': '20',
       'post': {
         'foreign': 'community',
-        'foreignId': '<?php echo $community->getId(); ?>',
+        'foreignId': '<?php echo $community->getId(); ?>'
       },
       'notify': {
         'lib': '<?php echo url_for('@homepage', array('absolute' => true)); ?>opTimelinePlugin/js/jquery.desktopify.js',
-        'title': '<?php echo $community->getName();?> の最新投稿',
+        'title': '<?php echo $community->getName();?> の最新投稿'
         <?php if ($community->getImageFileName()): ?>
-        'icon': '<?php echo sf_image_path($community->getImageFileName(), array('size' => '48x48',)); ?>',
+        ,'icon': '<?php echo sf_image_path($community->getImageFileName(), array('size' => '48x48',)); ?>'
         <?php endif; ?>
       },
-      'timerCount': '5000',
+      'timerCount': '5000'
     };
 var MAXLENGTH = 140;
 var viewPhoto = '<?php echo $viewPhoto ?>';

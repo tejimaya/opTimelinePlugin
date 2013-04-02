@@ -138,7 +138,6 @@
 
 .timestamp {
   color: #999!important;
-  //float: right;
   font-weight: normal;
   font-size: x-small;
 }
@@ -181,14 +180,12 @@
 
 .only-border-top {
   border-top: dotted 10px #e7eaf2;
-  //border-top: dashed 10px #e7eaf2;
   padding: 0 0 7px;
   margin-top: -3px;
 }
 
 .only-border-bottom {
   border-top: dotted 10px #e7eaf2;
-  //border-bottom: dashed 10px #e7eaf2;
   padding: 7px 0 0 0;
   margin-bottom: -10px;
 }
