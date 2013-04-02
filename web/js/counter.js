@@ -22,7 +22,7 @@ $(function ()
          {
            bodyLen = bodyLen + $(this).val().match(/\n/gm).length;
          }
-         count = (allowed - bodyLen);
+         var count = (allowed - bodyLen);
          counter.text(count);
          if (count <= warning && count >= 0) {
            counter.css({

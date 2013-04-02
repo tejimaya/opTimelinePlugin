@@ -312,7 +312,7 @@ function renderJSON(json, mode) {
   }
   if(json.data)
   {
-    for(i=0;i<json.data.length;i++)
+    for(var i = 0; i < json.data.length; i++)
     {
       if(json.data[i].replies)
       {
@@ -406,7 +406,7 @@ function tweetByData(data)
 
 function autoLinker(json)
 {
-  for(i=0;i<json.data.length;i++)
+  for(var i = 0; i < json.data.length; i++)
   {
     if (!json.data[i].body_html.match(/img.*src=/))
     {
