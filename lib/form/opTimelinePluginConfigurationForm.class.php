@@ -41,7 +41,10 @@ class opTimelinePluginConfigurationForm extends BaseForm
 
     foreach ($names as $name)
     {
-      Doctrine::getTable('SnsConfig')->set('op_timeline_plugin_'.$name, $this->getValue($name));
+      if (!is_null($this->getValue($name)))
+      {
+        Doctrine::getTable('SnsConfig')->set('op_timeline_plugin_'.$name, $this->getValue($name));
+      }
     }
   }
 }
