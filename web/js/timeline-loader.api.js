@@ -458,7 +458,8 @@ function lengthCheck(obj, target)
 
 function responseCheck(res)
 {
-  if (0 <= res.match(/\\<pre/))
+  var matchResult = res.match(/\\<pre/);
+  if (null != matchResult)
   {
     return 'エラーが発生しました。再度読み込んで下さい。';
   }
