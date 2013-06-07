@@ -18,6 +18,11 @@
 class opTimelineDb
 {
 
+  public static function isMySQL()
+  {
+    return 'mysql' === self::createPDOInstance()->getAttribute(PDO::ATTR_DRIVER_NAME);
+  }
+
   public static function findVariableOfMySQL($name)
   {
     $pdo = self::createPDOInstance();
