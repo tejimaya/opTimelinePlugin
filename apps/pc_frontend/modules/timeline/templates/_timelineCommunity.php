@@ -48,7 +48,8 @@ $(function(){
     $('.timeline-postform').css('padding-bottom', '30px');
     $('#timeline-textarea').attr('rows', '3');
     $('#timeline-submit-area').css('display', 'inline');
-    if ($.browser.msie && $.browser.version > 6 || $.browser.opera)
+    if ($.browser.msie && $.browser.version > 6 || $.browser.opera ||
+      navigator.userAgent.indexOf('Android') !== -1)
     {
       $('#timeline-upload-photo-button').remove();
       $('#timeline-submit-upload').css('display', 'inline');
