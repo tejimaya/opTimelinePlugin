@@ -21,7 +21,6 @@
             <div class="timeline-post-control">
             <a class="timeline-comment-link">コメントする</a>{{if member.self==true}} | <a href="#timeline-post-delete-confirm-${id}" class="timeline-post-delete-confirm-link">削除する</a>
             {{/if}} | <a href="<?php echo url_for('@homepage', array('absolute' => true)) ?>timeline/show/id/${id}"><span class="timestamp timeago" title="${created_at}"></span></a>
-
             <a>
               <div id="timeline-comment-loadmore-${id}" data-timeline-id="${id}" class="timeline-comment-loadmore">
                 <i class="icon-comment"></i>&nbsp;以前のコメントを見る
@@ -37,7 +36,7 @@
 
               <div id="timeline-post-comment-form-${id}" class="timeline-post-comment-form">
               <input class="timeline-post-comment-form-input" data-timeline-id="${id}" id="comment-textarea-${id}" type="text" />
-              <button data-timeline-id="${id}" class="btn btn-primary btn-mini timeline-comment-button" disabled="disabled">投稿</button>
+              <button data-timeline-id="${id}" class="btn btn-primary btn-small timeline-comment-button" disabled="disabled">投稿</button>
               </div>
               <div id="timeline-post-comment-form-loader-${id}" class="timeline-post-comment-form-loader">
               <?php echo op_image_tag('ajax-loader.gif', array()) ?>

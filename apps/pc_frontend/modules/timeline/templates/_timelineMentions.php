@@ -14,13 +14,12 @@ var gorgon = {
 
 
 <?php use_javascript('/opTimelinePlugin/js/timeline-loader.api.js') ?>
-<?php use_stylesheet('/opTimelinePlugin/css/bootstrap.css', 'last') ?>
 <?php use_stylesheet('/opTimelinePlugin/css/timeline.css', 'last') ?>
 
 <script type="text/javascript">
 $(function(){
   $("#timeline-textarea").focus(function(){
-    $('.timeline-postform').css('padding-bottom', '30px');
+    $('.timeline-postform').css('padding-bottom', '35px');
     $('#timeline-textarea').attr('rows', '3');
     $('#timeline-submit-area').css('display', 'inline');
   });

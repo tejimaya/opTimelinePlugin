@@ -19,7 +19,6 @@ var fileMaxSize = '<?php echo opTimelinePluginUtil::getFileSizeMax() ?>';
 <?php use_javascript('/opTimelinePlugin/js/timeline-loader.api.js', 'last') ?>
 <?php use_javascript('/opTimelinePlugin/js/lightbox.js', 'last') ?>
 <?php use_stylesheet('/opTimelinePlugin/css/lightbox.css', 'last') ?>
-<?php use_stylesheet('/opTimelinePlugin/css/bootstrap.css', 'last') ?>
 <?php use_stylesheet('/opTimelinePlugin/css/timeline.css', 'last') ?>
 
 <?php include_partial('timeline/timelineTemplate') ?>
@@ -32,4 +31,3 @@ var fileMaxSize = '<?php echo opTimelinePluginUtil::getFileSizeMax() ?>';
 
   </div>
 </div>
-

@@ -24,7 +24,6 @@ var MAXLENGTH = 140;
 <?php use_javascript('/opTimelinePlugin/js/jquery.timeago.js', 'last') ?>
 <?php use_javascript('/opTimelinePlugin/js/lightbox.js', 'last') ?>
 <?php use_stylesheet('/opTimelinePlugin/css/lightbox.css', 'last') ?>
-<?php use_stylesheet('/opTimelinePlugin/css/bootstrap.css', 'last') ?>
 <?php use_stylesheet('/opTimelinePlugin/css/timeline.css', 'last') ?>
 
 <?php include_partial('timeline/timelineTemplate') ?>
@@ -38,7 +37,7 @@ var MAXLENGTH = 140;
   <div id="timeline-list" data-last-id=""data-loadmore-id="">
   </div>
 
-  <button class="gorgon-button button" id="timeline-loadmore">もっと読む</button>
+  <button class="btn btn-small" id="timeline-loadmore">もっと読む</button>
   <div id="timeline-loadmore-loading"><?php echo op_image_tag('ajax-loader.gif', array()) ?></div>
 </div>
 
