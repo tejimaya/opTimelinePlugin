@@ -88,11 +88,3 @@ $(function(){
     </div>
 
 </div></div>
-<script id="LikelistTemplate" type="text/x-jquery-tmpl">
-<table>
-<tr style="padding: 2px;">
-<td style="width: 48px; padding: 2px;"><a href="${profile_url}"><img src="${profile_image}" width="48"></a></td>
-<td style="padding: 2px;"><a href="${profile_url}">${name}</a></td>
-</tr>
-</table>
-</script>
