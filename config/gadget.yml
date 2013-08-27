@@ -19,3 +19,23 @@ timelineAll:
         10: 10
         15: 15
         20: 20
+
+timelineFriend:
+  caption:
+    ja_JP: "フレンドのタイムライン"
+  description:
+    ja_JP: "利用者本人とそのフレンドのタイムラインが表示されます"
+  component: [timeline, timelineFriend]
+  config:
+    limit:
+      Name:      "limit"
+      Caption:   "最大表示件数"
+      FormType:  "select"
+      ValueType:  "int"
+      IsRequired: true
+      Default:    20
+      Choices:
+        5: 5
+        10: 10
+        15: 15
+        20: 20

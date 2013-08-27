@@ -304,7 +304,8 @@ class opTimeline
     {
       if ('friend' === $requestDataList['target'])
       {
-        $builder->includeFriends($requestDataList['target_id'] ? $requestDataList['target_id'] : null);
+        $builder->includeSelf()
+                ->includeFriends($requestDataList['target_id'] ? $requestDataList['target_id'] : null);
       }
 
       if ('community' === $requestDataList['target'])
