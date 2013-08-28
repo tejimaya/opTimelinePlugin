@@ -233,6 +233,11 @@ function timelineDifferenceLoad() {
   $.getJSON( openpne.apiBase + 'activity/search.json?count=20&since_id=' + lastId, gorgon, function(json){
     if (json.data)
     {
+      var lastId = $('#timeline-list').attr('data-last-id');
+      for (var i in json.data) {
+        if (json.data[i].id <= lastId)
+          delete json.data[i];
+      }
       renderJSON(json, 'diff');
     }
   });
