@@ -144,6 +144,13 @@ $(function(){
     lengthCheck($(this), $('button[data-timeline-id=' + $(this).attr('data-timeline-id') + ']'));
   });
 
+  // postform の送信完了を検知
+  $('.postform').on('DOMAttrModified', function(ev) {
+    if (ev.attrName === 'style' && ev.originalEvent.newValue.indexOf('display: none') !== -1) {
+      timelineAllLoad();
+    }
+  });
+
   $('#timeline-submit-upload').change(function() {
     var fileName = $('#timeline-submit-upload').val();
     var dom = $('#photo-file-name');
