@@ -209,6 +209,7 @@ class opTimelineUser
     {
       $q->from('MemberImage mi, mi.File f');
       $q->select('mi.member_id, f.name');
+      $q->where('mi.is_primary = true');
 
       $searchResult = $q->fetchArray();
       $queryCacheHash = $q->calculateQueryCacheHash();
