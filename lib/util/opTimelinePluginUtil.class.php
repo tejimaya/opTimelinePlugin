@@ -47,11 +47,17 @@ class opTimelinePluginUtil
 
   public static function getFileSizeMax()
   {
-    return min(
-            (int) opTimelineDb::findVariableOfMySQL('max_allowed_packet'),
+    $maxFileSize = min(
             self::calcConfigSizeToByte(ini_get('post_max_size')),
             self::calcConfigSizeToByte(ini_get('upload_max_filesize')),
             self::DB_MAX_FILE_SIZE);
+
+    if (opTimelineDb::isMySQL())
+    {
+      return min($maxFileSize, (int) opTimelineDb::findVariableOfMySQL('max_allowed_packet'));
+    }
+
+    return $maxFileSize;
   }
 
   const ONE_KB = 1024;
