@@ -15,3 +15,10 @@ smtCommunityTimelineBy1:
     ja_JP: "SNSメンバー全員のタイムラインが1行だけ表示されます。"
     en_US: "The timeline of only one line of All SNS members is displayed."
   component: [timeline, smtTimelineBy1]
+
+smtTimelineFriend:
+  caption:
+    ja_JP: "フレンドのタイムライン"
+  description:
+    ja_JP: "利用者本人とそのフレンドのタイムラインが表示されます"
+  component: [timeline, smtTimelineFriend]
