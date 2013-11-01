@@ -234,10 +234,12 @@ function timelineDifferenceLoad() {
     if (json.data)
     {
       var lastId = $('#timeline-list').attr('data-last-id');
-      for (var i in json.data) {
-        if (json.data[i].id <= lastId)
-          delete json.data[i];
-      }
+      json.data = $.map(json.data, function(value, i) {
+        if (value.id <= lastId)
+          return null; // delete
+        else
+          return value;
+      })
       renderJSON(json, 'diff');
     }
   });
