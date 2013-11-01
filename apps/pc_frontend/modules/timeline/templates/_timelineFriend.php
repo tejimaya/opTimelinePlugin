@@ -1,4 +1,4 @@
-<div id="homeAllTimeline_<?php echo $gadget->id ?>" class="dparts homeAllTimeline"><div class="parts">
+<div id="homeFriendTimeline_<?php echo $gadget->id ?>" class="dparts homeFriendTimeline"><div class="parts">
 
 <script type="text/javascript">
 //<![CDATA[
