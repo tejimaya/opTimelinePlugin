@@ -145,6 +145,7 @@ class opTimeline
     {
       $image = $this->getActivityImage($activity->getId());
 
+      $responseData = array();
       $responseData['id'] = $activity->getId();
       $responseData['member'] = $memberData[$activity->getMemberId()];
 
