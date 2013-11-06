@@ -26,6 +26,9 @@ opTimelinePlugin
 * コミュニティ内でつぶやくことができる(コミュニティアクティビティ)
   
 ## 更新履歴
+### 1.2.1 beta
+* キャッシュクリアを行うとタイムラインに投稿済みの画像が「No Image」になってしまう問題を修正しました。
+
 ### 1.1.6 alpha
 * タイムラン検索を高速化しました
  * 検索APIで前が3.51秒かかっていたのが0.78秒で実行することができるようになりました
@@ -56,6 +59,6 @@ opTimelinePlugin
 アクセスブロックした相手につぶやきを見えないようにする  
 
 ## 要望・フィードバック
-要望・フィードバックは #opTimelinePlugin のハッシュタグをつけてつぶやいてください。    
-   GitHubのアカウントを持っている人は [issues](https://github.com/kashiwasan/opTimelinePlugin/issues)に
+要望・フィードバックは #opTimelinePlugin のハッシュタグをつけてツイッターでつぶやいてください。    
+   GitHubのアカウントを持っている人は [issues](https://github.com/tejimaya/opTimelinePlugin/issues)に
 チケットを作成してください。
