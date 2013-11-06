@@ -140,23 +140,9 @@ class opTimeline
       $activityIds[] = $activity->getId();
     }
 
-    $activityImageUrls = $this->findActivityImageUrlsByActivityIds($activityIds);
-
     $responseDataList = array();
     foreach ($activityDataList as $activity)
     {
-      if (isset($activityImageUrls[$activity->getId()]))
-      {
-        //@todo symfonyの形式に変更させる
-        //$activityImageUrl = sf_image_path($activityImageUrls[$activity->getId()], array(), true);
-
-        $activityImageUrl = $activityImageUrls[$activity->getId()];
-      }
-      else
-      {
-        $activityImageUrl = null;
-      }
-
       $image = $this->getActivityImage($activity->getId());
 
       $responseData['id'] = $activity->getId();
@@ -176,54 +162,6 @@ class opTimeline
     }
 
     return $responseDataList;
-  }
-
-  private function getImageUrlInfoByImageUrl($imageUrl)
-  {
-    if (is_null($imageUrl))
-    {
-      return array(
-        'large' => null,
-        'small' => null,
-      );
-    }
-
-    $imagePath = $this->convertImageUrlToImagePath($imageUrl);
-
-    if (!file_exists($imagePath))
-    {
-      return array(
-        'large' => opTimelineImage::getNotImageUrl(),
-        'small' => opTimelineImage::getNotImageUrl(),
-      );
-    }
-
-    $minimumDirPath = opTimelineImage::findUploadDirPath($imagePath, self::MINIMUM_IMAGE_WIDTH);
-    $imageName = pathinfo($imagePath, PATHINFO_BASENAME);
-    $minimumImagePath = $minimumDirPath.'/'.$imageName;
-
-    if (!file_exists($minimumImagePath))
-    {
-      return array(
-        'large' => $imageUrl,
-        'small' => $imageUrl,
-      );
-    }
-
-    $minimumImageUrl = str_replace(sfConfig::get('sf_web_dir'), $this->baseUrl, $minimumImagePath);
-
-    return array(
-      'large' => $imageUrl,
-      'small' => $minimumImageUrl,
-    );
-  }
-
-  private function convertImageUrlToImagePath($imageUrl)
-  {
-    $match = array();
-    preg_match("/(https?:\/\/.*)(\/cache)/", $imageUrl, $match);
-
-    return str_replace($match[1], sfConfig::get('sf_web_dir'), $imageUrl);
   }
 
   private function createActivityDataByActivityDataRowsAndMemberDataForSearchAPI($activityDataRows, $memberDataList)
@@ -366,24 +304,6 @@ class opTimeline
     $query->andWhere('in_reply_to_activity_id IS NULL');
 
     return $query->execute();
-  }
-
-  public function findActivityImageUrlsByActivityIds(array $actvityIds)
-  {
-    $query = new opDoctrineQuery();
-    $query->select('activity_data_id, uri');
-    $query->from('ActivityImage');
-    $query->andWhereIn('activity_data_id', $actvityIds);
-
-    $searchResult = $query->fetchArray();
-
-    $imageUrls = array();
-    foreach ($searchResult as $row)
-    {
-      $imageUrls[$row['activity_data_id']] = $row['uri'];
-    }
-
-    return $imageUrls;
   }
 
   public function embedImageUrlToContentForSearchAPI(array $responseDataList)
