@@ -143,11 +143,11 @@ $(function(){
     }
   });
 
-  $('#timeline-textarea').keyup( function() {
+  $('#timeline-textarea').on('input propertychange', function() {
     lengthCheck($(this), $('#timeline-submit-button'));
   });
 
-  $(document).on('keyup', '.timeline-post-comment-form-input', function() {
+  $(document).on('input propertychange', '.timeline-post-comment-form-input', function() {
     lengthCheck($(this), $('button[data-timeline-id=' + $(this).attr('data-timeline-id') + ']'));
   });
 
