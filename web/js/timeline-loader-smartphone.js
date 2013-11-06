@@ -144,9 +144,9 @@ $(function(){
     lengthCheck($(this), $('button[data-timeline-id=' + $(this).attr('data-timeline-id') + ']'));
   });
 
-  // postform の送信完了を検知
-  $('.postform').on('DOMAttrModified', function(ev) {
-    if (ev.attrName === 'style' && ev.originalEvent.newValue.indexOf('display: none') !== -1) {
+  // アクティビティの投稿を検知
+  $(document).ajaxSuccess(function(event, xhr, settings) {
+    if (0 === settings.url.indexOf(openpne.apiBase + 'activity/post.json')) {
       timelineAllLoad();
     }
   });
