@@ -136,11 +136,11 @@ $(function(){
     });
   });
 
-  $('#tosaka_postform_body').keyup( function() {
+  $('#tosaka_postform_body').on('input propertychange', function() {
     lengthCheck($(this), $('#timeline_postform_submit'));
   });
 
-  $(document).on('keyup', '.timeline-post-comment-form-input', function() {
+  $(document).on('input propertychange', '.timeline-post-comment-form-input', function() {
     lengthCheck($(this), $('button[data-timeline-id=' + $(this).attr('data-timeline-id') + ']'));
   });
 
