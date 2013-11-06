@@ -157,7 +157,7 @@ class opTimeline
         $activityImageUrl = null;
       }
 
-      $imageUrls = $this->getImageUrlInfoByImageUrl($activityImageUrl);
+      $image = $this->getActivityImage($activity->getId());
 
       $responseData['id'] = $activity->getId();
       $responseData['member'] = $memberData[$activity->getMemberId()];
@@ -168,8 +168,8 @@ class opTimeline
       $responseData['source'] = $activity->getSource();
       $responseData['source_uri'] = $activity->getSourceUri();
 
-      $responseData['image_url'] = $imageUrls['small'];
-      $responseData['image_large_url'] = $imageUrls['large'];
+      $responseData['image_url'] = $image ? sf_image_path($image->getFile()->getName(), array('size' => '120x120')) : null;
+      $responseData['image_large_url'] = $image ? sf_image_path($image->getFile()->getName()): null;
       $responseData['created_at'] = date('r', strtotime($activity->getCreatedAt()));
 
       $responseDataList[] = $responseData;
@@ -523,6 +523,11 @@ class opTimeline
     );
 
     opTimelineImage::createMinimumImageByWidthSizeAndPaths(self::MINIMUM_IMAGE_WIDTH, $paths);
+  }
+
+  private function getActivityImage($timelineId)
+  {
+    return Doctrine::getTable('ActivityImage')->findOneByActivityDataId($timelineId);
   }
 
   public static function getViewPhoto()
