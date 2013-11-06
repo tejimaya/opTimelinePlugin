@@ -144,6 +144,13 @@ $(function(){
     lengthCheck($(this), $('button[data-timeline-id=' + $(this).attr('data-timeline-id') + ']'));
   });
 
+  // アクティビティの投稿を検知
+  $(document).ajaxSuccess(function(event, xhr, settings) {
+    if (0 === settings.url.indexOf(openpne.apiBase + 'activity/post.json')) {
+      timelineAllLoad();
+    }
+  });
+
   $('#timeline-submit-upload').change(function() {
     var fileName = $('#timeline-submit-upload').val();
     var dom = $('#photo-file-name');
