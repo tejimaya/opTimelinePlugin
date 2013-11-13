@@ -1,0 +1,11 @@
+<?xml version="1.0" ?>
+<xliff version="1.0">
+  <file orginal="global" source-language="en" datatype="plaintext">
+    <body>
+      <trans-unit id="">
+        <source>%Activity% of %Friend%</source>
+        <target>%Friend%の%Activity%</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

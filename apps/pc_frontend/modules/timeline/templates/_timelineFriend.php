@@ -56,7 +56,7 @@ $(function(){
 
 <?php include_partial('timeline/timelineTemplate') ?>
 
-<div class="partsHeading"><h3>フレンドの<?php echo $op_term['activity'] ?></h3></div>
+<div class="partsHeading"><h3><?php echo __('%Activity% of %Friend%') ?></h3></div>
 
     <div class="timeline">
       <div class="timeline-postform well">
