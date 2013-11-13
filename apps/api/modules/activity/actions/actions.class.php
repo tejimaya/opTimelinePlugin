@@ -77,8 +77,7 @@ class activityActions extends opJsonApiActions
 
   public function executePost(sfWebRequest $request)
   {
-    $errorResponse = $this->getErrorResponseIfBadRequestOfPost($request);
-
+    $errorResponse = $this->getErrorResponseIfBadRequestOfTweetPost($request);
     if (!is_null($errorResponse))
     {
       return $this->renderJSONDirect($errorResponse);
@@ -86,55 +85,47 @@ class activityActions extends opJsonApiActions
 
     $this->createActivityDataByRequest($request);
 
+    $imageFile = $request->getFiles('timeline-submit-upload');
+    $validatedFile = null;
+    if (!empty($imageFile))
+    {
+      $validator = new opValidatorImageFile();
+      $validator->setOption('max_size', opTimelinePluginUtil::getFileSizeMax());
+      try
+      {
+        $validatedFile = $validator->clean($imageFile);
+      }
+      catch (sfValidatorError $e)
+      {
+        if ('max_size' === $e->getCode())
+        {
+          $errorResponse = array('status' => 'error', 'message' => 'file size over', 'type' => 'file_size');
+        }
+        elseif ('mime_types' === $e->getCode())
+        {
+          $errorResponse = array('status' => 'error', 'message' => 'not image', 'type' => 'not_image');
+        }
+        else
+        {
+          $errorResponse = array('status' => 'error', 'message' => 'file upload error', 'type' => 'upload');
+        }
+
+        return $this->renderJSONDirect($errorResponse);
+      }
+
+      $this->timeline->createActivityImageByFileInfoAndActivity($validatedFile, $this->createdActivity);
+    }
+
     $responseData = $this->createResponActivityDataOfPost();
     $responseData['body'] = htmlspecialchars($responseData['body'], ENT_QUOTES, 'UTF-8', false);
     $responseData['body_html'] = htmlspecialchars($responseData['body_html'], ENT_QUOTES, 'UTF-8', false);
 
-    if ($this->isUploadImagePost())
+    if (!is_null($validatedFile))
     {
       return $this->renderJSONDirect(array('status' => 'success', 'message' => 'file up success', 'data' => $responseData));
     }
 
     return $this->renderJSONDirect(array('status' => 'success', 'message' => 'tweet success', 'data' => $responseData));
-  }
-
-  private function isUploadImagePost()
-  {
-    return (!empty($_FILES) && (int) $_FILES['timeline-submit-upload']['size'] !== 0);
-  }
-
-  private function getErrorResponseIfBadRequestOfPost(sfWebRequest $request)
-  {
-    $errorInfo = $this->getErrorResponseIfBadRequestOfTweetPost($request);
-
-    if (!empty($errorInfo))
-    {
-      return $errorInfo;
-    }
-
-    if ($this->isUploadImagePost())
-    {
-      $fileInfo = $this->createFileInfo($request);
-
-      if ($fileInfo['size'] >= opTimelinePluginUtil::getFileSizeMax())
-      {
-        return array('status' => 'error', 'message' => 'file size over', 'type' => 'file_size');
-      }
-
-      $stream = fopen($fileInfo['tmp_name'], 'r');
-
-      if (false === $stream)
-      {
-        return array('status' => 'error', 'message' => 'file upload error', 'type' => 'upload');
-      }
-
-      if (!$this->isImageUploadByFileInfo($fileInfo))
-      {
-        return array('status' => 'error', 'message' => 'not image', 'type' => 'not_image');
-      }
-    }
-
-    return null;
   }
 
   private function createResponActivityDataOfPost()
@@ -166,36 +157,12 @@ class activityActions extends opJsonApiActions
     exit;
   }
 
-  /**
-   * @todo ファイル情報じゃないのが含まれているので、それを分ける
-   */
-  private function createFileInfo()
-  {
-    $request = sfContext::getInstance()->getRequest();
-
-    //開発を簡単にするためにコメントアウト
-    $fileInfo = $_FILES['timeline-submit-upload'];
-    $fileInfo['stream'] = fopen($fileInfo['tmp_name'], 'r');
-    $fileInfo['dir_name'] = '/a'.$this->getUser()->getMember()->getId();
-    $fileInfo['binary'] = stream_get_contents($fileInfo['stream']);
-    $fileInfo['web_base_path'] = $request->getUriPrefix().$request->getRelativeUrlRoot();
-    $fileInfo['member_id'] = $this->getUser()->getMemberId();
-
-    return $fileInfo;
-  }
-
   private function createActivityDataByRequest(sfWebRequest $request)
   {
     $saveData = $request->getParameterHolder()->getAll();
     $memberId = $this->getUser()->getMemberId();
 
     $this->createdActivity = $this->timeline->createPostActivityFromAPIByApiDataAndMemberId($saveData, $memberId);
-
-    if ($this->isUploadImagePost())
-    {
-      $fileInfo = $this->createFileInfo($request);
-      $this->timeline->createActivityImageByFileInfoAndActivityId($fileInfo, $this->createdActivity->getId());
-    }
   }
 
   private function getErrorResponseIfBadRequestOfTweetPost(sfWebRequest $request)
@@ -229,21 +196,6 @@ class activityActions extends opJsonApiActions
     }
 
     return null;
-  }
-
-  private function isImageUploadByFileInfo(array $fileInfo)
-  {
-    foreach (opTimelinePluginUtil::getUploadAllowImageTypeList() as $type)
-    {
-      $contentType = 'image/'.$type;
-
-      if ($fileInfo['type'] === $contentType)
-      {
-        return true;
-      }
-    }
-
-    return false;
   }
 
   public function executeSearch(sfWebRequest $request)

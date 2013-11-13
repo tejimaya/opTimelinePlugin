@@ -375,30 +375,15 @@ class opTimeline
     return Doctrine::getTable('ActivityData')->updateActivity($memberId, $body, $options);
   }
 
-  public function createActivityImageByFileInfoAndActivityId(array $fileInfo, $activityId)
+  public function createActivityImageByFileInfoAndActivity(sfValidatedFile $fileInfo, ActivityData $activity)
   {
     $file = new File();
-    $file->setOriginalFilename(basename($fileInfo['name']));
-    $file->setType($fileInfo['type']);
-
-    $fileFormat = $file->getImageFormat();
-    if (is_null($fileFormat) || '' == $fileFormat)
-    {
-      $fileFormat = pathinfo($fileInfo['name'], PATHINFO_EXTENSION);
-    }
-
-    $fileBaseName = md5(time()).'_'.$fileFormat;
-    $filename = 'ac_'.$fileInfo['member_id'].'_'.$fileBaseName;
-
-    $file->setName($filename);
-    $file->setFilesize($fileInfo['size']);
-    $bin = new FileBin();
-    $bin->setBin($fileInfo['binary']);
-    $file->setFileBin($bin);
+    $file->setFromValidatedFile($fileInfo);
+    $file->name = 'ac_'.$activity->member_id.'_'.$file->name;
     $file->save();
 
     $activityImage = new ActivityImage();
-    $activityImage->setActivityDataId($activityId);
+    $activityImage->setActivityData($activity);
     $activityImage->setFileId($file->getId());
     $activityImage->setMimeType($file->type);
     $activityImage->save();

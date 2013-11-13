@@ -94,16 +94,4 @@ class opTimelinePluginUtil
     }
     return $ret;
   }
-
-  public static function getUploadAllowImageTypeList()
-  {
-    return array(
-        'jpeg',
-        'pjpeg', //IEだとjpegがpjpegになる
-        'gif',
-        'png',
-        'x-png', //IEだとpngがx-pngになる
-    );
-  }
-
 }
