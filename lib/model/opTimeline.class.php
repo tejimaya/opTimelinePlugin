@@ -400,21 +400,10 @@ class opTimeline
     $activityImage = new ActivityImage();
     $activityImage->setActivityDataId($activityId);
     $activityImage->setFileId($file->getId());
-    $activityImage->setUri($this->getActivityImageUriByfileInfoAndFilename($fileInfo, $filename));
     $activityImage->setMimeType($file->type);
     $activityImage->save();
 
     return $activityImage;
-  }
-
-  private function getActivityImageUriByfileInfoAndFilename($fileInfo, $filename)
-  {
-    //ファイルテーブルの名前だと拡張式がついていない
-    $filename = opTimelineImage::addExtensionToBasenameForFileTable($filename);
-    $uploadPath = opTimelineImage::findUploadDirPath($filename);
-    $uploadBasePath = str_replace(sfConfig::get('sf_web_dir'), '', $uploadPath);
-
-    return $fileInfo['web_base_path'].$uploadBasePath.'/'.$filename;
   }
 
   private function getActivityImage($timelineId)
