@@ -36,7 +36,6 @@ class opTimeline
   }
 
   const COMMENT_DISPLAY_MAX = 10;
-  const MINIMUM_IMAGE_WIDTH = 285;
 
   public function addPublicFlagByActivityDataForSearchAPIByActivityData(array $responseDataList, $activityDataList)
   {
@@ -405,8 +404,6 @@ class opTimeline
     $activityImage->setMimeType($file->type);
     $activityImage->save();
 
-    $this->createUploadImageFileByFileInfoAndSaveFileName($fileInfo, $filename);
-
     return $activityImage;
   }
 
@@ -418,33 +415,6 @@ class opTimeline
     $uploadBasePath = str_replace(sfConfig::get('sf_web_dir'), '', $uploadPath);
 
     return $fileInfo['web_base_path'].$uploadBasePath.'/'.$filename;
-  }
-
-  private function createUploadImageFileByFileInfoAndSaveFileName($fileInfo, $filename)
-  {
-    $filename = opTimelineImage::addExtensionToBasenameForFileTable($filename);
-    $uploadDirPath = opTimelineImage::findUploadDirPath($fileInfo['name']);
-
-    $fileSavePath = $uploadDirPath.'/'.$filename;
-
-    opTimelineImage::copyByResourcePathAndTargetPath($fileInfo['tmp_name'], $fileSavePath);
-
-    $imageSize = opTimelineImage::getImageSizeByPath($fileSavePath);
-    //画像が縮小サイズより小さい場合は縮小した画像を作成しない
-    if ($imageSize['width'] <= self::MINIMUM_IMAGE_WIDTH)
-    {
-      return true;
-    }
-
-    $minimumDirPath = opTimelineImage::findUploadDirPath($fileInfo['name'], self::MINIMUM_IMAGE_WIDTH);
-    $minimumPath = $minimumDirPath.'/'.basename($fileSavePath);
-
-    $paths = array(
-        'resource' => $fileSavePath,
-        'target' => $minimumPath,
-    );
-
-    opTimelineImage::createMinimumImageByWidthSizeAndPaths(self::MINIMUM_IMAGE_WIDTH, $paths);
   }
 
   private function getActivityImage($timelineId)
