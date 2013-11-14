@@ -83,8 +83,6 @@ class activityActions extends opJsonApiActions
       return $this->renderJSONDirect($errorResponse);
     }
 
-    $this->createActivityDataByRequest($request);
-
     $validator = new opValidatorImageFile(array('required' => false));
     $validator->setOption('max_size', opTimelinePluginUtil::getFileSizeMax());
     try
@@ -108,6 +106,8 @@ class activityActions extends opJsonApiActions
 
       return $this->renderJSONDirect($errorResponse);
     }
+
+    $this->createActivityDataByRequest($request);
 
     if (!is_null($validatedFile))
     {
