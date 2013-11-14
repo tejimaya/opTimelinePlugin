@@ -36,7 +36,6 @@ class opTimeline
   }
 
   const COMMENT_DISPLAY_MAX = 10;
-  const MINIMUM_IMAGE_WIDTH = 285;
 
   public function addPublicFlagByActivityDataForSearchAPIByActivityData(array $responseDataList, $activityDataList)
   {
@@ -376,75 +375,20 @@ class opTimeline
     return Doctrine::getTable('ActivityData')->updateActivity($memberId, $body, $options);
   }
 
-  public function createActivityImageByFileInfoAndActivityId(array $fileInfo, $activityId)
+  public function createActivityImageByFileInfoAndActivity(sfValidatedFile $fileInfo, ActivityData $activity)
   {
     $file = new File();
-    $file->setOriginalFilename(basename($fileInfo['name']));
-    $file->setType($fileInfo['type']);
-
-    $fileFormat = $file->getImageFormat();
-    if (is_null($fileFormat) || '' == $fileFormat)
-    {
-      $fileFormat = pathinfo($fileInfo['name'], PATHINFO_EXTENSION);
-    }
-
-    $fileBaseName = md5(time()).'_'.$fileFormat;
-    $filename = 'ac_'.$fileInfo['member_id'].'_'.$fileBaseName;
-
-    $file->setName($filename);
-    $file->setFilesize($fileInfo['size']);
-    $bin = new FileBin();
-    $bin->setBin($fileInfo['binary']);
-    $file->setFileBin($bin);
+    $file->setFromValidatedFile($fileInfo);
+    $file->name = 'ac_'.$activity->member_id.'_'.$file->name;
     $file->save();
 
     $activityImage = new ActivityImage();
-    $activityImage->setActivityDataId($activityId);
+    $activityImage->setActivityData($activity);
     $activityImage->setFileId($file->getId());
-    $activityImage->setUri($this->getActivityImageUriByfileInfoAndFilename($fileInfo, $filename));
     $activityImage->setMimeType($file->type);
     $activityImage->save();
 
-    $this->createUploadImageFileByFileInfoAndSaveFileName($fileInfo, $filename);
-
     return $activityImage;
-  }
-
-  private function getActivityImageUriByfileInfoAndFilename($fileInfo, $filename)
-  {
-    //ファイルテーブルの名前だと拡張式がついていない
-    $filename = opTimelineImage::addExtensionToBasenameForFileTable($filename);
-    $uploadPath = opTimelineImage::findUploadDirPath($filename);
-    $uploadBasePath = str_replace(sfConfig::get('sf_web_dir'), '', $uploadPath);
-
-    return $fileInfo['web_base_path'].$uploadBasePath.'/'.$filename;
-  }
-
-  private function createUploadImageFileByFileInfoAndSaveFileName($fileInfo, $filename)
-  {
-    $filename = opTimelineImage::addExtensionToBasenameForFileTable($filename);
-    $uploadDirPath = opTimelineImage::findUploadDirPath($fileInfo['name']);
-
-    $fileSavePath = $uploadDirPath.'/'.$filename;
-
-    opTimelineImage::copyByResourcePathAndTargetPath($fileInfo['tmp_name'], $fileSavePath);
-
-    $imageSize = opTimelineImage::getImageSizeByPath($fileSavePath);
-    //画像が縮小サイズより小さい場合は縮小した画像を作成しない
-    if ($imageSize['width'] <= self::MINIMUM_IMAGE_WIDTH)
-    {
-      return true;
-    }
-
-    $minimumDirPath = opTimelineImage::findUploadDirPath($fileInfo['name'], self::MINIMUM_IMAGE_WIDTH);
-    $minimumPath = $minimumDirPath.'/'.basename($fileSavePath);
-
-    $paths = array(
-        'resource' => $fileSavePath,
-        'target' => $minimumPath,
-    );
-
-    opTimelineImage::createMinimumImageByWidthSizeAndPaths(self::MINIMUM_IMAGE_WIDTH, $paths);
   }
 
   private function getActivityImage($timelineId)
