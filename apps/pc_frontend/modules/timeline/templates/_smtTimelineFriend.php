@@ -111,7 +111,7 @@ var fileMaxSizeInfo = {
 </div>
 
 <div class="row">
-  <div class="gadget_header span12">フレンドの<?php echo $op_term['activity'] ?></div>
+  <div class="gadget_header span12"><?php echo __('%Activity% of %Friend%') ?></div>
 </div>
 
 <div class="timeline" style="margin-left: 0px;">
