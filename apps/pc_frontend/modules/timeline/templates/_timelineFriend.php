@@ -36,7 +36,11 @@ $(function(){
     $('.timeline-postform').css('padding-bottom', '30px');
     $('#timeline-textarea').attr('rows', '3');
     $('#timeline-submit-area').css('display', 'inline');
-    if (($.browser.msie && $.browser.version > 6) || $.browser.opera)
+
+    var ua = navigator.userAgent;
+    var androidDefaultBrowser = -1 !== ua.indexOf('Android') && -1 !== ua.indexOf('WebKit') && -1 === ua.indexOf('Chrome');
+
+    if (($.browser.msie && $.browser.version > 6) || $.browser.opera || androidDefaultBrowser)
     {
       $('#timeline-upload-photo-button').remove();
       $('#timeline-submit-upload').css('display', 'inline');
