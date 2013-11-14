@@ -85,34 +85,32 @@ class activityActions extends opJsonApiActions
 
     $this->createActivityDataByRequest($request);
 
-    $imageFile = $request->getFiles('timeline-submit-upload');
-    $validatedFile = null;
-    if (!empty($imageFile))
+    $validator = new opValidatorImageFile(array('required' => false));
+    $validator->setOption('max_size', opTimelinePluginUtil::getFileSizeMax());
+    try
     {
-      $validator = new opValidatorImageFile();
-      $validator->setOption('max_size', opTimelinePluginUtil::getFileSizeMax());
-      try
+      $validatedFile = $validator->clean($request->getFiles('timeline-submit-upload'));
+    }
+    catch (sfValidatorError $e)
+    {
+      if ('max_size' === $e->getCode())
       {
-        $validatedFile = $validator->clean($imageFile);
+        $errorResponse = array('status' => 'error', 'message' => 'file size over', 'type' => 'file_size');
       }
-      catch (sfValidatorError $e)
+      elseif ('mime_types' === $e->getCode())
       {
-        if ('max_size' === $e->getCode())
-        {
-          $errorResponse = array('status' => 'error', 'message' => 'file size over', 'type' => 'file_size');
-        }
-        elseif ('mime_types' === $e->getCode())
-        {
-          $errorResponse = array('status' => 'error', 'message' => 'not image', 'type' => 'not_image');
-        }
-        else
-        {
-          $errorResponse = array('status' => 'error', 'message' => 'file upload error', 'type' => 'upload');
-        }
-
-        return $this->renderJSONDirect($errorResponse);
+        $errorResponse = array('status' => 'error', 'message' => 'not image', 'type' => 'not_image');
+      }
+      else
+      {
+        $errorResponse = array('status' => 'error', 'message' => 'file upload error', 'type' => 'upload');
       }
 
+      return $this->renderJSONDirect($errorResponse);
+    }
+
+    if (!is_null($validatedFile))
+    {
       $this->timeline->createActivityImageByFileInfoAndActivity($validatedFile, $this->createdActivity);
     }
 
