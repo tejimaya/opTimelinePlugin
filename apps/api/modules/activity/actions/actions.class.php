@@ -87,7 +87,15 @@ class activityActions extends opJsonApiActions
     $validator->setOption('max_size', opTimelinePluginUtil::getFileSizeMax());
     try
     {
-      $validatedFile = $validator->clean($request->getFiles('timeline-submit-upload'));
+      $file = $request->getFiles('timeline-submit-upload');
+      if (0 !== count($file))
+      {
+        $validatedFile = $validator->clean($file);
+      }
+      else
+      {
+        $validatedFile = null;
+      }
     }
     catch (sfValidatorError $e)
     {
