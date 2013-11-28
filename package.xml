@@ -57,44 +57,51 @@ $ ./symfony opTimelinePlugin:install
   <email />
   <active>yes</active>
  </lead>
+ <lead>
+  <name>Imamura Mutsumi</name>
+  <user>imamura623</user>
+  <email />
+  <active>yes</active>
+ </lead>
+ <lead>
+  <name>Yuya Watanabe</name>
+  <user>watanabe</user>
+  <email />
+  <active>yes</active>
+ </lead>
  <developer>
   <name>手嶋守</name>
   <user>tejima</user>
   <email />
   <active>yes</active>
  </developer>
- <date>2013-11-14</date>
- <time>18:03:34</time>
+ <developer>
+  <name>Imamura Mutsumi</name>
+  <user>imamura623</user>
+  <email />
+  <active>yes</active>
+ </developer>
+ <date>2013-11-28</date>
+ <time>17:11:26</time>
  <version>
-  <release>1.2.1</release>
-  <api>1.2.1</api>
+  <release>1.2.2</release>
+  <api>1.2.2</api>
  </version>
  <stability>
   <release>stable</release>
   <api>stable</api>
  </stability>
  <license>Apache</license>
- <notes><![CDATA[
-opTimelinePlugin 1.2.1 release.
+ <notes>
+opTimelinePlugin 1.2.2 release.
 
-* #2: AndroidからPC版タイムライン投稿欄に日本語入力をすると「投稿」ボタンの有効状態が変わらない場合がある問題の修正
-* #3: SQLite等のDBMSを使用時にopTimelinePluginのガジェットを使用すると500エラーとなる問題の修正
-* #4: Android端末からPC向けタイムライン投稿画面を表示すると写真投稿ボタンが機能しない問題の回避
-* #7: コメントがある場合にスマートフォンで表示すると、右端に空白が表示される
-* #9: opTimelinePluginがOpenPNEのフィルタ設定を不用意に上書きしている問題の修正
-* #10: 自分+フレンドの投稿を表示するタイムラインのガジェットを追加
-* #11: タイムラインに表示されるメンバー画像が、メイン画像指定を考慮していない
-* #12: postformからのアクティビティ投稿時にタイムラインの更新を行う
-* #13: スマートフォン版のコミュニティタイムライン表示で </div> が余分に入っている問題を修正
-* #14: タイムラインの自動読み込みのタイミングで投稿を行うと投稿した内容が重複して表示されてしまう問題の修正
-* #15: 画像クリック時にオリジナルサイズの画像を表示できないバグの修正
-* #16: キャッシュクリア後に画像がNo Imageになってしまうバグの修正
-* #17: Android標準ブラウザから画像投稿を行うと不正なファイルタイプとしてエラーとなる
-]]></notes>
+* acitvity/post.json での投稿時に timeline-submit-upload を省略できない問題の修正
+* opTImelinePlugin1.2.1でコメントの投稿をすると「投稿に失敗しました」となる
+ </notes>
  <contents>
   <dir baseinstalldir="/" name="/">
    <file baseinstalldir="/" md5sum="11740ddaf4e5afd37fa71fa02129b79e" name="apps/api/config/routing.yml" role="data" />
-   <file baseinstalldir="/" md5sum="4ea43fba3cfed0626e06bfff5d78ad1b" name="apps/api/modules/activity/actions/actions.class.php" role="data" />
+   <file baseinstalldir="/" md5sum="3b984cb3c54c5dcdf4e2c3556e1a4742" name="apps/api/modules/activity/actions/actions.class.php" role="data" />
    <file baseinstalldir="/" md5sum="aadc2fa440e9d14d6c53260d036b3145" name="apps/api/modules/activity/templates/commentSearchSuccess.php" role="data" />
    <file baseinstalldir="/" md5sum="d8cac6cd3ce8d31339f272ab814d24b9" name="apps/mobile_frontend/config/routing.yml" role="data" />
    <file baseinstalldir="/" md5sum="abee3656a469c4d17c66e1d3aa864cf0" name="apps/mobile_frontend/modules/community/config/view.yml" role="data" />
@@ -370,7 +377,7 @@ opTimelinePlugin 1.2.0 release.
    </stability>
    <date>2013-11-14</date>
    <license>Apache</license>
-   <notes><![CDATA[
+   <notes>
 opTimelinePlugin 1.2.1 release.
 
 * #2: AndroidからPC版タイムライン投稿欄に日本語入力をすると「投稿」ボタンの有効状態が変わらない場合がある問題の修正
@@ -381,12 +388,30 @@ opTimelinePlugin 1.2.1 release.
 * #10: 自分+フレンドの投稿を表示するタイムラインのガジェットを追加
 * #11: タイムラインに表示されるメンバー画像が、メイン画像指定を考慮していない
 * #12: postformからのアクティビティ投稿時にタイムラインの更新を行う
-* #13: スマートフォン版のコミュニティタイムライン表示で </div> が余分に入っている問題を修正
+* #13: スマートフォン版のコミュニティタイムライン表示で &lt;/div&gt; が余分に入っている問題を修正
 * #14: タイムラインの自動読み込みのタイミングで投稿を行うと投稿した内容が重複して表示されてしまう問題の修正
 * #15: 画像クリック時にオリジナルサイズの画像を表示できないバグの修正
 * #16: キャッシュクリア後に画像がNo Imageになってしまうバグの修正
 * #17: Android標準ブラウザから画像投稿を行うと不正なファイルタイプとしてエラーとなる
-]]></notes>
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>1.2.2</release>
+    <api>1.2.2</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2013-11-28</date>
+   <license>Apache</license>
+   <notes>
+opTimelinePlugin 1.2.2 release.
+
+* acitvity/post.json での投稿時に timeline-submit-upload を省略できない問題の修正
+* opTImelinePlugin1.2.1でコメントの投稿をすると「投稿に失敗しました」となる
+   </notes>
   </release>
  </changelog>
 </package>
