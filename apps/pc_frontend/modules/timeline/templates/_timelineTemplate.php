@@ -1,5 +1,14 @@
+<script type="text/javascript">
+function addreply(name,value) {
+    var id = $(value).parents('.timeline-post').attr('data-timeline-id');
+    var element = document.getElementById('comment-textarea-' + id);
+    element.value　=　element.value + '@' + name + ' ';
+    element.focus();
+}
+</script>
+
 <script id="timelineTemplate" type="text/x-jquery-tmpl">
-        <div class="timeline-post">
+        <div class="timeline-post" data-timeline-id="${id}">
           <a name="timeline-${id}"></a>
           <div class="timeline-post-member-image">
             <a href="${member.profile_url}" title="${member.name}"><img src="${member.profile_image}" alt="${member.name}" /></a>
@@ -92,6 +101,9 @@
                 {{if member.self==true }}
                 <a href="#timeline-post-delete-confirm-${id}" class="timeline-post-delete-confirm-link">削除する</a> | 
                 {{/if}} 
+                <?php if('1'== Doctrine::getTable('SnsConfig')->get('op_timeline_plugin_timeline_comment_reply')): ?>
+                  <a id="reply" href="javascript:void(0);" onclick="javascript:addreply('${member.name}',this)" ><?php echo __('Reply') ?></a>
+                <?php endif; ?>
                 <span class="timestamp timeago" title="${created_at}"></span>
                 </div>
               </div>
