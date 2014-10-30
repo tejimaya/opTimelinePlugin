@@ -2,7 +2,7 @@
 function addreply(name,value) {
     var id = $(value).parents('.timeline-post').attr('data-timeline-id');
     var element = document.getElementById('comment-textarea-' + id);
-    element.value　=　element.value + '@' + name + ' ';
+    element.value = element.value + '@' + name + ' ';
     element.focus();
 }
 </script>
