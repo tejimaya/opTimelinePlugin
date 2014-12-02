@@ -11,6 +11,10 @@
 	var uuid = 0;
 
 	$.fn.upload = function(url, data, callback, type) {
+    var body = $('<div />').text(data.body).html();
+    body = body.replace(/"/g, '&quot;');
+    data.body = body;
+
 		var self = this, inputs, checkbox, checked,
 			iframeName = 'jquery_upload' + ++uuid,
 			iframe = $('<iframe name="' + iframeName + '" style="position:absolute;top:-9999px" />').appendTo('body'),
