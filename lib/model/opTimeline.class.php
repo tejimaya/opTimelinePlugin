@@ -102,8 +102,6 @@ class opTimeline
         $response['replies'] = null;
         $response['replies_count'] = 0;
       }
-      $response['body'] = htmlspecialchars($response['body'], ENT_QUOTES, 'UTF-8', false);
-      $response['body_html'] = htmlspecialchars($response['body_html'], ENT_QUOTES, 'UTF-8', false);
     }
     unset($response);
 
@@ -148,8 +146,8 @@ class opTimeline
       $responseData['id'] = $activity->getId();
       $responseData['member'] = $memberData[$activity->getMemberId()];
 
-      $responseData['body'] = preg_replace('/<br\s\/>/', '&lt;br&nbsp;/&gt;', $activity->getBody());
-      $responseData['body_html'] = op_activity_linkification(nl2br(op_api_force_escape($responseData['body'])));
+      $responseData['body'] = htmlspecialchars($activity->getBody(), ENT_QUOTES, 'UTF-8');
+      $responseData['body_html'] = op_activity_linkification(nl2br($responseData['body']));
       $responseData['uri'] = $activity->getUri();
       $responseData['source'] = $activity->getSource();
       $responseData['source_uri'] = $activity->getSourceUri();
