@@ -1,0 +1,19 @@
+<?xml version="1.0" ?>
+<xliff version="1.0">
+  <file orginal="global" source-language="en" datatype="plaintext">
+    <body>
+      <trans-unit id="">
+        <source>%Activity% of %Friend%</source>
+        <target>%Friend%の%Activity%</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>%activity% comment reply</source>
+        <target>%activity%コメント返信機能設定</target>
+      </trans-unit>
+      <trans-unit id="">
+        <source>If this is used, you can reply to the %activity% comment.</source>
+        <target>使用するに設定した場合、クリックした%activity%コメントに返信することができます。</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
