@@ -81,27 +81,24 @@ $ ./symfony opTimelinePlugin:install
   <email />
   <active>yes</active>
  </developer>
- <date>2013-11-28</date>
- <time>17:11:26</time>
+ <date>2014-12-15</date>
+ <time>17:04:37</time>
  <version>
-  <release>1.2.2</release>
-  <api>1.2.2</api>
+  <release>1.2.3</release>
+  <api>1.2.3</api>
  </version>
  <stability>
-  <release>stable</release>
-  <api>stable</api>
+  <release>alpha</release>
+  <api>alpha</api>
  </stability>
  <license>Apache</license>
  <notes>
-opTimelinePlugin 1.2.2 release.
-
-* acitvity/post.json での投稿時に timeline-submit-upload を省略できない問題の修正
-* opTImelinePlugin1.2.1でコメントの投稿をすると「投稿に失敗しました」となる
+version 1.2.3 alpha release.
  </notes>
  <contents>
   <dir baseinstalldir="/" name="/">
    <file baseinstalldir="/" md5sum="11740ddaf4e5afd37fa71fa02129b79e" name="apps/api/config/routing.yml" role="data" />
-   <file baseinstalldir="/" md5sum="3b984cb3c54c5dcdf4e2c3556e1a4742" name="apps/api/modules/activity/actions/actions.class.php" role="data" />
+   <file baseinstalldir="/" md5sum="c1af04d12debdef00b3a24776bffd946" name="apps/api/modules/activity/actions/actions.class.php" role="data" />
    <file baseinstalldir="/" md5sum="aadc2fa440e9d14d6c53260d036b3145" name="apps/api/modules/activity/templates/commentSearchSuccess.php" role="data" />
    <file baseinstalldir="/" md5sum="d8cac6cd3ce8d31339f272ab814d24b9" name="apps/mobile_frontend/config/routing.yml" role="data" />
    <file baseinstalldir="/" md5sum="abee3656a469c4d17c66e1d3aa864cf0" name="apps/mobile_frontend/modules/community/config/view.yml" role="data" />
@@ -115,6 +112,7 @@ opTimelinePlugin 1.2.2 release.
    <file baseinstalldir="/" md5sum="2d6a0d585ed4e9986c3e2da700fc9804" name="apps/mobile_frontend/modules/timeline/templates/_timelineCommunity.php" role="data" />
    <file baseinstalldir="/" md5sum="baae7d4642cc3c7fdbecb69b18d64291" name="apps/mobile_frontend/modules/timeline/templates/_timelineProfile.php" role="data" />
    <file baseinstalldir="/" md5sum="921faa1fc775110818e9ef2b3641ea3e" name="apps/mobile_frontend/modules/timeline/templates/_timelineRecord.php" role="data" />
+   <file baseinstalldir="/" md5sum="c8df34a94c75d112450badbd5b6c730e" name="apps/pc_backend/i18n/messages.ja.xml" role="data" />
    <file baseinstalldir="/" md5sum="eabeebc326413506515e4aef3680a0e6" name="apps/pc_backend/modules/opTimelinePlugin/actions/actions.class.php" role="data" />
    <file baseinstalldir="/" md5sum="31334df4a8ed4c95f6ca86d2ffb57daa" name="apps/pc_backend/modules/opTimelinePlugin/templates/indexSuccess.php" role="data" />
    <file baseinstalldir="/" md5sum="bad7647a85995ba9de2ca59688d7b5a6" name="apps/pc_frontend/config/routing.yml" role="data" />
@@ -145,7 +143,7 @@ opTimelinePlugin 1.2.2 release.
    <file baseinstalldir="/" md5sum="0084a55d2fead210c79651d04608ec02" name="apps/pc_frontend/modules/timeline/templates/_timelineFriend.php" role="data" />
    <file baseinstalldir="/" md5sum="eeb835dfd2c20f67a478afce475ba628" name="apps/pc_frontend/modules/timeline/templates/_timelineMentions.php" role="data" />
    <file baseinstalldir="/" md5sum="db4f711392d0f0d6b8b26d8d1f4e7975" name="apps/pc_frontend/modules/timeline/templates/_timelineProfile.php" role="data" />
-   <file baseinstalldir="/" md5sum="02e55c11933af0c83f28545282ea24d3" name="apps/pc_frontend/modules/timeline/templates/_timelineTemplate.php" role="data" />
+   <file baseinstalldir="/" md5sum="bfa22bb0e92b3681a6d7f1a67cb65f7d" name="apps/pc_frontend/modules/timeline/templates/_timelineTemplate.php" role="data" />
    <file baseinstalldir="/" md5sum="89865db1b392385b743600951318308f" name="config/gadget.yml" role="data" />
    <file baseinstalldir="/" md5sum="f092338b0355ecdaf2a8318e00c26a0d" name="config/mobile_gadget.yml" role="data" />
    <file baseinstalldir="/" md5sum="48bc20e3823ac36fa767731b9330e8df" name="config/mobile_profile_gadget.yml" role="data" />
@@ -160,10 +158,10 @@ opTimelinePlugin 1.2.2 release.
    <file baseinstalldir="/" md5sum="4de4655917d48e76ae5e9ddc9dbcde2c" name="lib/action/opTimelineAction.class.php" role="data" />
    <file baseinstalldir="/" md5sum="f772d0d77d487ea793064fc0767b999e" name="lib/database/opTimelineDb.php" role="data" />
    <file baseinstalldir="/" md5sum="35ff41f5a7aaeca0aa4e0a256c6c90ea" name="lib/form/MemberConfigTimelineScreenNameForm.class.php" role="data" />
-   <file baseinstalldir="/" md5sum="864e47d5b6bd67fa3537326b7494fe8e" name="lib/form/opTimelinePluginConfigurationForm.class.php" role="data" />
+   <file baseinstalldir="/" md5sum="a0b4c12b006a31697002e9134830b00c" name="lib/form/opTimelinePluginConfigurationForm.class.php" role="data" />
    <file baseinstalldir="/" md5sum="20ba546e0f842152c432a0803fd93154" name="lib/form/doctrine/TimelineDataForm.class.php" role="data" />
    <file baseinstalldir="/" md5sum="b4c7470175c0587e2b4b11e0594634fb" name="lib/helper/opTimelineHelper.php" role="data" />
-   <file baseinstalldir="/" md5sum="f75941f7a8093e1af3fb077d84c6abbc" name="lib/model/opTimeline.class.php" role="data" />
+   <file baseinstalldir="/" md5sum="7707edb9e1330febc957bfefc74986b4" name="lib/model/opTimeline.class.php" role="data" />
    <file baseinstalldir="/" md5sum="84fd1559fb0dc99c000d2537306e1ee7" name="lib/model/opTimelineUser.class.php" role="data" />
    <file baseinstalldir="/" md5sum="5589b8ad48dff9edb39413fab61123f0" name="lib/task/opTimelinePluginInstallTask.class.php" role="data" />
    <file baseinstalldir="/" md5sum="61e93bc11fb8ca14bddfb5653a1c2b58" name="lib/util/opTimelineImage.class.php" role="data" />
@@ -233,12 +231,12 @@ opTimelinePlugin 1.2.2 release.
    <file baseinstalldir="/" md5sum="ca938a8370f45b827026f2ca5c04845d" name="web/js/counter.js" role="data" />
    <file baseinstalldir="/" md5sum="0fa78a621a85700338f794cafb1898f6" name="web/js/jquery.colorbox.js" role="data" />
    <file baseinstalldir="/" md5sum="007640beb5613c6aab970d8d6ef753cb" name="web/js/jquery.desktopify.js" role="data" />
-   <file baseinstalldir="/" md5sum="4c1e2a15b1eafb93a71ebc71b415b4eb" name="web/js/jquery.timeago.js" role="data" />
-   <file baseinstalldir="/" md5sum="62b71ff362359c0282f8e738d4f09cc4" name="web/js/jquery.timeline.js" role="data" />
-   <file baseinstalldir="/" md5sum="94466a640d5b6830cd9724d071a8e9bf" name="web/js/jquery.upload-1.0.2.js" role="data" />
+   <file baseinstalldir="/" md5sum="b32b4e3c4c0274049d44acbbc7e6eb60" name="web/js/jquery.timeago.js" role="data" />
+   <file baseinstalldir="/" md5sum="7dd19201d4566e32d613a8823fe7ddc3" name="web/js/jquery.timeline.js" role="data" />
+   <file baseinstalldir="/" md5sum="65a320ffa6047db9b3c328fe28563b7c" name="web/js/jquery.upload-1.0.2.js" role="data" />
    <file baseinstalldir="/" md5sum="3063792fd8f0c850fc8f609533f954f5" name="web/js/lightbox.js" role="data" />
    <file baseinstalldir="/" md5sum="d71602bcc34557f37011d24ad87724ed" name="web/js/timeline-loader-smartphone.js" role="data" />
-   <file baseinstalldir="/" md5sum="f337143c42855fd3167861b827d803ea" name="web/js/timeline-loader.api.js" role="data" />
+   <file baseinstalldir="/" md5sum="0c0143053b31d4731c88cc9c2d4f70d8" name="web/js/timeline-loader.api.js" role="data" />
    <file baseinstalldir="/" md5sum="d68f452e78f4ed9d29fc37894175c506" name="dependencies.yml" role="data" />
    <file baseinstalldir="/" md5sum="3b83ef96387f14655fc854ddc3c6bd57" name="LICENSE" role="data" />
    <file baseinstalldir="/" md5sum="e8b101336a2d8e9ac12eee732a146ab2" name="README.md" role="data" />
@@ -411,6 +409,21 @@ opTimelinePlugin 1.2.2 release.
 
 * acitvity/post.json での投稿時に timeline-submit-upload を省略できない問題の修正
 * opTImelinePlugin1.2.1でコメントの投稿をすると「投稿に失敗しました」となる
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>1.2.3</release>
+    <api>1.2.3</api>
+   </version>
+   <stability>
+    <release>alpha</release>
+    <api>alpha</api>
+   </stability>
+   <date>2014-12-15</date>
+   <license>Apache</license>
+   <notes>
+version 1.2.3 alpha release.
    </notes>
   </release>
  </changelog>
