@@ -124,7 +124,16 @@ class activityActions extends opJsonApiActions
 
     $responseData = $this->createResponActivityDataOfPost();
     $responseData['body'] = htmlspecialchars($responseData['body'], ENT_QUOTES, 'UTF-8');
-    $responseData['body_html'] = op_activity_linkification(nl2br(op_api_force_escape($responseData['body'])));
+    $responseData['body_html'] = $request->getParameter('in_reply_to_activity_id');
+
+    if (is_null($request->getParameter('in_reply_to_activity_id')))
+    {
+      $responseData['body_html'] = op_activity_linkification(nl2br(op_api_force_escape($responseData['body'])));
+    }
+    else
+    {
+      $responseData['body_html'] = op_activity_linkification(nl2br($responseData['body']));
+    }
 
     if (!is_null($validatedFile))
     {
