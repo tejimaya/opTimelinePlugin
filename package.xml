@@ -81,11 +81,11 @@ $ ./symfony opTimelinePlugin:install
   <email />
   <active>yes</active>
  </developer>
- <date>2014-12-24</date>
- <time>14:38:20</time>
+ <date>2015-02-19</date>
+ <time>16:26:31</time>
  <version>
-  <release>1.2.5</release>
-  <api>1.2.5</api>
+  <release>1.2.6</release>
+  <api>1.2.6</api>
  </version>
  <stability>
   <release>alpha</release>
@@ -93,7 +93,7 @@ $ ./symfony opTimelinePlugin:install
  </stability>
  <license>Apache</license>
  <notes>
-version 1.2.5 alpha release.
+version 1.2.6 alpha release.
  </notes>
  <contents>
   <dir baseinstalldir="/" name="/">
@@ -236,10 +236,10 @@ version 1.2.5 alpha release.
    <file baseinstalldir="/" md5sum="65a320ffa6047db9b3c328fe28563b7c" name="web/js/jquery.upload-1.0.2.js" role="data" />
    <file baseinstalldir="/" md5sum="3063792fd8f0c850fc8f609533f954f5" name="web/js/lightbox.js" role="data" />
    <file baseinstalldir="/" md5sum="d71602bcc34557f37011d24ad87724ed" name="web/js/timeline-loader-smartphone.js" role="data" />
-   <file baseinstalldir="/" md5sum="0c0143053b31d4731c88cc9c2d4f70d8" name="web/js/timeline-loader.api.js" role="data" />
+   <file baseinstalldir="/" md5sum="9163acecd045c515ab9f220466151a2f" name="web/js/timeline-loader.api.js" role="data" />
    <file baseinstalldir="/" md5sum="d68f452e78f4ed9d29fc37894175c506" name="dependencies.yml" role="data" />
    <file baseinstalldir="/" md5sum="3b83ef96387f14655fc854ddc3c6bd57" name="LICENSE" role="data" />
-   <file baseinstalldir="/" md5sum="e8b101336a2d8e9ac12eee732a146ab2" name="README.md" role="data" />
+   <file baseinstalldir="/" md5sum="a1a8fd70176e9e8ba73af58698c7f8d1" name="README.md" role="data" />
   </dir>
  </contents>
  <dependencies>
@@ -454,6 +454,21 @@ version 1.2.4 alpha release.
    <license>Apache</license>
    <notes>
 version 1.2.5 alpha release.
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>1.2.6</release>
+    <api>1.2.6</api>
+   </version>
+   <stability>
+    <release>alpha</release>
+    <api>alpha</api>
+   </stability>
+   <date>2015-02-19</date>
+   <license>Apache</license>
+   <notes>
+version 1.2.6 alpha release.
    </notes>
   </release>
  </changelog>
