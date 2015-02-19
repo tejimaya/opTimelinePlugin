@@ -45,7 +45,7 @@ opTimelinePlugin
 ## インストール方法
 * 以下のコマンドを実行して下さい。  
  プラグインをダウンロードします。  
-    ./symfony opPlugin:install opTimelinePlugin -r 1.1.6  
+    ./symfony opPlugin:install opTimelinePlugin
  スマートフォン対応する場合はパッチを適用します。  
     cd OpenPNE_dir  
     patch -p0 < plugins/opTimelinePlugin/data/patches/384.diff  
