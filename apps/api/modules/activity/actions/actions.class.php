@@ -208,6 +208,15 @@ class activityActions extends opJsonApiActions
 
         return $errorInfo;
       }
+
+      $memberId = $this->getUser()->getMemberId();
+      $isCommunityMember = Doctrine_Core::getTable('CommunityMember')->isMember($memberId, $request['target_id']);
+      if (!$isCommunityMember)
+      {
+        $errorInfo['message'] = 'You\'re not participate in this community.';
+
+        return $errorInfo;
+      }
     }
 
     return null;
