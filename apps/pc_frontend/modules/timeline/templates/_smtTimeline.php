@@ -47,6 +47,9 @@ var fileMaxSizeInfo = {
 
           <div class="timeline-post-control">
             <a href="#timeline-${id}" class="timeline-comment-link">コメントする</a>
+            {{if member.self }}
+            <a href="#timeline-post-delete-confirm-${id}" class="timeline-post-delete-confirm-link" data-timeline-id="${id}">削除する</a>
+            {{/if}}
             <span class="timeline-public-flag-show">
               {{if public_status == 'friend' }}
               <span class="icon-lock"></span>
@@ -97,6 +100,11 @@ var fileMaxSizeInfo = {
               <div class="timestamp timeline-post-control timeago" title="${created_at}"></div>
               <div class="timeline-post-comment-body">
               {{html body_html}}
+              </div>
+              <div class="timeline-post-control">
+                {{if member.self }}
+                <a href="#timeline-post-delete-confirm-${id}" class="timeline-post-delete-confirm-link" data-timeline-id="${id}">削除する</a>
+                {{/if}}
               </div>
             </div>
 </script>
