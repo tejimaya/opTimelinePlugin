@@ -81,11 +81,11 @@ $ ./symfony opTimelinePlugin:install
   <email />
   <active>yes</active>
  </developer>
- <date>2015-02-19</date>
- <time>16:26:31</time>
+ <date>2016-11-09</date>
+ <time>18:05:35</time>
  <version>
-  <release>1.2.6</release>
-  <api>1.2.6</api>
+  <release>1.2.6.1</release>
+  <api>1.2.6.1</api>
  </version>
  <stability>
   <release>alpha</release>
@@ -93,12 +93,12 @@ $ ./symfony opTimelinePlugin:install
  </stability>
  <license>Apache</license>
  <notes>
-version 1.2.6 alpha release.
+version 1.2.6.1 for OPSA-2016-002
  </notes>
  <contents>
   <dir baseinstalldir="/" name="/">
    <file baseinstalldir="/" md5sum="11740ddaf4e5afd37fa71fa02129b79e" name="apps/api/config/routing.yml" role="data" />
-   <file baseinstalldir="/" md5sum="30fbb59d88fa99758226f7cc44d371cf" name="apps/api/modules/activity/actions/actions.class.php" role="data" />
+   <file baseinstalldir="/" md5sum="3fe98a678dc799d3b47cf194a064b28d" name="apps/api/modules/activity/actions/actions.class.php" role="data" />
    <file baseinstalldir="/" md5sum="aadc2fa440e9d14d6c53260d036b3145" name="apps/api/modules/activity/templates/commentSearchSuccess.php" role="data" />
    <file baseinstalldir="/" md5sum="d8cac6cd3ce8d31339f272ab814d24b9" name="apps/mobile_frontend/config/routing.yml" role="data" />
    <file baseinstalldir="/" md5sum="abee3656a469c4d17c66e1d3aa864cf0" name="apps/mobile_frontend/modules/community/config/view.yml" role="data" />
@@ -469,6 +469,21 @@ version 1.2.5 alpha release.
    <license>Apache</license>
    <notes>
 version 1.2.6 alpha release.
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>1.2.6.1</release>
+    <api>1.2.6.1</api>
+   </version>
+   <stability>
+    <release>alpha</release>
+    <api>alpha</api>
+   </stability>
+   <date>2016-11-09</date>
+   <license>Apache</license>
+   <notes>
+version 1.2.6.1 for OPSA-2016-002
    </notes>
   </release>
  </changelog>
