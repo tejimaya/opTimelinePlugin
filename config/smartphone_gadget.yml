@@ -35,3 +35,16 @@ smtTimelineFriend:
   description:
     ja_JP: "利用者本人とそのフレンドのタイムラインが表示されます"
   component: [timeline, smtTimelineFriend]
+  config:
+    limit:
+      Name:      "limit"
+      Caption:   "最大表示件数"
+      FormType:  "select"
+      ValueType:  "int"
+      IsRequired: true
+      Default:    20
+      Choices:
+        5: 5
+        10: 10
+        15: 15
+        20: 20
