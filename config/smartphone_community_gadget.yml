@@ -6,6 +6,19 @@ smtCommunityTimelineBox:
     ja_JP: "コミュニティのタイムラインを表示します。"
     en_US: "The timeline of a community is displayed."
   component: [timeline, smtTimelineCommunity]
+  config:
+    limit:
+      Name:      "limit"
+      Caption:   "最大表示件数"
+      FormType:  "select"
+      ValueType:  "int"
+      IsRequired: true
+      Default:    20
+      Choices:
+        5: 5
+        10: 10
+        15: 15
+        20: 20
 
 smtCommunityTimelineBy1:
   caption:

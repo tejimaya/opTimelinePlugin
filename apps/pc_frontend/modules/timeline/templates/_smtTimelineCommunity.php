@@ -4,7 +4,7 @@
 var gorgon = {
       'target': 'community',
       'target_id': <?php echo $id; ?>,
-      'count': '20',
+      'count': '<?php echo $gadget->getConfig('limit'); ?>',
       'post': {
         'foreign': 'community',
         'foreignId': '<?php echo $id; ?>'

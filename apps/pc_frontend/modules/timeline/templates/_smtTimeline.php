@@ -3,6 +3,7 @@
 //<![CDATA[
 var gorgon = {
       'mode': 'all',
+      'count': '<?php echo $gadget->getConfig('limit'); ?>',
       'post': {
       }
     };
