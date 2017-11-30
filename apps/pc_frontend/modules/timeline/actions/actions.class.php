@@ -85,6 +85,8 @@ class timelineActions extends sfActions
   {
     $activityId = (int)$request['id'];
     $this->activity = Doctrine::getTable('ActivityData')->find($activityId);
+    $activityId = $this->activity->in_reply_to_activity_id ? $this->activity->in_reply_to_activity_id : $this->activity->id;
+    $this->activity = Doctrine::getTable('ActivityData')->find($activityId);
     if (!$this->activity)
     {
       $this->redirect('default/error');
