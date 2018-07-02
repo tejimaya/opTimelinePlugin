@@ -2,7 +2,9 @@
 <script type="text/javascript">
 //<![CDATA[
 var gorgon = {
-  'target': 'friend'
+  'target': 'friend',
+  'post': {
+  },
 };
 
 var MAXLENGTH = 140;
