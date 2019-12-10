@@ -412,26 +412,63 @@ function tweetByData(data)
 
 function autoLinker(json)
 {
-  for(var i = 0; i < json.data.length; i++)
+  for(let i = 0; i < json.data.length; i++)
   {
     if (!json.data[i].body_html.match(/img.*src=/))
     {
-      if (json.data[i].body.match(/\.(jpg|jpeg|png|gif)/))
+      let body = json.data[i].body;
+      if (body.match(/\.(jpg|jpeg|png|gif)/))
       {
-        json.data[i].body_html = json.data[i].body.replace(/((http:|https:)\/\/[\x21-\x26\x28-\x7e]+.(jpg|jpeg|png|gif))/gi, '<div><a href="$1"><img src="$1"></img></a></div>');
+        json.data[i].body_html = body.replace(/((http:|https:)\/\/[\x21-\x26\x28-\x7e]+.(jpg|jpeg|png|gif))/gi, '<div><a href="$1"><img src="$1"></img></a></div>');
       }
-      else if (json.data[i].body.match(/((http:|https:)\/\/www\.youtube\.com\/watch\?v=([a-zA-Z0-9_\-]+))/))
+      else if (body.match(/(http:|https:)\/\/jp\.youtube\.com\/watch\?v=([a-zA-Z0-9_\-]+)/))
       {
-        var youtubeId = json.data[i].body.substring(json.data[i].body.lastIndexOf('v=') + 2, json.data[i].body.length);
-        var iframe = '<iframe width="370" height="277" src="http://www.youtube.com/embed/' + youtubeId + '" frameborder="0" allowfullscreen></iframe>';
-        json.data[i].body_html = json.data[i].body.replace(/((http:|https:)\/\/www\.youtube\.com\/watch\?v=([a-zA-Z0-9_\-]+))/gi, '<div>' + iframe + '</div>');
+        json.data[i].body_html = body.replace(/(http:|https:)\/\/jp\.youtube\.com\/watch\?v=([a-zA-Z0-9_\-]+)/gi, '<div>' + _autoLinker_Youtube(RegExp.$2, body) + '</div>');
       }
-      else if (json.data[i].body.match(/((http:|https:)\/\/[\x21-\x26\x28-\x7e]+)/))
+      else if (body.match(/(http:|https:)\/\/(?:www\.|)youtube\.com\/watch\?(?:.+&amp;)?v=([a-zA-Z0-9_\-]+)/))
       {
-        json.data[i].body_html = json.data[i].body.replace(/((http:|https:)\/\/[\x21-\x26\x28-\x7e]+)/gi, '<a href="$1"><div class="urlBlock"><img src="http://mozshot.nemui.org/shot?$1"><br />$1</div></a>');
+        json.data[i].body_html = body.replace(/(http:|https:)\/\/(?:www\.|)youtube\.com\/watch\?(?:.+&amp;)?v=([a-zA-Z0-9_\-]+)/gi, '<div>' + _autoLinker_Youtube(RegExp.$2, body) + '</div>');
+      }
+      else if (body.match(/(http:|https:)\/\/youtu\.be\/([a-zA-Z0-9_\-]+)/))
+      {
+        json.data[i].body_html = body.replace(/(http:|https:)\/\/youtu\.be\/([a-zA-Z0-9_\-]+)/gi, '<div>' + _autoLinker_Youtube(RegExp.$2, body) + '</div>');
+      }
+      else if (body.match(/((http:|https:)\/\/[\x21-\x26\x28-\x7e]+)/))
+      {
+        json.data[i].body_html = _autoLinker(body);
       }
     }
   }
+}
+
+function _autoLinker(body)
+{
+  return body.replace(/((http:|https:)\/\/[\x21-\x26\x28-\x7e]+)/gi, '<a href="$1"><div class="urlBlock"><img src="http://mozshot.nemui.org/shot?$1"><br />$1</div></a>');
+}
+
+function _autoLinker_Youtube(_id, _body)
+{
+  if (!_id.match(/^[a-zA-Z0-9_\-]+$/)) {
+    return _autoLinker(body);
+  }
+  let width = 370;
+  let height = 277;
+
+  let html = '<object width="'
+      + width
+      + '" height="'
+      + height
+      + '"><param name="movie" value="http://www.youtube.com/v/'
+      + _id
+      + '"></param><embed src="http://www.youtube.com/v/'
+      + _id
+      + '" type="application/x-shockwave-flash" width="'
+      + width
+      + '" height="'
+      + height
+      + '"></embed></object>';
+
+  return html;
 }
 
 function lengthCheck(obj, target)
