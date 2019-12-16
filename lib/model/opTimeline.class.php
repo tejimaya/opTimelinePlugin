@@ -154,7 +154,7 @@ class opTimeline
       {
         $responseData['body'] = htmlspecialchars($activity->getBody(), ENT_QUOTES, 'UTF-8');
       }
-      $responseData['body_html'] = $this->_convCmd(nl2br($responseData['body']));
+      $responseData['body_html'] = $this->convCmd(nl2br($responseData['body']), is_null($activity->in_reply_to_activity_id) ? false: true);
       $responseData['uri'] = $activity->getUri();
       $responseData['source'] = $activity->getSource();
       $responseData['source_uri'] = $activity->getSourceUri();
@@ -169,7 +169,7 @@ class opTimeline
     return $responseDataList;
   }
 
-  private function createActivityDataByActivityDataRowsAndMemberDataForSearchAPI($activityDataRows, $memberDataList, $target)
+  private function createActivityDataByActivityDataRowsAndMemberDataForSearchAPI($activityDataRows, $memberDataList, $target, $isMini = false)
   {
     $responseDataList = array();
     foreach ($activityDataRows as $row)
@@ -185,7 +185,7 @@ class opTimeline
       {
         $responseData['body'] = htmlspecialchars($row['body'], ENT_QUOTES, 'UTF-8', false);
       }
-      $responseData['body_html'] = $this->_convCmd(nl2br($responseData['body']));
+      $responseData['body_html'] = $this->convCmd(nl2br($responseData['body']), is_null($row['in_reply_to_activity_id']) ? false: true);
       $responseData['uri'] = $row['uri'];
       $responseData['source'] = $row['source'];
       $responseData['source_uri'] = $row['source_uri'];
@@ -201,7 +201,7 @@ class opTimeline
     return $responseDataList;
   }
 
-  private function _convCmd($_body)
+  public function convCmd($_body, $_isMini)
   {
     $body = $this->_unfoldGooGl($_body);
     $urlList = $this->_getUrlList($body);
@@ -213,19 +213,19 @@ class opTimeline
       }
       else if (preg_match('/(http:|https:)\/\/jp\.youtube\.com\/watch\?v=([a-zA-Z0-9_\-]+)/', $urlStr, $matches))
       {
-        $body = str_replace($urlStr, $this->_getYoutubeCmd($matches[2]), $body);
+        $body = str_replace($urlStr, $this->_getYoutubeCmd($matches[2], $_isMini), $body);
       }
       else if (preg_match('/(http:|https:)\/\/(?:www\.|)youtube\.com\/watch\?(?:.+&amp;)?v=([a-zA-Z0-9_\-]+)/', $urlStr, $matches))
       {
-        $body = str_replace($urlStr, $this->_getYoutubeCmd($matches[2]), $body);
+        $body = str_replace($urlStr, $this->_getYoutubeCmd($matches[2], $_isMini), $body);
       }
       else if (preg_match('/(http:|https:)\/\/youtu\.be\/([a-zA-Z0-9_\-]+)/', $urlStr, $matches))
       {
-        $body = str_replace($urlStr, $this->_getYoutubeCmd($matches[2]), $body);
+        $body = str_replace($urlStr, $this->_getYoutubeCmd($matches[2], $_isMini), $body);
       }
       else if (preg_match('/(http:|https:)\/\/www\.nicovideo\.jp\/watch\/([a-z0-9]+)/', $urlStr, $matches))
       {
-        $body = str_replace($urlStr, $this->_getNicoVideoCmd($matches[2]), $body);
+        $body = str_replace($urlStr, $this->_getNicoVideoCmd($matches[2], $_isMini), $body);
       }
       else if (preg_match('/(http:|https:)\/\/maps\.google\.co\.jp\/maps[?\/](.+)/', $urlStr, $matches))
       {
@@ -288,22 +288,37 @@ class opTimeline
     return $_body;
   }
 
-  private function _getYoutubeCmd($_id)
+  private function _getYoutubeCmd($_id, $_isMini)
   {
-    $html = '<object width="370" height="277">';
+    $w = 370;
+    $h = 277;
+    if ($_isMini)
+    {
+      $w = 300;
+      $h = 230;
+    }
+    $html = '<object width="'.$w.'" height="'.$h.'">';
     $html .= '<param name="movie" value="http://www.youtube.com/v/'.$_id.'"></param>';
-    $html .= '<embed src="http://www.youtube.com/v/'.$_id.'" type="application/x-shockwave-flash" width="370" height="277"></embed>';
+    $html .= '<embed src="http://www.youtube.com/v/'.$_id.'" type="application/x-shockwave-flash" width="'.$w.'" height="'.$h.'"></embed>';
     $html .= '</object>';
 
     return $html;
   }
 
-  private function _getNicoVideoCmd($_id)
+  private function _getNicoVideoCmd($_id, $_isMini)
   {
+    $w = 350;
+    $h = 230;
+    if ($_isMini)
+    {
+      $w = 300;
+      $h = 230;
+    }
+
     $url = 'https://www.nicovideo.jp/watch/'.$_id;
 
-    $html = '<iframe id="iframe1" src="https://ext.nicovideo.jp/thumb/'.$_id.'" width="350"';
-    $html .= ' height="230" scrolling="no" style="border: solid 1px #ccc;" frameborder="0">';
+    $html = '<iframe id="iframe1" src="https://ext.nicovideo.jp/thumb/'.$_id.'" width="'.$w.'"';
+    $html .= ' height="'.$h.'" scrolling="no" style="border: solid 1px #ccc;" frameborder="0">';
     $html .= '<a href="'.$url.'">'.$url.'</a>';
     $html .= '</iframe>';
 
