@@ -99,8 +99,8 @@ function addreply(name,value) {
 
                 <div class="timeline-post-comment-control">
                 {{if member.self==true }}
-                <a href="#timeline-post-delete-confirm-${id}" class="timeline-post-delete-confirm-link">削除する</a> | 
-                {{/if}} 
+                <a href="#timeline-post-delete-confirm-${id}" class="timeline-post-delete-confirm-link">削除する</a> |
+                {{/if}}
                 <?php if('1'== Doctrine::getTable('SnsConfig')->get('op_timeline_plugin_timeline_comment_reply')): ?>
                   <a class="reply" href="javascript:void(0);" onclick="javascript:addreply('${member.name}',this)" ><?php echo __('Reply') ?></a>
                 <?php endif; ?>

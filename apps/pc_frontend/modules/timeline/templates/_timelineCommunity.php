@@ -18,7 +18,7 @@ var gorgon = {
         ,'icon': '<?php echo sf_image_path($community->getImageFileName(), array('size' => '48x48',)); ?>'
         <?php endif; ?>
       },
-      'timerCount': '5000'
+      'timerCount': '60000'
     };
 var MAXLENGTH = 140;
 var viewPhoto = '<?php echo $viewPhoto ?>';

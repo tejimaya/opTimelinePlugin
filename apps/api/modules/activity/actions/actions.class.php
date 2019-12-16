@@ -147,7 +147,6 @@ class activityActions extends opJsonApiActions
   {
     $this->loadHelperForUseOpJsonAPI();
     $activity = op_api_activity($this->createdActivity);
-
     $replies = $this->createdActivity->getReplies();
     if (0 < count($replies))
     {
@@ -167,7 +166,6 @@ class activityActions extends opJsonApiActions
    */
   private function renderJSONDirect(array $data)
   {
-    //header("Content-Type: application/json; charset=utf-8");
     echo json_encode($data);
     exit;
   }
@@ -242,7 +240,7 @@ class activityActions extends opJsonApiActions
     }
 
     $responseData = $this->timeline->createActivityDataByActivityDataAndViewerMemberIdForSearchAPI(
-                    $activityData, $this->getUser()->getMemberId());
+                    $activityData, $this->getUser()->getMemberId(), $parameters['target']);
 
     $responseData = $this->timeline->addPublicFlagByActivityDataForSearchAPIByActivityData($responseData, $activityData);
     $responseData = $this->timeline->embedImageUrlToContentForSearchAPI($responseData);

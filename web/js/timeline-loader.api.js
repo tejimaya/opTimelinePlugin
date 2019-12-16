@@ -32,7 +32,7 @@ $(function(){
     $('#photo-file-name').empty();
     $('#photo-remove').hide();
 
-    var body = $('#timeline-textarea').val();
+    var body = htmlspecialchars($('#timeline-textarea').val());
 
     if (gorgon)
     {
@@ -281,10 +281,10 @@ function renderJSON(json, mode) {
   {
     $('#timeline-list').empty();
   }
-  if(json.data && 0 < viewPhoto)
-  {
-    autoLinker(json);
-  }
+  // if(json.data && 0 < viewPhoto)
+  // {
+  //   autoLinker(json);
+  // }
 
   $timelineData = $('#timelineTemplate').tmpl(json.data);
   $('.timeline-comment-button', $timelineData).timelineComment();
@@ -358,6 +358,15 @@ function renderJSON(json, mode) {
   $('.timeago').timeago();
 }
 
+function htmlspecialchars(str)
+{
+  return (str + '').replace(/&/g,'&amp;')
+      .replace(/"/g,'&quot;')
+      .replace(/'/g,'&#039;')
+      .replace(/</g,'&lt;')
+      .replace(/>/g,'&gt;');
+}
+
 function tweetByData(data)
 {
   //reference　http://lagoscript.org/jquery/upload/documentation
@@ -408,67 +417,6 @@ function tweetByData(data)
     },
     'text'
     );
-}
-
-function autoLinker(json)
-{
-  for(let i = 0; i < json.data.length; i++)
-  {
-    if (!json.data[i].body_html.match(/img.*src=/))
-    {
-      let body = json.data[i].body;
-      if (body.match(/\.(jpg|jpeg|png|gif)/))
-      {
-        json.data[i].body_html = body.replace(/((http:|https:)\/\/[\x21-\x26\x28-\x7e]+.(jpg|jpeg|png|gif))/gi, '<div><a href="$1"><img src="$1"></img></a></div>');
-      }
-      else if (body.match(/(http:|https:)\/\/jp\.youtube\.com\/watch\?v=([a-zA-Z0-9_\-]+)/))
-      {
-        json.data[i].body_html = body.replace(/(http:|https:)\/\/jp\.youtube\.com\/watch\?v=([a-zA-Z0-9_\-]+)/gi, '<div>' + _autoLinker_Youtube(RegExp.$2, body) + '</div>');
-      }
-      else if (body.match(/(http:|https:)\/\/(?:www\.|)youtube\.com\/watch\?(?:.+&amp;)?v=([a-zA-Z0-9_\-]+)/))
-      {
-        json.data[i].body_html = body.replace(/(http:|https:)\/\/(?:www\.|)youtube\.com\/watch\?(?:.+&amp;)?v=([a-zA-Z0-9_\-]+)/gi, '<div>' + _autoLinker_Youtube(RegExp.$2, body) + '</div>');
-      }
-      else if (body.match(/(http:|https:)\/\/youtu\.be\/([a-zA-Z0-9_\-]+)/))
-      {
-        json.data[i].body_html = body.replace(/(http:|https:)\/\/youtu\.be\/([a-zA-Z0-9_\-]+)/gi, '<div>' + _autoLinker_Youtube(RegExp.$2, body) + '</div>');
-      }
-      else if (body.match(/((http:|https:)\/\/[\x21-\x26\x28-\x7e]+)/))
-      {
-        json.data[i].body_html = _autoLinker(body);
-      }
-    }
-  }
-}
-
-function _autoLinker(body)
-{
-  return body.replace(/((http:|https:)\/\/[\x21-\x26\x28-\x7e]+)/gi, '<a href="$1"><div class="urlBlock"><img src="http://mozshot.nemui.org/shot?$1"><br />$1</div></a>');
-}
-
-function _autoLinker_Youtube(_id, _body)
-{
-  if (!_id.match(/^[a-zA-Z0-9_\-]+$/)) {
-    return _autoLinker(body);
-  }
-  let width = 370;
-  let height = 277;
-
-  let html = '<object width="'
-      + width
-      + '" height="'
-      + height
-      + '"><param name="movie" value="http://www.youtube.com/v/'
-      + _id
-      + '"></param><embed src="http://www.youtube.com/v/'
-      + _id
-      + '" type="application/x-shockwave-flash" width="'
-      + width
-      + '" height="'
-      + height
-      + '"></embed></object>';
-
-  return html;
 }
 
 function lengthCheck(obj, target)

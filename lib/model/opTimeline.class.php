@@ -65,7 +65,7 @@ class opTimeline
   /**
    * メソッドを実行する前にopJsonApiをロードしておく必要がある
    */
-  public function createActivityDataByActivityDataAndViewerMemberIdForSearchAPI($activityDataList, $viewerMemberId)
+  public function createActivityDataByActivityDataAndViewerMemberIdForSearchAPI($activityDataList, $viewerMemberId, $target)
   {
     $activityIds = array();
     foreach ($activityDataList as $activity)
@@ -84,7 +84,7 @@ class opTimeline
                     $activityDataList, $replyActivityDataList);
     $memberDataList = $this->user->createMemberDataByViewerMemberIdAndMemberIdsForAPIResponse($viewerMemberId, $memberIds);
 
-    $responseDataList = $this->createActivityDataByActivityDataAndMemberDataForSearchAPI($activityDataList, $memberDataList);
+    $responseDataList = $this->createActivityDataByActivityDataAndMemberDataForSearchAPI($activityDataList, $memberDataList, $target);
 
     foreach ($responseDataList as &$response)
     {
@@ -94,7 +94,7 @@ class opTimeline
       {
         $replies = $replyActivityDataList[$id];
 
-        $response['replies'] = $this->createActivityDataByActivityDataRowsAndMemberDataForSearchAPI($replies['data'], $memberDataList);
+        $response['replies'] = $this->createActivityDataByActivityDataRowsAndMemberDataForSearchAPI($replies['data'], $memberDataList, $target);
         $response['replies_count'] = $replies['count'];
       }
       else
@@ -129,7 +129,7 @@ class opTimeline
     return $memberIds;
   }
 
-  private function createActivityDataByActivityDataAndMemberDataForSearchAPI($activityDataList, $memberData)
+  private function createActivityDataByActivityDataAndMemberDataForSearchAPI($activityDataList, $memberData, $target)
   {
     $activityIds = array();
     foreach ($activityDataList as $activity)
@@ -146,8 +146,15 @@ class opTimeline
       $responseData['id'] = $activity->getId();
       $responseData['member'] = $memberData[$activity->getMemberId()];
 
-      $responseData['body'] = htmlspecialchars($activity->getBody(), ENT_QUOTES, 'UTF-8');
-      $responseData['body_html'] = op_activity_linkification(nl2br($responseData['body']));
+      if ('community' === $target)
+      {
+        $responseData['body'] = $activity->getBody();
+      }
+      else
+      {
+        $responseData['body'] = htmlspecialchars($activity->getBody(), ENT_QUOTES, 'UTF-8');
+      }
+      $responseData['body_html'] = $this->_convCmd(nl2br($responseData['body']));
       $responseData['uri'] = $activity->getUri();
       $responseData['source'] = $activity->getSource();
       $responseData['source_uri'] = $activity->getSourceUri();
@@ -162,17 +169,23 @@ class opTimeline
     return $responseDataList;
   }
 
-  private function createActivityDataByActivityDataRowsAndMemberDataForSearchAPI($activityDataRows, $memberDataList)
+  private function createActivityDataByActivityDataRowsAndMemberDataForSearchAPI($activityDataRows, $memberDataList, $target)
   {
-
     $responseDataList = array();
     foreach ($activityDataRows as $row)
     {
       $responseData['id'] = $row['id'];
       $responseData['member'] = $memberDataList[$row['member_id']];
 
-      $responseData['body'] = htmlspecialchars($row['body'], ENT_QUOTES, 'UTF-8', false);
-      $responseData['body_html'] = op_activity_linkification(nl2br(htmlspecialchars($row['body'], ENT_QUOTES, 'UTF-8', false)));
+      if ('community' === $target)
+      {
+        $responseData['body'] = $row['body'];
+      }
+      else
+      {
+        $responseData['body'] = htmlspecialchars($row['body'], ENT_QUOTES, 'UTF-8', false);
+      }
+      $responseData['body_html'] = $this->_convCmd(nl2br($responseData['body']));
       $responseData['uri'] = $row['uri'];
       $responseData['source'] = $row['source'];
       $responseData['source_uri'] = $row['source_uri'];
@@ -186,6 +199,176 @@ class opTimeline
     }
 
     return $responseDataList;
+  }
+
+  private function _convCmd($_body)
+  {
+    $body = $this->_unfoldGooGl($_body);
+    $urlList = $this->_getUrlList($body);
+
+    foreach ($urlList as $urlStr) {
+      if (preg_match('/\.(jpg|jpeg|png|gif)/', $urlStr))
+      {
+        $body = str_replace($urlStr, '<div><a href="'.$urlStr.'"><img src="'.$urlStr.'"></a></div>', $body);
+      }
+      else if (preg_match('/(http:|https:)\/\/jp\.youtube\.com\/watch\?v=([a-zA-Z0-9_\-]+)/', $urlStr, $matches))
+      {
+        $body = str_replace($urlStr, $this->_getYoutubeCmd($matches[2]), $body);
+      }
+      else if (preg_match('/(http:|https:)\/\/(?:www\.|)youtube\.com\/watch\?(?:.+&amp;)?v=([a-zA-Z0-9_\-]+)/', $urlStr, $matches))
+      {
+        $body = str_replace($urlStr, $this->_getYoutubeCmd($matches[2]), $body);
+      }
+      else if (preg_match('/(http:|https:)\/\/youtu\.be\/([a-zA-Z0-9_\-]+)/', $urlStr, $matches))
+      {
+        $body = str_replace($urlStr, $this->_getYoutubeCmd($matches[2]), $body);
+      }
+      else if (preg_match('/(http:|https:)\/\/www\.nicovideo\.jp\/watch\/([a-z0-9]+)/', $urlStr, $matches))
+      {
+        $body = str_replace($urlStr, $this->_getNicoVideoCmd($matches[2]), $body);
+      }
+      else if (preg_match('/(http:|https:)\/\/maps\.google\.co\.jp\/maps[?\/](.+)/', $urlStr, $matches))
+      {
+        $body = str_replace($urlStr, $this->_getGoogleMapCmd($matches[2]), $body);
+      }
+      else if (preg_match('/(http:|https:)\/\/maps\.google\.com\/maps[?\/](.+)/', $urlStr, $matches))
+      {
+        $body = str_replace($urlStr, $this->_getGoogleMapCmd($matches[2]), $body);
+      }
+      else if (preg_match('/(http:|https:)\/\/www\.google\.co\.jp\/maps[?\/](.+)/', $urlStr, $matches))
+      {
+        $body = str_replace($urlStr, $this->_getGoogleMapCmd($matches[2]), $body);
+      }
+      else if (preg_match('/(http:|https:)\/\/www\.google\.com\/maps[?\/](.+)/', $urlStr, $matches))
+      {
+        $body = str_replace($urlStr, $this->_getGoogleMapCmd($matches[2]), $body);
+      }
+      else if (preg_match('/((http:|https:)\/\/[\x21-\x26\x28-\x7e]+)/', $urlStr, $matches))
+      {
+        $body = str_replace($urlStr, $this->_getLink($urlStr), $body);
+      }
+    }
+
+    return $body;
+  }
+
+  private function _getUrlList($_body)
+  {
+    $pattern = '(https?://[-_.!~*\'()a-zA-Z0-9;/?:@&=+$,%#]+)';
+    $list = [];
+    if(preg_match_all($pattern, $_body, $result) !== false){
+      foreach ($result[0] as $value){
+        $list[] = $value;
+      }
+    }
+
+    return $list;
+  }
+
+  private function _unfoldGooGl($_body)
+  {
+    $pattern = '(https?://goo\.gl/maps/[-_.!~*\'()a-zA-Z0-9;/?:@&=+$,%#]+)';
+    if(preg_match_all($pattern, $_body, $result) !== false){
+      foreach ($result[0] as $value){
+        // プロトコルは https にする
+        // http にした場合、いったん https にリダイレクトされてしまうため、'Location' の内容が変わってしまう
+        $gglUrl = preg_replace('/^https?/', 'https', $value);
+        $header = get_headers($gglUrl, 1);
+
+        $gglLocation = $header["Location"];
+        // 'Location' の内容が array の場合、1つ目を取得
+        if (is_array($gglLocation))
+        {
+          $gglLocation = $gglLocation[0];
+        }
+        $_body = preg_replace($pattern, $gglLocation, $_body);
+      }
+    }
+
+    return $_body;
+  }
+
+  private function _getYoutubeCmd($_id)
+  {
+    $html = '<object width="370" height="277">';
+    $html .= '<param name="movie" value="http://www.youtube.com/v/'.$_id.'"></param>';
+    $html .= '<embed src="http://www.youtube.com/v/'.$_id.'" type="application/x-shockwave-flash" width="370" height="277"></embed>';
+    $html .= '</object>';
+
+    return $html;
+  }
+
+  private function _getNicoVideoCmd($_id)
+  {
+    $url = 'https://www.nicovideo.jp/watch/'.$_id;
+
+    $html = '<iframe id="iframe1" src="https://ext.nicovideo.jp/thumb/'.$_id.'" width="350"';
+    $html .= ' height="230" scrolling="no" style="border: solid 1px #ccc;" frameborder="0">';
+    $html .= '<a href="'.$url.'">'.$url.'</a>';
+    $html .= '</iframe>';
+
+    return $html;
+  }
+
+  private function _getGoogleMapCmd($_id)
+  {
+    $param = [ 'lon' => 0, 'lat' => 0, 'z' => 15, 't' => '', 'q' => '' ];
+    preg_match(
+      '/(?:^|\/)@(-?[0-9.]+),(-?[0-9.]+),([0-9.]+z)(\/data=!3m1!1e3)?/',
+      $_id,
+      $result
+    );
+
+    if ($result)
+    {
+      $param['lon'] = $result[1];
+      $param['lat'] = $result[2];
+      $param['z'] = $result[3];
+      if ($result[4])
+      {
+        $param['t'] = 'k';
+      }
+    }
+    else
+    {
+      $query = explode('&amp;', $_id);
+      foreach($query as $q)
+      {
+        $pair = explode('=', $q);
+        if (2 !== count($pair))
+        {
+          continue;
+        }
+        $key = $pair[0];
+        $value = $pair[1];
+        if (!$param[$key])
+        {
+          $param[$key] = $value;
+        }
+        else if ('ll' === $key)
+        {
+          $v = explode(',', $value);
+          $param['lon'] = $v[0];
+          $param['lat'] = $v[1];
+        }
+      }
+    }
+
+    $html = '<iframe marginwidth="0" marginheight="0" hspace="0" vspace="0" frameborder="0" scrolling="no" bordercolor="#000000"';
+    $html .= 'src="/googlemaps';
+    $html .= '?x='.$param['lon'];
+    $html .= '&y='.$param['lat'];
+    $html .= '&z='.$param['z'];
+    $html .= '&t='.$param['t'];
+    $html .= '&q='.$param['q'];
+    $html .= '" name="sample" height="350">この部分はインラインフレームを使用しています。</iframe>';
+
+    return $html;
+  }
+
+  private function _getLink($_url)
+  {
+    return '<a href="'.$_url.'"><div class="urlBlock"><img src="http://mozshot.nemui.org/shot?'.$_url.'"><br>'.$_url.'</div></a>';
   }
 
   public function findReplyActivityDataByActivityIdsGroupByActivityId(array $activityIds)
