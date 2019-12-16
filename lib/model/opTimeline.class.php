@@ -65,7 +65,7 @@ class opTimeline
   /**
    * メソッドを実行する前にopJsonApiをロードしておく必要がある
    */
-  public function createActivityDataByActivityDataAndViewerMemberIdForSearchAPI($activityDataList, $viewerMemberId, $target)
+  public function createActivityDataByActivityDataAndViewerMemberIdForSearchAPI($activityDataList, $viewerMemberId, $target, $isSmartPhone = false)
   {
     $activityIds = array();
     foreach ($activityDataList as $activity)
@@ -84,7 +84,7 @@ class opTimeline
                     $activityDataList, $replyActivityDataList);
     $memberDataList = $this->user->createMemberDataByViewerMemberIdAndMemberIdsForAPIResponse($viewerMemberId, $memberIds);
 
-    $responseDataList = $this->createActivityDataByActivityDataAndMemberDataForSearchAPI($activityDataList, $memberDataList, $target);
+    $responseDataList = $this->createActivityDataByActivityDataAndMemberDataForSearchAPI($activityDataList, $memberDataList, $target, $isSmartPhone);
 
     foreach ($responseDataList as &$response)
     {
@@ -94,7 +94,7 @@ class opTimeline
       {
         $replies = $replyActivityDataList[$id];
 
-        $response['replies'] = $this->createActivityDataByActivityDataRowsAndMemberDataForSearchAPI($replies['data'], $memberDataList, $target);
+        $response['replies'] = $this->createActivityDataByActivityDataRowsAndMemberDataForSearchAPI($replies['data'], $memberDataList, $target, $isSmartPhone);
         $response['replies_count'] = $replies['count'];
       }
       else
@@ -129,7 +129,7 @@ class opTimeline
     return $memberIds;
   }
 
-  private function createActivityDataByActivityDataAndMemberDataForSearchAPI($activityDataList, $memberData, $target)
+  private function createActivityDataByActivityDataAndMemberDataForSearchAPI($activityDataList, $memberData, $target, $isSmartPhone = false)
   {
     $activityIds = array();
     foreach ($activityDataList as $activity)
@@ -154,7 +154,7 @@ class opTimeline
       {
         $responseData['body'] = htmlspecialchars($activity->getBody(), ENT_QUOTES, 'UTF-8');
       }
-      $responseData['body_html'] = $this->convCmd(nl2br($responseData['body']), is_null($activity->in_reply_to_activity_id) ? false: true);
+      $responseData['body_html'] = $this->convCmd(nl2br($responseData['body']), is_null($activity->in_reply_to_activity_id) ? false: true, $isSmartPhone);
       $responseData['uri'] = $activity->getUri();
       $responseData['source'] = $activity->getSource();
       $responseData['source_uri'] = $activity->getSourceUri();
@@ -169,7 +169,7 @@ class opTimeline
     return $responseDataList;
   }
 
-  private function createActivityDataByActivityDataRowsAndMemberDataForSearchAPI($activityDataRows, $memberDataList, $target, $isMini = false)
+  private function createActivityDataByActivityDataRowsAndMemberDataForSearchAPI($activityDataRows, $memberDataList, $target, $isSmartPhone = false)
   {
     $responseDataList = array();
     foreach ($activityDataRows as $row)
@@ -185,7 +185,7 @@ class opTimeline
       {
         $responseData['body'] = htmlspecialchars($row['body'], ENT_QUOTES, 'UTF-8', false);
       }
-      $responseData['body_html'] = $this->convCmd(nl2br($responseData['body']), is_null($row['in_reply_to_activity_id']) ? false: true);
+      $responseData['body_html'] = $this->convCmd(nl2br($responseData['body']), is_null($row['in_reply_to_activity_id']) ? false: true, $isSmartPhone);
       $responseData['uri'] = $row['uri'];
       $responseData['source'] = $row['source'];
       $responseData['source_uri'] = $row['source_uri'];
@@ -201,7 +201,7 @@ class opTimeline
     return $responseDataList;
   }
 
-  public function convCmd($_body, $_isMini)
+  public function convCmd($_body, $_isMini, $_isSmartPhone)
   {
     $body = $this->_unfoldGooGl($_body);
     $urlList = $this->_getUrlList($body);
@@ -213,35 +213,35 @@ class opTimeline
       }
       else if (preg_match('/(http:|https:)\/\/jp\.youtube\.com\/watch\?v=([a-zA-Z0-9_\-]+)/', $urlStr, $matches))
       {
-        $body = str_replace($urlStr, $this->_getYoutubeCmd($matches[2], $_isMini), $body);
+        $body = str_replace($urlStr, $this->_getYoutubeCmd($matches[2], $_isMini, $_isSmartPhone), $body);
       }
       else if (preg_match('/(http:|https:)\/\/(?:www\.|)youtube\.com\/watch\?(?:.+&amp;)?v=([a-zA-Z0-9_\-]+)/', $urlStr, $matches))
       {
-        $body = str_replace($urlStr, $this->_getYoutubeCmd($matches[2], $_isMini), $body);
+        $body = str_replace($urlStr, $this->_getYoutubeCmd($matches[2], $_isMini, $_isSmartPhone), $body);
       }
       else if (preg_match('/(http:|https:)\/\/youtu\.be\/([a-zA-Z0-9_\-]+)/', $urlStr, $matches))
       {
-        $body = str_replace($urlStr, $this->_getYoutubeCmd($matches[2], $_isMini), $body);
+        $body = str_replace($urlStr, $this->_getYoutubeCmd($matches[2], $_isMini, $_isSmartPhone), $body);
       }
       else if (preg_match('/(http:|https:)\/\/www\.nicovideo\.jp\/watch\/([a-z0-9]+)/', $urlStr, $matches))
       {
-        $body = str_replace($urlStr, $this->_getNicoVideoCmd($matches[2], $_isMini), $body);
+        $body = str_replace($urlStr, $this->_getNicoVideoCmd($matches[2], $_isMini, $_isSmartPhone), $body);
       }
       else if (preg_match('/(http:|https:)\/\/maps\.google\.co\.jp\/maps[?\/](.+)/', $urlStr, $matches))
       {
-        $body = str_replace($urlStr, $this->_getGoogleMapCmd($matches[2]), $body);
+        $body = str_replace($urlStr, $this->_getGoogleMapCmd($matches[2], $_isMini, $_isSmartPhone), $body);
       }
       else if (preg_match('/(http:|https:)\/\/maps\.google\.com\/maps[?\/](.+)/', $urlStr, $matches))
       {
-        $body = str_replace($urlStr, $this->_getGoogleMapCmd($matches[2]), $body);
+        $body = str_replace($urlStr, $this->_getGoogleMapCmd($matches[2], $_isMini, $_isSmartPhone), $body);
       }
       else if (preg_match('/(http:|https:)\/\/www\.google\.co\.jp\/maps[?\/](.+)/', $urlStr, $matches))
       {
-        $body = str_replace($urlStr, $this->_getGoogleMapCmd($matches[2]), $body);
+        $body = str_replace($urlStr, $this->_getGoogleMapCmd($matches[2], $_isMini, $_isSmartPhone), $body);
       }
       else if (preg_match('/(http:|https:)\/\/www\.google\.com\/maps[?\/](.+)/', $urlStr, $matches))
       {
-        $body = str_replace($urlStr, $this->_getGoogleMapCmd($matches[2]), $body);
+        $body = str_replace($urlStr, $this->_getGoogleMapCmd($matches[2], $_isMini, $_isSmartPhone), $body);
       }
       else if (preg_match('/((http:|https:)\/\/[\x21-\x26\x28-\x7e]+)/', $urlStr, $matches))
       {
@@ -288,13 +288,18 @@ class opTimeline
     return $_body;
   }
 
-  private function _getYoutubeCmd($_id, $_isMini)
+  private function _getYoutubeCmd($_id, $_isMini, $_isSmartPhone)
   {
     $w = 370;
     $h = 277;
     if ($_isMini)
     {
       $w = 300;
+      $h = 230;
+    }
+    if ($_isSmartPhone)
+    {
+      $w = 250;
       $h = 230;
     }
     $html = '<object width="'.$w.'" height="'.$h.'">';
@@ -305,7 +310,7 @@ class opTimeline
     return $html;
   }
 
-  private function _getNicoVideoCmd($_id, $_isMini)
+  private function _getNicoVideoCmd($_id, $_isMini, $_isSmartPhone)
   {
     $w = 350;
     $h = 230;
@@ -313,6 +318,11 @@ class opTimeline
     {
       $w = 300;
       $h = 230;
+    }
+    if ($_isSmartPhone)
+    {
+      $w = 250;
+      $h = 270;
     }
 
     $url = 'https://www.nicovideo.jp/watch/'.$_id;
@@ -325,8 +335,21 @@ class opTimeline
     return $html;
   }
 
-  private function _getGoogleMapCmd($_id)
+  private function _getGoogleMapCmd($_id, $_isMini, $_isSmartPhone)
   {
+    $w = 350;
+    $h = 350;
+    if ($_isMini)
+    {
+      $w = 300;
+      $h = 300;
+    }
+    if ($_isSmartPhone)
+    {
+      $w = 250;
+      $h = 270;
+    }
+
     $param = [ 'lon' => 0, 'lat' => 0, 'z' => 15, 't' => '', 'q' => '' ];
     preg_match(
       '/(?:^|\/)@(-?[0-9.]+),(-?[0-9.]+),([0-9.]+z)(\/data=!3m1!1e3)?/',
@@ -376,7 +399,7 @@ class opTimeline
     $html .= '&z='.$param['z'];
     $html .= '&t='.$param['t'];
     $html .= '&q='.$param['q'];
-    $html .= '" name="sample" height="350">この部分はインラインフレームを使用しています。</iframe>';
+    $html .= '" name="gmap" width="'.$w.'" height="'.$h.'">この部分はインラインフレームを使用しています。</iframe>';
 
     return $html;
   }
