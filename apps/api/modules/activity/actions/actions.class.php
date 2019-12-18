@@ -238,7 +238,7 @@ class activityActions extends opJsonApiActions
     }
 
     $responseData = $this->timeline->createActivityDataByActivityDataAndViewerMemberIdForSearchAPI(
-                    $activityData, $this->getUser()->getMemberId(), $parameters['target'], $request->isSmartphone());
+                    $activityData, $this->getUser()->getMemberId(), $request->isSmartphone());
 
     $responseData = $this->timeline->addPublicFlagByActivityDataForSearchAPIByActivityData($responseData, $activityData);
     $responseData = $this->timeline->embedImageUrlToContentForSearchAPI($responseData);

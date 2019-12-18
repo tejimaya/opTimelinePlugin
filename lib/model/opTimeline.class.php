@@ -65,7 +65,7 @@ class opTimeline
   /**
    * メソッドを実行する前にopJsonApiをロードしておく必要がある
    */
-  public function createActivityDataByActivityDataAndViewerMemberIdForSearchAPI($activityDataList, $viewerMemberId, $target, $isSmartPhone = false)
+  public function createActivityDataByActivityDataAndViewerMemberIdForSearchAPI($activityDataList, $viewerMemberId, $isSmartPhone = false)
   {
     $activityIds = array();
     foreach ($activityDataList as $activity)
@@ -84,7 +84,7 @@ class opTimeline
                     $activityDataList, $replyActivityDataList);
     $memberDataList = $this->user->createMemberDataByViewerMemberIdAndMemberIdsForAPIResponse($viewerMemberId, $memberIds);
 
-    $responseDataList = $this->createActivityDataByActivityDataAndMemberDataForSearchAPI($activityDataList, $memberDataList, $target, $isSmartPhone);
+    $responseDataList = $this->createActivityDataByActivityDataAndMemberDataForSearchAPI($activityDataList, $memberDataList, $isSmartPhone);
 
     foreach ($responseDataList as &$response)
     {
@@ -94,7 +94,7 @@ class opTimeline
       {
         $replies = $replyActivityDataList[$id];
 
-        $response['replies'] = $this->createActivityDataByActivityDataRowsAndMemberDataForSearchAPI($replies['data'], $memberDataList, $target, $isSmartPhone);
+        $response['replies'] = $this->createActivityDataByActivityDataRowsAndMemberDataForSearchAPI($replies['data'], $memberDataList, $isSmartPhone);
         $response['replies_count'] = $replies['count'];
       }
       else
@@ -129,7 +129,7 @@ class opTimeline
     return $memberIds;
   }
 
-  private function createActivityDataByActivityDataAndMemberDataForSearchAPI($activityDataList, $memberData, $target, $isSmartPhone = false)
+  private function createActivityDataByActivityDataAndMemberDataForSearchAPI($activityDataList, $memberData, $isSmartPhone = false)
   {
     $activityIds = array();
     foreach ($activityDataList as $activity)
@@ -145,15 +145,7 @@ class opTimeline
       $responseData = array();
       $responseData['id'] = $activity->getId();
       $responseData['member'] = $memberData[$activity->getMemberId()];
-
-      if ('community' === $target)
-      {
-        $responseData['body'] = $activity->getBody();
-      }
-      else
-      {
-        $responseData['body'] = htmlspecialchars($activity->getBody(), ENT_QUOTES, 'UTF-8');
-      }
+      $responseData['body'] = htmlspecialchars($activity->getBody(), ENT_QUOTES, 'UTF-8');
       $responseData['body_html'] = $this->convCmd(nl2br($responseData['body']), is_null($activity->in_reply_to_activity_id) ? false: true, $isSmartPhone);
       $responseData['uri'] = $activity->getUri();
       $responseData['source'] = $activity->getSource();
@@ -169,22 +161,14 @@ class opTimeline
     return $responseDataList;
   }
 
-  private function createActivityDataByActivityDataRowsAndMemberDataForSearchAPI($activityDataRows, $memberDataList, $target, $isSmartPhone = false)
+  private function createActivityDataByActivityDataRowsAndMemberDataForSearchAPI($activityDataRows, $memberDataList, $isSmartPhone = false)
   {
     $responseDataList = array();
     foreach ($activityDataRows as $row)
     {
       $responseData['id'] = $row['id'];
       $responseData['member'] = $memberDataList[$row['member_id']];
-
-      if ('community' === $target)
-      {
-        $responseData['body'] = $row['body'];
-      }
-      else
-      {
-        $responseData['body'] = htmlspecialchars($row['body'], ENT_QUOTES, 'UTF-8', false);
-      }
+      $responseData['body'] = htmlspecialchars($row['body'], ENT_QUOTES, 'UTF-8');
       $responseData['body_html'] = $this->convCmd(nl2br($responseData['body']), is_null($row['in_reply_to_activity_id']) ? false: true, $isSmartPhone);
       $responseData['uri'] = $row['uri'];
       $responseData['source'] = $row['source'];

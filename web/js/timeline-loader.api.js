@@ -32,7 +32,7 @@ $(function(){
     $('#photo-file-name').empty();
     $('#photo-remove').hide();
 
-    var body = htmlspecialchars($('#timeline-textarea').val());
+    var body = $('#timeline-textarea').val();
 
     if (gorgon)
     {
@@ -281,10 +281,6 @@ function renderJSON(json, mode) {
   {
     $('#timeline-list').empty();
   }
-  // if(json.data && 0 < viewPhoto)
-  // {
-  //   autoLinker(json);
-  // }
 
   $timelineData = $('#timelineTemplate').tmpl(json.data);
   $('.timeline-comment-button', $timelineData).timelineComment();
@@ -356,15 +352,6 @@ function renderJSON(json, mode) {
     $('#timeline-loadmore-loading').hide();
   }
   $('.timeago').timeago();
-}
-
-function htmlspecialchars(str)
-{
-  return (str + '').replace(/&/g,'&amp;')
-      .replace(/"/g,'&quot;')
-      .replace(/'/g,'&#039;')
-      .replace(/</g,'&lt;')
-      .replace(/>/g,'&gt;');
 }
 
 function tweetByData(data)
