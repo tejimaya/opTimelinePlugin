@@ -107,6 +107,20 @@ $(function(){
     $('#gorgon-loadmore').show();
   });
 
+  $(document).on('click', '.timeline-post-delete-confirm-link', function(ev){
+    ev.preventDefault();
+
+    if (!confirm('削除しますか？')) {
+      return;
+    }
+
+    var activityId = this.dataset.timelineId;
+    $.getJSON(openpne.apiBase + 'activity/delete.json', { apiKey: openpne.apiKey, activity_id: activityId })
+      .done(function(){
+        timelineAllLoad();
+      });
+  });
+
   $(document).on('click', '.timeline-comment-loadmore', function() {
     var timelineId = $(this).attr('data-timeline-id');
     var commentlist = $('#commentlist-' + timelineId);
