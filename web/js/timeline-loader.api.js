@@ -32,7 +32,7 @@ $(function(){
     $('#photo-file-name').empty();
     $('#photo-remove').hide();
 
-    var body = $('#timeline-textarea').val();
+    var body = htmlspecialchars($('#timeline-textarea').val());
 
     if (gorgon)
     {
@@ -281,10 +281,10 @@ function renderJSON(json, mode) {
   {
     $('#timeline-list').empty();
   }
-  if(json.data && 0 < viewPhoto)
-  {
-    autoLinker(json);
-  }
+  // if(json.data && 0 < viewPhoto)
+  // {
+  //   autoLinker(json);
+  // }
 
   $timelineData = $('#timelineTemplate').tmpl(json.data);
   $('.timeline-comment-button', $timelineData).timelineComment();
@@ -358,6 +358,15 @@ function renderJSON(json, mode) {
   $('.timeago').timeago();
 }
 
+function htmlspecialchars(str)
+{
+  return (str + '').replace(/&/g,'&amp;')
+      .replace(/"/g,'&quot;')
+      .replace(/'/g,'&#039;')
+      .replace(/</g,'&lt;')
+      .replace(/>/g,'&gt;');
+}
+
 function tweetByData(data)
 {
   //reference　http://lagoscript.org/jquery/upload/documentation
@@ -408,30 +417,6 @@ function tweetByData(data)
     },
     'text'
     );
-}
-
-function autoLinker(json)
-{
-  for(var i = 0; i < json.data.length; i++)
-  {
-    if (!json.data[i].body_html.match(/img.*src=/))
-    {
-      if (json.data[i].body.match(/\.(jpg|jpeg|png|gif)/))
-      {
-        json.data[i].body_html = json.data[i].body.replace(/((http:|https:)\/\/[\x21-\x26\x28-\x7e]+.(jpg|jpeg|png|gif))/gi, '<div><a href="$1"><img src="$1"></img></a></div>');
-      }
-      else if (json.data[i].body.match(/((http:|https:)\/\/www\.youtube\.com\/watch\?v=([a-zA-Z0-9_\-]+))/))
-      {
-        var youtubeId = json.data[i].body.substring(json.data[i].body.lastIndexOf('v=') + 2, json.data[i].body.length);
-        var iframe = '<iframe width="370" height="277" src="http://www.youtube.com/embed/' + youtubeId + '" frameborder="0" allowfullscreen></iframe>';
-        json.data[i].body_html = json.data[i].body.replace(/((http:|https:)\/\/www\.youtube\.com\/watch\?v=([a-zA-Z0-9_\-]+))/gi, '<div>' + iframe + '</div>');
-      }
-      else if (json.data[i].body.match(/((http:|https:)\/\/[\x21-\x26\x28-\x7e]+)/))
-      {
-        json.data[i].body_html = json.data[i].body.replace(/((http:|https:)\/\/[\x21-\x26\x28-\x7e]+)/gi, '<a href="$1"><div class="urlBlock"><img src="http://mozshot.nemui.org/shot?$1"><br />$1</div></a>');
-      }
-    }
-  }
 }
 
 function lengthCheck(obj, target)
