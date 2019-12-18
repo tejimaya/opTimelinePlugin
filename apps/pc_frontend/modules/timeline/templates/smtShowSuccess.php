@@ -4,6 +4,10 @@
 var gorgon = {
       'activity_id': <?php echo $activity->getId() ?>,
       'count': 1
+<?php if ($isCommunity && $community->isPrivilegeBelong($memberId)): ?>
+  ,'target': 'community',
+  'target_id': <?php echo $community->getId() ?>
+<?php endif; ?>
     };
 var MAXLENGTH = 140;
 var viewPhoto = '<?php echo $viewPhoto ?>';
