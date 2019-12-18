@@ -124,15 +124,13 @@ class activityActions extends opJsonApiActions
 
     $responseData = $this->createResponActivityDataOfPost();
     $responseData['body'] = htmlspecialchars($responseData['body'], ENT_QUOTES, 'UTF-8');
-    $responseData['body_html'] = $request->getParameter('in_reply_to_activity_id');
-
     if (is_null($request->getParameter('in_reply_to_activity_id')))
     {
-      $responseData['body_html'] = op_activity_linkification(nl2br(op_api_force_escape($responseData['body'])));
+      $responseData['body_html'] = $this->timeline->convCmd(nl2br(op_api_force_escape($responseData['body'])), false);
     }
     else
     {
-      $responseData['body_html'] = op_activity_linkification(nl2br($responseData['body']));
+      $responseData['body_html'] = $this->timeline->convCmd(nl2br($responseData['body']), true);
     }
 
     if (!is_null($validatedFile))
@@ -147,7 +145,6 @@ class activityActions extends opJsonApiActions
   {
     $this->loadHelperForUseOpJsonAPI();
     $activity = op_api_activity($this->createdActivity);
-
     $replies = $this->createdActivity->getReplies();
     if (0 < count($replies))
     {
@@ -167,7 +164,6 @@ class activityActions extends opJsonApiActions
    */
   private function renderJSONDirect(array $data)
   {
-    //header("Content-Type: application/json; charset=utf-8");
     echo json_encode($data);
     exit;
   }
@@ -242,7 +238,7 @@ class activityActions extends opJsonApiActions
     }
 
     $responseData = $this->timeline->createActivityDataByActivityDataAndViewerMemberIdForSearchAPI(
-                    $activityData, $this->getUser()->getMemberId());
+                    $activityData, $this->getUser()->getMemberId(), $parameters['target'], $request->isSmartphone());
 
     $responseData = $this->timeline->addPublicFlagByActivityDataForSearchAPIByActivityData($responseData, $activityData);
     $responseData = $this->timeline->embedImageUrlToContentForSearchAPI($responseData);
