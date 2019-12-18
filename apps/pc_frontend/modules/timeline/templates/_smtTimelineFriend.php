@@ -2,6 +2,7 @@
 <script type="text/javascript">
 //<![CDATA[
 var gorgon = {
+  'count': '<?php echo $gadget->getConfig('limit'); ?>',
   'target': 'friend',
   'post': {
   },
