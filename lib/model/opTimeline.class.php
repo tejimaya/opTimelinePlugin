@@ -287,8 +287,8 @@ class opTimeline
       $h = 230;
     }
     $html = '<object width="'.$w.'" height="'.$h.'">';
-    $html .= '<param name="movie" value="http://www.youtube.com/v/'.$_id.'"></param>';
-    $html .= '<embed src="http://www.youtube.com/v/'.$_id.'" type="application/x-shockwave-flash" width="'.$w.'" height="'.$h.'"></embed>';
+    $html .= '<param name="movie" value="https://www.youtube.com/v/'.$_id.'"></param>';
+    $html .= '<embed src="https://www.youtube.com/v/'.$_id.'" type="application/x-shockwave-flash" width="'.$w.'" height="'.$h.'"></embed>';
     $html .= '</object>';
 
     return $html;
@@ -390,7 +390,7 @@ class opTimeline
 
   private function _getLink($_url)
   {
-    return '<a href="'.$_url.'"><div class="urlBlock"><img src="http://mozshot.nemui.org/shot?'.$_url.'"><br>'.$_url.'</div></a>';
+    return '<a href="'.$_url.'"><div class="urlBlock"><img src="https://mozshot.nemui.org/shot?'.$_url.'"><br>'.$_url.'</div></a>';
   }
 
   public function findReplyActivityDataByActivityIdsGroupByActivityId(array $activityIds)
