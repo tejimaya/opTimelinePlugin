@@ -38,14 +38,12 @@ var fileMaxSizeInfo = {
 <?php use_javascript('/opTimelinePlugin/js/jquery.timeago.js', 'last') ?>
 <?php use_javascript('/opTimelinePlugin/js/lightbox.js', 'last') ?>
 <?php use_stylesheet('/opTimelinePlugin/css/lightbox.css', 'last') ?>
-<?php use_stylesheet('/opTimelinePlugin/css/counter.css', 'last') ?>
-<?php use_stylesheet('/opTimelinePlugin/css/bootstrap.css', 'last') ?>
 <?php use_stylesheet('/opTimelinePlugin/css/timeline.css', 'last') ?>
 
 <script type="text/javascript">
 $(function(){
   $("#timeline-textarea").focus(function(){
-    $('.timeline-postform').css('padding-bottom', '30px');
+    $('.timeline-postform').css('padding-bottom', '50px');
     $('#timeline-textarea').attr('rows', '3');
     $('#timeline-submit-area').css('display', 'inline');
 
@@ -72,16 +70,16 @@ $(function(){
 <?php include_partial('timeline/timelineTemplate') ?>
 <div class="partsHeading"><h3><?php echo $community->getName() ?><?php echo $op_term['activity'] ?></h3></div>
     <div class="timeline">
-      <div class="timeline-postform well">
+      <div class="timeline-postform">
         <textarea id="timeline-textarea" class="input-xlarge" rows="1" tabindex="1" placeholder="今何してる？"></textarea>
         <div id="timeline-submit-loader"><?php echo op_image_tag('ajax-loader.gif', array()) ?></div>
         <div id="timeline-submit-error"></div>
         <div id="timeline-submit-area">
           <span id="timeline-upload-photo-button" class="btn"><i class="icon-camera"></i></span>
           <span id="photo-remove"><span class="icon-remove"></span></span><span id="photo-file-name"></span>
-          <span id="counter"></span>
           <input id="timeline-submit-upload" type="file" name="timeline-submit-upload" enctype="multipart/form-data">
           <button id="timeline-submit-button" class="btn btn-primary timeline-submit" tabindex="2" disabled="disabled">投稿</button>
+          <span id="counter"></span>
         </div>
       </div>
 
@@ -89,7 +87,7 @@ $(function(){
       <div id="timeline-list" data-last-id=""data-loadmore-id="">
       </div>
 
-      <button class="gorgon-button button" id="timeline-loadmore">もっと読む</button>
+      <button class="btn btn-small" id="timeline-loadmore">もっと読む</button>
       <div id="timeline-loadmore-loading"><?php echo op_image_tag('ajax-loader.gif', array()) ?></div>
     </div>
 

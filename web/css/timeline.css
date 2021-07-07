@@ -12,7 +12,7 @@ input.error:focus, select.error:focus, textarea.error:focus {
 
 .timestamp,
 .public-flag {
-  color: #999!important;
+  color: #999;
 }
 
 a.screen-name {
@@ -26,7 +26,11 @@ a.screen-name:link {
 
 .timeline-postform {
   position: relative; 
-  margin-bottom: 20px;
+  padding-bottom: 10px;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  border-bottom:1px solid #ddd;
 }
 
 #timeline-textarea {
@@ -60,15 +64,14 @@ a.screen-name:link {
 }
 
 #timeline-submit-area{
-  width: 48px;
+  width: 100%;
   float: left;
   display: none;
+  padding-top:10px;
 }
 
 .timeline-submit {
   position: absolute;
-  right: 10px;
-  bottom: 5px;
   display: none;
   float: right;
   display: table;
@@ -86,8 +89,12 @@ a.screen-name:link {
 
 .timeline-post {
   padding: 10px;
-  border-top: 2px solid #DDD;
+  border-top: 1px solid #DDD;
   overflow: hidden;
+}
+
+.timeline-post:first-child {
+	border-top:none;
 }
 
 .timeline-post-member-image {
@@ -125,7 +132,6 @@ a.screen-name:link {
 
 .timeline-post-comments {
   margin-top: 10px;
-  background-color: whiteSmoke;
 }
 
 .timeline-post-comment {
@@ -218,11 +224,11 @@ a.screen-name:link {
 }
 
 #timeline-public-flag {
-  position: absolute;
+  position: relative;
   margin: 0;
-  width: 100px;
-  right: 110px;
-  bottom: 5px;
+  width: auto;
+  float: right;
+  margin-right:5px;
 }
 
 #timeline-submit-upload {
@@ -233,26 +239,43 @@ a.screen-name:link {
 }
 
 #timeline-upload-photo-button {
-  position: absolute;
+  position: relative;
+  float:left;
   padding: 6px 7px;
-  bottom: 5px;
 }
 
 #photo-file-name {
-  position: absolute;
-  bottom: 10px;
-  left: 68px;
-  width: 200px;
+  position: relative;
+  float:left;
+  width: auto;
+  margin-top: 5px;
+  margin-left: 5px;
 }
 
 #photo-remove {
   display: none;
   cursor: pointer;
-  position: absolute;
-  bottom: 12px;
-  left: 53px;
+  position: relative;
+  float:left;
+  margin-left:10px;
+  margin-top: 5px;
 }
 
 #timeline-submit-button {
-  margin-right: 9px;
+  position: relative;
+  float: right;
+}
+#counter{
+  position: relative;
+  font-size: 20px;
+  float: right;
+  line-height: 30px;
+  margin-right:10px;
+}
+#lightbox img {
+  max-width: 700px;
+  height: auto;
+}
+#lb-outerContainer {
+	max-width:720px;
 }
