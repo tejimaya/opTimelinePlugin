@@ -126,11 +126,11 @@ class activityActions extends opJsonApiActions
     $responseData['body'] = htmlspecialchars($responseData['body'], ENT_QUOTES, 'UTF-8');
     if (is_null($request->getParameter('in_reply_to_activity_id')))
     {
-      $responseData['body_html'] = $this->timeline->convCmd(nl2br(op_api_force_escape($responseData['body'])), false);
+      $responseData['body_html'] = $this->timeline->convCmd(nl2br(op_api_force_escape($responseData['body'])), false, $request->isSmartphone());
     }
     else
     {
-      $responseData['body_html'] = $this->timeline->convCmd(nl2br($responseData['body']), true);
+      $responseData['body_html'] = $this->timeline->convCmd(nl2br($responseData['body']), true, $request->isSmartphone());
     }
 
     if (!is_null($validatedFile))
